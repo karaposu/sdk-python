@@ -1,7 +1,7 @@
 """Unit tests for result models."""
 
 import pytest
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from brightdata.models import (
     BaseResult,
     ScrapeResult,
@@ -22,7 +22,7 @@ class TestBaseResult:
     
     def test_elapsed_ms(self):
         """Test elapsed time calculation."""
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         result = BaseResult(
             success=True,
             request_sent_at=now,
@@ -45,7 +45,7 @@ class TestBaseResult:
     
     def test_get_timing_breakdown(self):
         """Test timing breakdown generation."""
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         result = BaseResult(
             success=True,
             request_sent_at=now,

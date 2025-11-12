@@ -63,18 +63,17 @@ class TestHierarchicalServiceAccess:
         
         scrape = client.scrape
         
-        # Generic should work
+        # All scrapers should now be accessible
         assert scrape.generic is not None
+        assert scrape.amazon is not None
+        assert scrape.linkedin is not None
+        assert scrape.chatgpt is not None
         
-        # Others not yet implemented - should raise NotImplementedError
-        with pytest.raises(NotImplementedError):
-            _ = scrape.amazon
-        
-        with pytest.raises(NotImplementedError):
-            _ = scrape.linkedin
-        
-        with pytest.raises(NotImplementedError):
-            _ = scrape.chatgpt
+        # Verify they're the correct types
+        from brightdata.scrapers import AmazonScraper, LinkedInScraper, ChatGPTScraper
+        assert isinstance(scrape.amazon, AmazonScraper)
+        assert isinstance(scrape.linkedin, LinkedInScraper)
+        assert isinstance(scrape.chatgpt, ChatGPTScraper)
     
     def test_search_service_has_search_engines(self, api_token):
         """Test search service provides access to search engines."""
@@ -194,17 +193,26 @@ class TestUserExperience:
         assert generic_scraper is not None
         assert hasattr(generic_scraper, 'url')
         
-        # Platform access exists (even if not yet implemented)
-        # These will raise NotImplementedError until implemented
-        try:
-            _ = scrape_path.amazon
-        except NotImplementedError:
-            pass  # Expected for now
+        # Platform scrapers (all implemented now!)
+        amazon_scraper = scrape_path.amazon
+        assert amazon_scraper is not None
+        assert hasattr(amazon_scraper, 'scrape')
+        assert hasattr(amazon_scraper, 'products')
+        
+        linkedin_scraper = scrape_path.linkedin
+        assert linkedin_scraper is not None
+        assert hasattr(linkedin_scraper, 'scrape')
+        assert hasattr(linkedin_scraper, 'jobs')
+        
+        chatgpt_scraper = scrape_path.chatgpt
+        assert chatgpt_scraper is not None
+        assert hasattr(chatgpt_scraper, 'prompt')
         
         print("\n✅ Hierarchical access pattern is intuitive!")
         print("  - client.scrape.generic.url()  ✅ (working)")
-        print("  - client.scrape.amazon  🚧 (planned)")
-        print("  - client.scrape.linkedin  🚧 (planned)") 
+        print("  - client.scrape.amazon.products()  ✅ (working)")
+        print("  - client.scrape.linkedin.jobs()  ✅ (working)") 
+        print("  - client.scrape.chatgpt.prompt()  ✅ (working)")
         print("  - client.search.google()  🚧 (planned)")
         print("  - client.crawler.discover()  🚧 (planned)")
 

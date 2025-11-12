@@ -471,44 +471,71 @@ class ScrapeService:
     
     @property
     def amazon(self):
-        """Access Amazon scraper."""
+        """
+        Access Amazon scraper.
+        
+        Returns:
+            AmazonScraper instance for Amazon product scraping and search
+        
+        Example:
+            >>> # URL-based scraping
+            >>> result = client.scrape.amazon.scrape("https://amazon.com/dp/B123")
+            >>> 
+            >>> # Keyword-based search
+            >>> result = client.scrape.amazon.products(keyword="laptop")
+        """
         if self._amazon is None:
-            try:
-                from .scrapers.amazon.scraper import AmazonScraper
-                self._amazon = AmazonScraper(bearer_token=self._client.token)
-            except (ImportError, AttributeError):
-                # Scraper not implemented yet
-                raise NotImplementedError(
-                    "Amazon scraper will be implemented in scrapers.amazon module"
-                )
+            from .scrapers.amazon import AmazonScraper
+            self._amazon = AmazonScraper(bearer_token=self._client.token)
         return self._amazon
     
     @property
     def linkedin(self):
-        """Access LinkedIn scraper."""
+        """
+        Access LinkedIn scraper.
+        
+        Returns:
+            LinkedInScraper instance for LinkedIn data extraction
+        
+        Example:
+            >>> # URL-based scraping
+            >>> result = client.scrape.linkedin.scrape("https://linkedin.com/in/johndoe")
+            >>> 
+            >>> # Search for jobs
+            >>> result = client.scrape.linkedin.jobs(keyword="python", location="NYC")
+            >>> 
+            >>> # Search for profiles
+            >>> result = client.scrape.linkedin.profiles(keyword="data scientist")
+            >>> 
+            >>> # Search for companies
+            >>> result = client.scrape.linkedin.companies(keyword="tech startup")
+        """
         if self._linkedin is None:
-            try:
-                from .scrapers.linkedin.scraper import LinkedInScraper
-                self._linkedin = LinkedInScraper(bearer_token=self._client.token)
-            except (ImportError, AttributeError):
-                # Scraper not implemented yet
-                raise NotImplementedError(
-                    "LinkedIn scraper will be implemented in scrapers.linkedin module"
-                )
+            from .scrapers.linkedin import LinkedInScraper
+            self._linkedin = LinkedInScraper(bearer_token=self._client.token)
         return self._linkedin
     
     @property
     def chatgpt(self):
-        """Access ChatGPT scraper."""
+        """
+        Access ChatGPT scraper.
+        
+        Returns:
+            ChatGPTScraper instance for ChatGPT interactions
+        
+        Example:
+            >>> # Single prompt
+            >>> result = client.scrape.chatgpt.prompt("Explain async programming")
+            >>> 
+            >>> # Multiple prompts
+            >>> result = client.scrape.chatgpt.prompts([
+            ...     "What is Python?",
+            ...     "What is JavaScript?"
+            ... ])
+        """
         if self._chatgpt is None:
-            try:
-                from .scrapers.chatgpt.scraper import ChatGPTScraper
-                self._chatgpt = ChatGPTScraper(bearer_token=self._client.token)
-            except (ImportError, AttributeError):
-                # Scraper not implemented yet
-                raise NotImplementedError(
-                    "ChatGPT scraper will be implemented in scrapers.chatgpt module"
-                )
+            from .scrapers.chatgpt import ChatGPTScraper
+            self._chatgpt = ChatGPTScraper(bearer_token=self._client.token)
         return self._chatgpt
     
     @property

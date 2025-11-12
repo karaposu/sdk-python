@@ -1,2 +1,0 @@
-"""Example: Specialized scrapers."""
-

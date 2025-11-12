@@ -1,2 +1,0 @@
-"""Type aliases and unions."""
-

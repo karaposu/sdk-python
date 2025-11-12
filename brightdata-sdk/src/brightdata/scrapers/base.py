@@ -1,2 +1,0 @@
-"""Base scraper class."""
-

@@ -131,18 +131,11 @@ class TestClientServiceProperties:
         scrape_service = client.scrape
         assert scrape_service is not None
         
-        # Generic should work
+        # All scrapers should now work
         assert scrape_service.generic is not None
-        
-        # Others raise NotImplementedError until implemented
-        with pytest.raises(NotImplementedError):
-            _ = scrape_service.amazon
-        
-        with pytest.raises(NotImplementedError):
-            _ = scrape_service.linkedin
-        
-        with pytest.raises(NotImplementedError):
-            _ = scrape_service.chatgpt
+        assert scrape_service.amazon is not None
+        assert scrape_service.linkedin is not None
+        assert scrape_service.chatgpt is not None
     
     def test_scrape_service_is_cached(self):
         """Test scrape service is cached (returns same instance)."""
