@@ -133,6 +133,45 @@ class FacebookReelsPayload(TypedDict, total=False):
     end_date: NotRequired[str]
 
 
+class InstagramProfilePayload(TypedDict, total=False):
+    """Instagram profile by URL payload."""
+    url: str  # Required
+
+
+class InstagramPostPayload(TypedDict, total=False):
+    """Instagram post by URL payload."""
+    url: str  # Required
+
+
+class InstagramCommentPayload(TypedDict, total=False):
+    """Instagram comments by post URL payload."""
+    url: str  # Required
+
+
+class InstagramReelPayload(TypedDict, total=False):
+    """Instagram reel by URL payload."""
+    url: str  # Required
+
+
+class InstagramPostsDiscoverPayload(TypedDict, total=False):
+    """Instagram posts discovery by URL payload."""
+    url: str  # Required
+    num_of_posts: NotRequired[int]
+    posts_to_not_include: NotRequired[List[str]]
+    start_date: NotRequired[str]  # MM-DD-YYYY
+    end_date: NotRequired[str]  # MM-DD-YYYY
+    post_type: NotRequired[str]  # e.g., "post", "reel"
+
+
+class InstagramReelsDiscoverPayload(TypedDict, total=False):
+    """Instagram reels discovery by URL payload."""
+    url: str  # Required
+    num_of_posts: NotRequired[int]
+    posts_to_not_include: NotRequired[List[str]]
+    start_date: NotRequired[str]  # MM-DD-YYYY
+    end_date: NotRequired[str]  # MM-DD-YYYY
+
+
 class TriggerResponse(TypedDict):
     """Response from /datasets/v3/trigger."""
     snapshot_id: str
@@ -234,6 +273,13 @@ __all__ = [
     "FacebookPostPayload",
     "FacebookCommentsPayload",
     "FacebookReelsPayload",
+    # Instagram Payloads
+    "InstagramProfilePayload",
+    "InstagramPostPayload",
+    "InstagramCommentPayload",
+    "InstagramReelPayload",
+    "InstagramPostsDiscoverPayload",
+    "InstagramReelsDiscoverPayload",
     # Responses
     "TriggerResponse",
     "ProgressResponse",

@@ -27,6 +27,7 @@ class ScrapeService:
         self._linkedin = None
         self._chatgpt = None
         self._facebook = None
+        self._instagram = None
         self._generic = None
     
     @property
@@ -133,6 +134,40 @@ class ScrapeService:
             from ..scrapers.facebook import FacebookScraper
             self._facebook = FacebookScraper(bearer_token=self._client.token)
         return self._facebook
+    
+    @property
+    def instagram(self):
+        """
+        Access Instagram scraper.
+        
+        Returns:
+            InstagramScraper instance for Instagram data extraction
+        
+        Example:
+            >>> # Scrape profile
+            >>> result = client.scrape.instagram.profiles(
+            ...     url="https://instagram.com/username"
+            ... )
+            >>> 
+            >>> # Scrape post
+            >>> result = client.scrape.instagram.posts(
+            ...     url="https://instagram.com/p/ABC123"
+            ... )
+            >>> 
+            >>> # Scrape comments
+            >>> result = client.scrape.instagram.comments(
+            ...     url="https://instagram.com/p/ABC123"
+            ... )
+            >>> 
+            >>> # Scrape reel
+            >>> result = client.scrape.instagram.reels(
+            ...     url="https://instagram.com/reel/ABC123"
+            ... )
+        """
+        if self._instagram is None:
+            from ..scrapers.instagram import InstagramScraper
+            self._instagram = InstagramScraper(bearer_token=self._client.token)
+        return self._instagram
     
     @property
     def generic(self):

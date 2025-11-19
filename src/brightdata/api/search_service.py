@@ -41,6 +41,7 @@ class SearchService:
         self._yandex_service: Optional['YandexSERPService'] = None
         self._linkedin_search: Optional['LinkedInSearchScraper'] = None
         self._chatgpt_search: Optional['ChatGPTSearchService'] = None
+        self._instagram_search: Optional['InstagramSearchScraper'] = None
     
     async def google_async(
         self,
@@ -236,4 +237,33 @@ class SearchService:
             from ..scrapers.chatgpt.search import ChatGPTSearchService
             self._chatgpt_search = ChatGPTSearchService(bearer_token=self._client.token)
         return self._chatgpt_search
+    
+    @property
+    def instagram(self):
+        """
+        Access Instagram search service for discovery operations.
+        
+        Returns:
+            InstagramSearchScraper for discovering posts and reels
+        
+        Example:
+            >>> # Discover posts from profile
+            >>> result = client.search.instagram.posts(
+            ...     url="https://instagram.com/username",
+            ...     num_of_posts=10,
+            ...     post_type="reel"
+            ... )
+            >>> 
+            >>> # Discover reels from profile
+            >>> result = client.search.instagram.reels(
+            ...     url="https://instagram.com/username",
+            ...     num_of_posts=50,
+            ...     start_date="01-01-2024",
+            ...     end_date="12-31-2024"
+            ... )
+        """
+        if self._instagram_search is None:
+            from ..scrapers.instagram.search import InstagramSearchScraper
+            self._instagram_search = InstagramSearchScraper(bearer_token=self._client.token)
+        return self._instagram_search
 
