@@ -98,6 +98,7 @@ class InstagramScraper(BaseWebScraper):
             url=url,
             dataset_id=self.DATASET_ID_PROFILES,
             timeout=timeout,
+            sdk_function="profiles",
         )
     
     def profiles(
@@ -145,6 +146,7 @@ class InstagramScraper(BaseWebScraper):
             url=url,
             dataset_id=self.DATASET_ID_POSTS,
             timeout=timeout,
+            sdk_function="posts",
         )
     
     def posts(
@@ -192,6 +194,7 @@ class InstagramScraper(BaseWebScraper):
             url=url,
             dataset_id=self.DATASET_ID_COMMENTS,
             timeout=timeout,
+            sdk_function="comments",
         )
     
     def comments(
@@ -239,6 +242,7 @@ class InstagramScraper(BaseWebScraper):
             url=url,
             dataset_id=self.DATASET_ID_REELS,
             timeout=timeout,
+            sdk_function="reels",
         )
     
     def reels(
@@ -258,6 +262,7 @@ class InstagramScraper(BaseWebScraper):
         url: Union[str, List[str]],
         dataset_id: str,
         timeout: int,
+        sdk_function: Optional[str] = None,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """
         Scrape URLs using standard async workflow (trigger/poll/fetch).
@@ -266,10 +271,17 @@ class InstagramScraper(BaseWebScraper):
             url: URL(s) to scrape
             dataset_id: Instagram dataset ID
             timeout: Maximum wait time in seconds (for polling)
+            sdk_function: SDK function name for monitoring (auto-detected if not provided)
         
         Returns:
             ScrapeResult(s)
         """
+        if sdk_function is None:
+            import inspect
+            frame = inspect.currentframe()
+            if frame and frame.f_back:
+                sdk_function = frame.f_back.f_code.co_name
+        
         is_single = isinstance(url, str)
         url_list = [url] if is_single else url
         
@@ -282,6 +294,7 @@ class InstagramScraper(BaseWebScraper):
             poll_timeout=timeout,
             include_errors=True,
             normalize_func=self.normalize_result,
+            sdk_function=sdk_function,
         )
         
         if is_single and isinstance(result.data, list) and len(result.data) == 1:

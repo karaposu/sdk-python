@@ -44,6 +44,7 @@ class DatasetAPIClient:
         payload: List[Dict[str, Any]],
         dataset_id: str,
         include_errors: bool = True,
+        sdk_function: Optional[str] = None,
     ) -> Optional[str]:
         """
         Trigger dataset collection and get snapshot_id.
@@ -52,6 +53,7 @@ class DatasetAPIClient:
             payload: Request payload for dataset collection
             dataset_id: Bright Data dataset identifier
             include_errors: Include error records in results
+            sdk_function: SDK function name for monitoring
         
         Returns:
             snapshot_id if successful, None otherwise
@@ -63,6 +65,10 @@ class DatasetAPIClient:
             "dataset_id": dataset_id,
             "include_errors": str(include_errors).lower(),
         }
+        
+        if sdk_function:
+            for item in payload:
+                item["sdk_function"] = sdk_function
         
         async with self.engine.post_to_url(
             self.TRIGGER_URL,

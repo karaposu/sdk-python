@@ -166,12 +166,20 @@ class AmazonScraper(BaseWebScraper):
         
         # Use reviews dataset with standard async workflow
         is_single = isinstance(url, str)
+        
+        import inspect
+        frame = inspect.currentframe()
+        sdk_function = None
+        if frame and frame.f_back:
+            sdk_function = frame.f_back.f_code.co_name
+        
         result = await self.workflow_executor.execute(
             payload=payload,
             dataset_id=self.DATASET_ID_REVIEWS,
             poll_interval=10,
             poll_timeout=timeout,
             include_errors=True,
+            sdk_function=sdk_function,
             normalize_func=self.normalize_result,
         )
         
@@ -285,6 +293,12 @@ class AmazonScraper(BaseWebScraper):
         payload = [{"url": u} for u in url_list]
         
         # Use standard async workflow (trigger/poll/fetch)
+        import inspect
+        frame = inspect.currentframe()
+        sdk_function = None
+        if frame and frame.f_back:
+            sdk_function = frame.f_back.f_code.co_name
+        
         result = await self.workflow_executor.execute(
             payload=payload,
             dataset_id=dataset_id,
@@ -292,6 +306,7 @@ class AmazonScraper(BaseWebScraper):
             poll_timeout=timeout,
             include_errors=True,
             normalize_func=self.normalize_result,
+            sdk_function=sdk_function,
         )
         
         # Return single or list based on input

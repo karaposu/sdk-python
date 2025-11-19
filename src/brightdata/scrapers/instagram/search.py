@@ -113,6 +113,7 @@ class InstagramSearchScraper:
             end_date=end_date,
             post_type=post_type,
             timeout=timeout,
+            sdk_function="posts",
         )
     
     def posts(
@@ -182,6 +183,7 @@ class InstagramSearchScraper:
             start_date=start_date,
             end_date=end_date,
             timeout=timeout,
+            sdk_function="reels",
         )
     
     def reels(
@@ -249,6 +251,12 @@ class InstagramSearchScraper:
             
             payload.append(item)
         
+        if sdk_function is None:
+            import inspect
+            frame = inspect.currentframe()
+            if frame and frame.f_back:
+                sdk_function = frame.f_back.f_code.co_name
+        
         result = await self.workflow_executor.execute(
             payload=payload,
             dataset_id=dataset_id,
@@ -256,6 +264,7 @@ class InstagramSearchScraper:
             poll_timeout=timeout,
             include_errors=True,
             normalize_func=None,
+            sdk_function=sdk_function,
         )
         
         if is_single and isinstance(result.data, list) and len(result.data) == 1:

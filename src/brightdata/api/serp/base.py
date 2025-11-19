@@ -137,6 +137,11 @@ class BaseSERPService:
             "method": "GET",
         }
         
+        import inspect
+        frame = inspect.currentframe()
+        if frame and frame.f_back:
+            payload["sdk_function"] = frame.f_back.f_code.co_name
+        
         async def _make_request():
             async with self.engine.post_to_url(
                 f"{self.engine.BASE_URL}{self.ENDPOINT}",

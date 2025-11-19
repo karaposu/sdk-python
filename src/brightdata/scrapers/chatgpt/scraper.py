@@ -91,12 +91,19 @@ class ChatGPTScraper(BaseWebScraper):
         
         # Execute workflow
         timeout = poll_timeout or self.MIN_POLL_TIMEOUT
+        import inspect
+        frame = inspect.currentframe()
+        sdk_function = None
+        if frame and frame.f_back:
+            sdk_function = frame.f_back.f_code.co_name
+        
         result = await self.workflow_executor.execute(
             payload=payload,
             dataset_id=self.DATASET_ID,
             poll_interval=poll_interval,
             poll_timeout=timeout,
             include_errors=True,
+            sdk_function=sdk_function,
             normalize_func=self.normalize_result,
         )
         
@@ -169,12 +176,19 @@ class ChatGPTScraper(BaseWebScraper):
         
         # Execute workflow
         timeout = poll_timeout or self.MIN_POLL_TIMEOUT
+        import inspect
+        frame = inspect.currentframe()
+        sdk_function = None
+        if frame and frame.f_back:
+            sdk_function = frame.f_back.f_code.co_name
+        
         result = await self.workflow_executor.execute(
             payload=payload,
             dataset_id=self.DATASET_ID,
             poll_interval=poll_interval,
             poll_timeout=timeout,
             include_errors=True,
+            sdk_function=sdk_function,
             normalize_func=self.normalize_result,
         )
         

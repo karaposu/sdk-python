@@ -130,6 +130,13 @@ class BaseWebScraper(ABC):
         
         payload = self._build_scrape_payload(url_list, **kwargs)
         timeout = poll_timeout or self.MIN_POLL_TIMEOUT
+        
+        import inspect
+        frame = inspect.currentframe()
+        sdk_function = None
+        if frame and frame.f_back:
+            sdk_function = frame.f_back.f_code.co_name
+        
         result = await self.workflow_executor.execute(
             payload=payload,
             dataset_id=self.DATASET_ID,
@@ -137,6 +144,7 @@ class BaseWebScraper(ABC):
             poll_timeout=timeout,
             include_errors=include_errors,
             normalize_func=self.normalize_result,
+            sdk_function=sdk_function,
         )
         
         if is_single and isinstance(result.data, list) and len(result.data) == 1:

@@ -202,7 +202,7 @@ class TestLinkedInDualNamespaces:
         import inspect
         scraper_sig = inspect.signature(scraper.posts)
         assert 'url' in scraper_sig.parameters
-        assert 'sync' in scraper_sig.parameters
+        assert 'sync' not in scraper_sig.parameters  # sync parameter was removed
         
         # Search uses platform-specific parameters
         search_sig = inspect.signature(search.posts)

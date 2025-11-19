@@ -117,6 +117,11 @@ class WebUnlockerService(BaseAPI):
         if country:
             payload["country"] = country.upper()
         
+        import inspect
+        frame = inspect.currentframe()
+        if frame and frame.f_back:
+            payload["sdk_function"] = frame.f_back.f_code.co_name
+        
         try:
             # Make the request and read response body immediately
             async with self.engine.post_to_url(

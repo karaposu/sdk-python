@@ -49,6 +49,7 @@ class WorkflowExecutor:
         poll_timeout: int = 600,
         include_errors: bool = True,
         normalize_func: Optional[Callable[[Any], Any]] = None,
+        sdk_function: Optional[str] = None,
     ) -> ScrapeResult:
         """
         Execute complete trigger/poll/fetch workflow.
@@ -60,6 +61,7 @@ class WorkflowExecutor:
             poll_timeout: Maximum seconds to wait
             include_errors: Include error records
             normalize_func: Optional function to normalize result data
+            sdk_function: SDK function name for monitoring
         
         Returns:
             ScrapeResult with data or error
@@ -71,6 +73,7 @@ class WorkflowExecutor:
                 payload=payload,
                 dataset_id=dataset_id,
                 include_errors=include_errors,
+                sdk_function=sdk_function,
             )
         except APIError as e:
             return ScrapeResult(

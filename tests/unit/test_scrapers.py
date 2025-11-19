@@ -452,7 +452,7 @@ class TestPhilosophicalPrinciples:
         # Amazon products() is now URL-based scraping (not search)
         products_sig = inspect.signature(amazon.products)
         assert 'url' in products_sig.parameters
-        assert 'sync' in products_sig.parameters
+        assert 'sync' not in products_sig.parameters  # sync parameter was removed
         
         # For search methods, check LinkedInSearchScraper
         from brightdata.scrapers.linkedin import LinkedInSearchScraper

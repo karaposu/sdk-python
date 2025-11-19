@@ -380,12 +380,19 @@ class LinkedInSearchScraper:
             ScrapeResult with search results
         """
         # Use workflow executor for trigger/poll/fetch
+        import inspect
+        frame = inspect.currentframe()
+        sdk_function = None
+        if frame and frame.f_back:
+            sdk_function = frame.f_back.f_code.co_name
+        
         result = await self.workflow_executor.execute(
             payload=payload,
             dataset_id=dataset_id,
             poll_interval=10,
             poll_timeout=timeout,
             include_errors=True,
+            sdk_function=sdk_function,
         )
         
         return result

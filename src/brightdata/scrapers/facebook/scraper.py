@@ -114,6 +114,7 @@ class FacebookScraper(BaseWebScraper):
             start_date=start_date,
             end_date=end_date,
             timeout=timeout,
+            sdk_function="posts_by_profile",
         )
     
     def posts_by_profile(
@@ -180,6 +181,7 @@ class FacebookScraper(BaseWebScraper):
             start_date=start_date,
             end_date=end_date,
             timeout=timeout,
+            sdk_function="posts_by_group",
         )
     
     def posts_by_group(
@@ -233,6 +235,7 @@ class FacebookScraper(BaseWebScraper):
             url=url,
             dataset_id=self.DATASET_ID_POSTS_URL,
             timeout=timeout,
+            sdk_function="posts_by_url",
         )
     
     def posts_by_url(
@@ -295,6 +298,7 @@ class FacebookScraper(BaseWebScraper):
             start_date=start_date,
             end_date=end_date,
             timeout=timeout,
+            sdk_function="comments",
         )
     
     def comments(
@@ -361,6 +365,7 @@ class FacebookScraper(BaseWebScraper):
             start_date=start_date,
             end_date=end_date,
             timeout=timeout,
+            sdk_function="reels",
         )
     
     def reels(
@@ -386,6 +391,7 @@ class FacebookScraper(BaseWebScraper):
         url: Union[str, List[str]],
         dataset_id: str,
         timeout: int,
+        sdk_function: Optional[str] = None,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """
         Scrape URLs using standard async workflow (trigger/poll/fetch).
@@ -394,10 +400,17 @@ class FacebookScraper(BaseWebScraper):
             url: URL(s) to scrape
             dataset_id: Facebook dataset ID
             timeout: Maximum wait time in seconds (for polling)
+            sdk_function: SDK function name for monitoring (auto-detected if not provided)
         
         Returns:
             ScrapeResult(s)
         """
+        if sdk_function is None:
+            import inspect
+            frame = inspect.currentframe()
+            if frame and frame.f_back:
+                sdk_function = frame.f_back.f_code.co_name
+        
         is_single = isinstance(url, str)
         url_list = [url] if is_single else url
         
@@ -410,6 +423,7 @@ class FacebookScraper(BaseWebScraper):
             poll_timeout=timeout,
             include_errors=True,
             normalize_func=self.normalize_result,
+            sdk_function=sdk_function,
         )
         
         if is_single and isinstance(result.data, list) and len(result.data) == 1:
@@ -429,6 +443,7 @@ class FacebookScraper(BaseWebScraper):
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
         timeout: int = 240,
+        sdk_function: Optional[str] = None,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """
         Scrape URLs with additional parameters using standard async workflow.
@@ -476,6 +491,7 @@ class FacebookScraper(BaseWebScraper):
             poll_timeout=timeout,
             include_errors=True,
             normalize_func=self.normalize_result,
+            sdk_function="posts_by_profile",
         )
         
         if is_single and isinstance(result.data, list) and len(result.data) == 1:
