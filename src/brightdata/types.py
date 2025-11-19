@@ -92,6 +92,47 @@ class ChatGPTPromptPayload(TypedDict, total=False):
     additional_prompt: NotRequired[str]
 
 
+class FacebookPostsProfilePayload(TypedDict, total=False):
+    """Facebook posts by profile URL payload."""
+    url: str  # Required
+    num_of_posts: NotRequired[int]
+    posts_to_not_include: NotRequired[List[str]]
+    start_date: NotRequired[str]  # MM-DD-YYYY
+    end_date: NotRequired[str]  # MM-DD-YYYY
+
+
+class FacebookPostsGroupPayload(TypedDict, total=False):
+    """Facebook posts by group URL payload."""
+    url: str  # Required
+    num_of_posts: NotRequired[int]
+    posts_to_not_include: NotRequired[List[str]]
+    start_date: NotRequired[str]  # MM-DD-YYYY
+    end_date: NotRequired[str]  # MM-DD-YYYY
+
+
+class FacebookPostPayload(TypedDict, total=False):
+    """Facebook post by URL payload."""
+    url: str  # Required
+
+
+class FacebookCommentsPayload(TypedDict, total=False):
+    """Facebook comments by post URL payload."""
+    url: str  # Required
+    num_of_comments: NotRequired[int]
+    comments_to_not_include: NotRequired[List[str]]
+    start_date: NotRequired[str]  # MM-DD-YYYY
+    end_date: NotRequired[str]  # MM-DD-YYYY
+
+
+class FacebookReelsPayload(TypedDict, total=False):
+    """Facebook reels by profile URL payload."""
+    url: str  # Required
+    num_of_posts: NotRequired[int]
+    posts_to_not_include: NotRequired[List[str]]
+    start_date: NotRequired[str]
+    end_date: NotRequired[str]
+
+
 class TriggerResponse(TypedDict):
     """Response from /datasets/v3/trigger."""
     snapshot_id: str
@@ -188,6 +229,11 @@ __all__ = [
     "LinkedInJobSearchPayload",
     "LinkedInPostSearchPayload",
     "ChatGPTPromptPayload",
+    "FacebookPostsProfilePayload",
+    "FacebookPostsGroupPayload",
+    "FacebookPostPayload",
+    "FacebookCommentsPayload",
+    "FacebookReelsPayload",
     # Responses
     "TriggerResponse",
     "ProgressResponse",

@@ -26,6 +26,7 @@ class ScrapeService:
         self._amazon = None
         self._linkedin = None
         self._chatgpt = None
+        self._facebook = None
         self._generic = None
     
     @property
@@ -96,6 +97,42 @@ class ScrapeService:
             from ..scrapers.chatgpt import ChatGPTScraper
             self._chatgpt = ChatGPTScraper(bearer_token=self._client.token)
         return self._chatgpt
+    
+    @property
+    def facebook(self):
+        """
+        Access Facebook scraper.
+        
+        Returns:
+            FacebookScraper instance for Facebook data extraction
+        
+        Example:
+            >>> # Posts from profile
+            >>> result = client.scrape.facebook.posts_by_profile(
+            ...     url="https://facebook.com/profile",
+            ...     num_of_posts=10
+            ... )
+            >>> 
+            >>> # Posts from group
+            >>> result = client.scrape.facebook.posts_by_group(
+            ...     url="https://facebook.com/groups/example"
+            ... )
+            >>> 
+            >>> # Comments from post
+            >>> result = client.scrape.facebook.comments(
+            ...     url="https://facebook.com/post/123456",
+            ...     num_of_comments=100
+            ... )
+            >>> 
+            >>> # Reels from profile
+            >>> result = client.scrape.facebook.reels(
+            ...     url="https://facebook.com/profile"
+            ... )
+        """
+        if self._facebook is None:
+            from ..scrapers.facebook import FacebookScraper
+            self._facebook = FacebookScraper(bearer_token=self._client.token)
+        return self._facebook
     
     @property
     def generic(self):
