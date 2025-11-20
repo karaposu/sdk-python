@@ -170,8 +170,9 @@ class TestAmazonScraper:
         scraper = AmazonScraper(bearer_token="test_token_123456789")
         
         assert scraper.PLATFORM_NAME == "amazon"
-        assert scraper.DATASET_ID == "gd_l7q7dkf244hwxbl93"
+        assert scraper.DATASET_ID == "gd_l7q7dkf244hwjntr0"
         assert scraper.MIN_POLL_TIMEOUT == 240
+        assert scraper.COST_PER_RECORD == 0.001  # Uses DEFAULT_COST_PER_RECORD
     
     def test_amazon_scraper_has_products_method(self):
         """Test AmazonScraper has products search method."""

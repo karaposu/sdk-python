@@ -16,9 +16,9 @@ class TestClientInitialization:
         
         assert client.token == "test_token_123456789"
         assert client.timeout == 30  # Default timeout
-        assert client.web_unlocker_zone == "sdk_unlocker"
-        assert client.serp_zone == "sdk_serp"
-        assert client.browser_zone == "sdk_browser"
+        assert client.web_unlocker_zone == "web_unlocker1"
+        assert client.serp_zone == "serp_api1"
+        assert client.browser_zone == "browser_api1"
     
     def test_client_with_custom_config(self):
         """Test client with custom configuration."""

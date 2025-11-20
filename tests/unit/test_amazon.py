@@ -107,9 +107,9 @@ class TestAmazonDatasetIDs:
         scraper = AmazonScraper(bearer_token="test_token_123456789")
         
         # Verify known IDs
-        assert scraper.DATASET_ID == "gd_l7q7dkf244hwxbl93"  # Products
-        assert scraper.DATASET_ID_REVIEWS == "gd_l1vq6tkpl34p7mq7c"  # Reviews
-        assert scraper.DATASET_ID_SELLERS == "gd_lwjkkolem8c4o7j3s"  # Sellers
+        assert scraper.DATASET_ID == "gd_l7q7dkf244hwjntr0"  # Products
+        assert scraper.DATASET_ID_REVIEWS == "gd_le8e811kzy4ggddlq"  # Reviews
+        assert scraper.DATASET_ID_SELLERS == "gd_lhotzucw1etoe5iw1k"  # Sellers
 
 
 class TestAmazonSyncVsAsyncMode:
