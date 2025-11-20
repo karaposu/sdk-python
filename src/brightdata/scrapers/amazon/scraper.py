@@ -43,9 +43,9 @@ class AmazonScraper(BaseWebScraper):
     """
     
     # Amazon dataset IDs
-    DATASET_ID = "gd_l7q7dkf244hwxbl93"  # Amazon Products
-    DATASET_ID_REVIEWS = "gd_l1vq6tkpl34p7mq7c"  # Amazon Reviews
-    DATASET_ID_SELLERS = "gd_lwjkkolem8c4o7j3s"  # Amazon Sellers
+    DATASET_ID = "gd_l7q7dkf244hwjntr0"  # Amazon Products
+    DATASET_ID_REVIEWS = "gd_le8e811kzy4ggddlq"  # Amazon Reviews
+    DATASET_ID_SELLERS = "gd_lhotzucw1etoe5iw1k"  # Amazon Sellers
     
     PLATFORM_NAME = "amazon"
     MIN_POLL_TIMEOUT = DEFAULT_TIMEOUT_MEDIUM  # Amazon scrapes can take longer
@@ -150,21 +150,10 @@ class AmazonScraper(BaseWebScraper):
         else:
             validate_url_list(url)
         
-        # Build custom payload with review filters
+        # Build payload - Amazon Reviews dataset only accepts URL
+        # Note: pastDays, keyWord, numOfReviews are not supported by the API
         url_list = [url] if isinstance(url, str) else url
-        payload = []
-        
-        for u in url_list:
-            item: Dict[str, Any] = {"url": u}
-            
-            if pastDays is not None:
-                item["pastDays"] = pastDays
-            if keyWord is not None:
-                item["keyWord"] = keyWord
-            if numOfReviews is not None:
-                item["numOfReviews"] = numOfReviews
-            
-            payload.append(item)
+        payload = [{"url": u} for u in url_list]
         
         # Use reviews dataset with standard async workflow
         is_single = isinstance(url, str)

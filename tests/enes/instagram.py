@@ -24,40 +24,42 @@ async def test_instagram_profiles():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n👤 Testing Instagram profile scraping...")
-        print("📍 Profile URL: https://www.instagram.com/instagram")
+        scraper = client.scrape.instagram
+        async with scraper.engine:
+            print("\n👤 Testing Instagram profile scraping...")
+            print("📍 Profile URL: https://www.instagram.com/instagram")
 
-        try:
-            result = await client.scrape.instagram.profiles_async(
-                url="https://www.instagram.com/instagram",
-                timeout=180
-            )
+            try:
+                result = await scraper.profiles_async(
+                    url="https://www.instagram.com/instagram",
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
 
-            if result.data:
-                print(f"\n✅ Got profile data:")
-                if isinstance(result.data, dict):
-                    print(f"   - Username: {result.data.get('username', 'N/A')}")
-                    print(f"   - Full Name: {result.data.get('full_name', 'N/A')}")
-                    print(f"   - Followers: {result.data.get('followers', 'N/A')}")
-                    print(f"   - Following: {result.data.get('following', 'N/A')}")
-                    print(f"   - Posts: {result.data.get('posts_count', 'N/A')}")
-                    print(f"   - Bio: {result.data.get('bio', 'N/A')[:60]}...")
+                if result.data:
+                    print(f"\n✅ Got profile data:")
+                    if isinstance(result.data, dict):
+                        print(f"   - Username: {result.data.get('username', 'N/A')}")
+                        print(f"   - Full Name: {result.data.get('full_name', 'N/A')}")
+                        print(f"   - Followers: {result.data.get('followers', 'N/A')}")
+                        print(f"   - Following: {result.data.get('following', 'N/A')}")
+                        print(f"   - Posts: {result.data.get('posts_count', 'N/A')}")
+                        print(f"   - Bio: {result.data.get('bio', 'N/A')[:60]}...")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No profile data returned")
+                    print(f"\n❌ No profile data returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 async def test_instagram_posts():
@@ -70,38 +72,40 @@ async def test_instagram_posts():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n📸 Testing Instagram post scraping...")
-        print("📍 Post URL: https://www.instagram.com/p/C9z9z9z9z9z")
+        scraper = client.scrape.instagram
+        async with scraper.engine:
+            print("\n📸 Testing Instagram post scraping...")
+            print("📍 Post URL: https://www.instagram.com/p/C9z9z9z9z9z")
 
-        try:
-            result = await client.scrape.instagram.posts_async(
-                url="https://www.instagram.com/p/C9z9z9z9z9z",
-                timeout=180
-            )
+            try:
+                result = await scraper.posts_async(
+                    url="https://www.instagram.com/p/C9z9z9z9z9z",
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
 
-            if result.data:
-                print(f"\n✅ Got post data:")
-                if isinstance(result.data, dict):
-                    print(f"   - Caption: {result.data.get('caption', 'N/A')[:60]}...")
-                    print(f"   - Likes: {result.data.get('likes', 'N/A')}")
-                    print(f"   - Comments: {result.data.get('comments_count', 'N/A')}")
-                    print(f"   - Posted: {result.data.get('timestamp', 'N/A')}")
+                if result.data:
+                    print(f"\n✅ Got post data:")
+                    if isinstance(result.data, dict):
+                        print(f"   - Caption: {result.data.get('caption', 'N/A')[:60]}...")
+                        print(f"   - Likes: {result.data.get('likes', 'N/A')}")
+                        print(f"   - Comments: {result.data.get('comments_count', 'N/A')}")
+                        print(f"   - Posted: {result.data.get('timestamp', 'N/A')}")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No post data returned")
+                    print(f"\n❌ No post data returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 async def test_instagram_reels():
@@ -114,38 +118,40 @@ async def test_instagram_reels():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n🎥 Testing Instagram reel scraping...")
-        print("📍 Reel URL: https://www.instagram.com/reel/ABC123")
+        scraper = client.scrape.instagram
+        async with scraper.engine:
+            print("\n🎥 Testing Instagram reel scraping...")
+            print("📍 Reel URL: https://www.instagram.com/reel/ABC123")
 
-        try:
-            result = await client.scrape.instagram.reels_async(
-                url="https://www.instagram.com/reel/ABC123",
-                timeout=180
-            )
+            try:
+                result = await scraper.reels_async(
+                    url="https://www.instagram.com/reel/ABC123",
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
 
-            if result.data:
-                print(f"\n✅ Got reel data:")
-                if isinstance(result.data, dict):
-                    print(f"   - Caption: {result.data.get('caption', 'N/A')[:60]}...")
-                    print(f"   - Likes: {result.data.get('likes', 'N/A')}")
-                    print(f"   - Views: {result.data.get('views', 'N/A')}")
-                    print(f"   - Comments: {result.data.get('comments_count', 'N/A')}")
+                if result.data:
+                    print(f"\n✅ Got reel data:")
+                    if isinstance(result.data, dict):
+                        print(f"   - Caption: {result.data.get('caption', 'N/A')[:60]}...")
+                        print(f"   - Likes: {result.data.get('likes', 'N/A')}")
+                        print(f"   - Views: {result.data.get('views', 'N/A')}")
+                        print(f"   - Comments: {result.data.get('comments_count', 'N/A')}")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No reel data returned")
+                    print(f"\n❌ No reel data returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 async def test_instagram_search_posts():
@@ -158,40 +164,42 @@ async def test_instagram_search_posts():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n🔍 Testing Instagram post search...")
-        print("📋 Search: profile url, num_of_posts=10")
+        scraper = client.search.instagram
+        async with scraper.engine:
+            print("\n🔍 Testing Instagram post search...")
+            print("📋 Search: profile url, num_of_posts=10")
 
-        try:
-            result = await client.search.instagram.posts_async(
-                url="https://www.instagram.com/instagram",
-                num_of_posts=10,
-                timeout=180
-            )
+            try:
+                result = await scraper.posts_async(
+                    url="https://www.instagram.com/instagram",
+                    num_of_posts=10,
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
 
-            if result.data:
-                if isinstance(result.data, list):
-                    print(f"\n✅ Got {len(result.data)} post results:")
-                    for i, post in enumerate(result.data[:3], 1):
-                        print(f"\n   Post {i}:")
-                        print(f"   - Caption: {post.get('caption', 'N/A')[:50]}...")
-                        print(f"   - Likes: {post.get('likes', 'N/A')}")
-                        print(f"   - Comments: {post.get('comments_count', 'N/A')}")
+                if result.data:
+                    if isinstance(result.data, list):
+                        print(f"\n✅ Got {len(result.data)} post results:")
+                        for i, post in enumerate(result.data[:3], 1):
+                            print(f"\n   Post {i}:")
+                            print(f"   - Caption: {post.get('caption', 'N/A')[:50]}...")
+                            print(f"   - Likes: {post.get('likes', 'N/A')}")
+                            print(f"   - Comments: {post.get('comments_count', 'N/A')}")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No search results returned")
+                    print(f"\n❌ No search results returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 if __name__ == "__main__":

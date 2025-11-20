@@ -53,10 +53,10 @@ class LinkedInScraper(BaseWebScraper):
     """
     
     # LinkedIn dataset IDs
-    DATASET_ID = "gd_l1oojb10z2jye29kh"  # People Profiles
-    DATASET_ID_COMPANIES = "gd_lhkq90okie75oj8mo"  # Companies
-    DATASET_ID_JOBS = "gd_lj4v2v5oqpp3qb79j"  # Jobs
-    DATASET_ID_POSTS = "gd_lwae11111pwxp6c4ea"  # Posts
+    DATASET_ID = "gd_l1viktl72bvl7bjuj0"  # People Profiles
+    DATASET_ID_COMPANIES = "gd_l1vikfnt1wgvvqz95w"  # Companies
+    DATASET_ID_JOBS = "gd_lpfll7v5hcqtkxl6l"  # Jobs
+    DATASET_ID_POSTS = "gd_lyy3tktm25m4avu764"  # Posts
     
     PLATFORM_NAME = "linkedin"
     MIN_POLL_TIMEOUT = DEFAULT_TIMEOUT_SHORT

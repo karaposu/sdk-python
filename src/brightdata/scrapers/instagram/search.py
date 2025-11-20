@@ -115,7 +115,6 @@ class InstagramSearchScraper:
             end_date=end_date,
             post_type=post_type,
             timeout=timeout,
-            sdk_function="posts",
         )
     
     def posts(
@@ -216,6 +215,7 @@ class InstagramSearchScraper:
         end_date: Optional[str] = None,
         post_type: Optional[str] = None,
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
+        sdk_function: Optional[str] = None,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """
         Discover content with additional parameters using standard async workflow.

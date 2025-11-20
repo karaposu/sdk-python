@@ -65,9 +65,9 @@ class DatasetAPIClient:
             "dataset_id": dataset_id,
             "include_errors": str(include_errors).lower(),
         }
-        
+
         if sdk_function:
-            payload = [{**item, "sdk_function": sdk_function} for item in payload]
+            params["sdk_function"] = sdk_function
         
         async with self.engine.post_to_url(
             self.TRIGGER_URL,

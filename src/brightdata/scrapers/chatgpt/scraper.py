@@ -81,13 +81,14 @@ class ChatGPTScraper(BaseWebScraper):
         if not prompt or not isinstance(prompt, str):
             raise ValidationError("Prompt must be a non-empty string")
         
-        # Build payload
+        # Build payload - ChatGPT scraper requires url field pointing to ChatGPT
         payload = [{
+            "url": "https://chatgpt.com/",
             "prompt": prompt,
             "country": country.upper(),
             "web_search": web_search,
         }]
-        
+
         if additional_prompt:
             payload[0]["additional_prompt"] = additional_prompt
         
@@ -158,18 +159,19 @@ class ChatGPTScraper(BaseWebScraper):
         if not prompts or not isinstance(prompts, list):
             raise ValidationError("Prompts must be a non-empty list")
         
-        # Build batch payload
+        # Build batch payload - ChatGPT scraper requires url field
         payload = []
         for i, prompt in enumerate(prompts):
             item = {
+                "url": "https://chatgpt.com/",
                 "prompt": prompt,
                 "country": countries[i].upper() if countries and i < len(countries) else "US",
                 "web_search": web_searches[i] if web_searches and i < len(web_searches) else False,
             }
-            
+
             if additional_prompts and i < len(additional_prompts):
                 item["additional_prompt"] = additional_prompts[i]
-            
+
             payload.append(item)
         
         # Execute workflow

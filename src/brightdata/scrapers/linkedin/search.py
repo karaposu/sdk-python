@@ -39,9 +39,10 @@ class LinkedInSearchScraper:
     """
     
     # Dataset IDs for different LinkedIn types
-    DATASET_ID_POSTS = "gd_lwae11111pwxp6c4ea"
-    DATASET_ID_PROFILES = "gd_l1oojb10z2jye29kh"
-    DATASET_ID_JOBS = "gd_lj4v2v5oqpp3qb79j"
+    DATASET_ID_POSTS = "gd_lyy3tktm25m4avu764"
+    DATASET_ID_PROFILES = "gd_l1viktl72bvl7bjuj0"
+    DATASET_ID_JOBS = "gd_lpfll7v5hcqtkxl6l"  # URL-based job scraping
+    DATASET_ID_JOBS_DISCOVERY = "gd_m487ihp32jtc4ujg45"  # Keyword/location discovery
     
     def __init__(self, bearer_token: str, engine: Optional[AsyncEngine] = None):
         """
@@ -288,10 +289,13 @@ class LinkedInSearchScraper:
                 item["locationRadius"] = location_radii[i]
             
             payload.append(item)
-        
+
+        # Use discovery dataset if searching by keyword/location, otherwise URL-based
+        dataset_id = self.DATASET_ID_JOBS_DISCOVERY if (keyword or location) else self.DATASET_ID_JOBS
+
         return await self._execute_search(
             payload=payload,
-            dataset_id=self.DATASET_ID_JOBS,
+            dataset_id=dataset_id,
             timeout=timeout
         )
     

@@ -24,38 +24,40 @@ async def test_linkedin_profiles():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n👤 Testing LinkedIn profile scraping...")
-        print("📍 Profile URL: https://www.linkedin.com/in/williamhgates")
+        scraper = client.scrape.linkedin
+        async with scraper.engine:
+            print("\n👤 Testing LinkedIn profile scraping...")
+            print("📍 Profile URL: https://www.linkedin.com/in/williamhgates")
 
-        try:
-            result = await client.scrape.linkedin.profiles_async(
-                url="https://www.linkedin.com/in/williamhgates",
-                timeout=180
-            )
+            try:
+                result = await scraper.profiles_async(
+                    url="https://www.linkedin.com/in/williamhgates",
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
 
-            if result.data:
-                print(f"\n✅ Got profile data:")
-                if isinstance(result.data, dict):
-                    print(f"   - Name: {result.data.get('name', 'N/A')}")
-                    print(f"   - Headline: {result.data.get('headline', 'N/A')}")
-                    print(f"   - Location: {result.data.get('location', 'N/A')}")
-                    print(f"   - Connections: {result.data.get('connections', 'N/A')}")
+                if result.data:
+                    print(f"\n✅ Got profile data:")
+                    if isinstance(result.data, dict):
+                        print(f"   - Name: {result.data.get('name', 'N/A')}")
+                        print(f"   - Headline: {result.data.get('headline', 'N/A')}")
+                        print(f"   - Location: {result.data.get('location', 'N/A')}")
+                        print(f"   - Connections: {result.data.get('connections', 'N/A')}")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No profile data returned")
+                    print(f"\n❌ No profile data returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 async def test_linkedin_companies():
@@ -68,38 +70,40 @@ async def test_linkedin_companies():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n🏢 Testing LinkedIn company scraping...")
-        print("📍 Company URL: https://www.linkedin.com/company/microsoft")
+        scraper = client.scrape.linkedin
+        async with scraper.engine:
+            print("\n🏢 Testing LinkedIn company scraping...")
+            print("📍 Company URL: https://www.linkedin.com/company/microsoft")
 
-        try:
-            result = await client.scrape.linkedin.companies_async(
-                url="https://www.linkedin.com/company/microsoft",
-                timeout=180
-            )
+            try:
+                result = await scraper.companies_async(
+                    url="https://www.linkedin.com/company/microsoft",
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
 
-            if result.data:
-                print(f"\n✅ Got company data:")
-                if isinstance(result.data, dict):
-                    print(f"   - Name: {result.data.get('name', 'N/A')}")
-                    print(f"   - Industry: {result.data.get('industry', 'N/A')}")
-                    print(f"   - Size: {result.data.get('company_size', 'N/A')}")
-                    print(f"   - Website: {result.data.get('website', 'N/A')}")
+                if result.data:
+                    print(f"\n✅ Got company data:")
+                    if isinstance(result.data, dict):
+                        print(f"   - Name: {result.data.get('name', 'N/A')}")
+                        print(f"   - Industry: {result.data.get('industry', 'N/A')}")
+                        print(f"   - Size: {result.data.get('company_size', 'N/A')}")
+                        print(f"   - Website: {result.data.get('website', 'N/A')}")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No company data returned")
+                    print(f"\n❌ No company data returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 async def test_linkedin_jobs():
@@ -112,38 +116,40 @@ async def test_linkedin_jobs():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n💼 Testing LinkedIn job scraping...")
-        print("📍 Job URL: https://www.linkedin.com/jobs/view/3787241244")
+        scraper = client.scrape.linkedin
+        async with scraper.engine:
+            print("\n💼 Testing LinkedIn job scraping...")
+            print("📍 Job URL: https://www.linkedin.com/jobs/view/3787241244")
 
-        try:
-            result = await client.scrape.linkedin.jobs_async(
-                url="https://www.linkedin.com/jobs/view/3787241244",
-                timeout=180
-            )
+            try:
+                result = await scraper.jobs_async(
+                    url="https://www.linkedin.com/jobs/view/3787241244",
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
 
-            if result.data:
-                print(f"\n✅ Got job data:")
-                if isinstance(result.data, dict):
-                    print(f"   - Title: {result.data.get('title', 'N/A')}")
-                    print(f"   - Company: {result.data.get('company', 'N/A')}")
-                    print(f"   - Location: {result.data.get('location', 'N/A')}")
-                    print(f"   - Posted: {result.data.get('posted_date', 'N/A')}")
+                if result.data:
+                    print(f"\n✅ Got job data:")
+                    if isinstance(result.data, dict):
+                        print(f"   - Title: {result.data.get('title', 'N/A')}")
+                        print(f"   - Company: {result.data.get('company', 'N/A')}")
+                        print(f"   - Location: {result.data.get('location', 'N/A')}")
+                        print(f"   - Posted: {result.data.get('posted_date', 'N/A')}")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No job data returned")
+                    print(f"\n❌ No job data returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 async def test_linkedin_search_jobs():
@@ -156,40 +162,44 @@ async def test_linkedin_search_jobs():
     client = BrightDataClient()
 
     async with client.engine:
-        print("\n🔍 Testing LinkedIn job search...")
-        print("📋 Search: keyword='python developer', location='New York'")
+        scraper = client.search.linkedin
+        async with scraper.engine:
+            print("\n🔍 Testing LinkedIn job search...")
+            print("📋 Search: keyword='python developer', location='New York'")
 
-        try:
-            result = await client.search.linkedin.jobs_async(
-                keyword="python developer",
-                location="New York",
-                timeout=180
-            )
+            try:
+                result = await scraper.jobs_async(
+                    keyword="python developer",
+                    location="New York",
+                    timeout=180
+                )
 
-            print(f"\n✅ API call succeeded")
-            print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
+                print(f"\n✅ API call succeeded")
+                print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
-            print(f"   - result.success: {result.success}")
-            print(f"   - result.data type: {type(result.data)}")
+                print(f"\n📊 Result analysis:")
+                print(f"   - result.success: {result.success}")
+                print(f"   - result.data type: {type(result.data)}")
+                print(f"   - result.status: {result.status if hasattr(result, 'status') else 'N/A'}")
+                print(f"   - result.error: {result.error if hasattr(result, 'error') else 'N/A'}")
 
-            if result.data:
-                if isinstance(result.data, list):
-                    print(f"\n✅ Got {len(result.data)} job results:")
-                    for i, job in enumerate(result.data[:3], 1):
-                        print(f"\n   Job {i}:")
-                        print(f"   - Title: {job.get('title', 'N/A')}")
-                        print(f"   - Company: {job.get('company', 'N/A')}")
-                        print(f"   - Location: {job.get('location', 'N/A')}")
+                if result.data:
+                    if isinstance(result.data, list):
+                        print(f"\n✅ Got {len(result.data)} job results:")
+                        for i, job in enumerate(result.data[:3], 1):
+                            print(f"\n   Job {i}:")
+                            print(f"   - Title: {job.get('title', 'N/A')}")
+                            print(f"   - Company: {job.get('company', 'N/A')}")
+                            print(f"   - Location: {job.get('location', 'N/A')}")
+                    else:
+                        print(f"   Data: {result.data}")
                 else:
-                    print(f"   Data: {result.data}")
-            else:
-                print(f"\n❌ No search results returned")
+                    print(f"\n❌ No search results returned")
 
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
-            import traceback
-            traceback.print_exc()
+            except Exception as e:
+                print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
 
 
 if __name__ == "__main__":
