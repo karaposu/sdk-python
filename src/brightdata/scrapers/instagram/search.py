@@ -15,7 +15,7 @@ from ...models import ScrapeResult
 from ...exceptions import ValidationError, APIError
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
-from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM
+from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, COST_PER_RECORD_INSTAGRAM
 from ..api_client import DatasetAPIClient
 from ..workflow import WorkflowExecutor
 
@@ -57,7 +57,7 @@ class InstagramSearchScraper:
         self.workflow_executor = WorkflowExecutor(
             api_client=self.api_client,
             platform_name="instagram",
-            cost_per_record=0.002,
+            cost_per_record=COST_PER_RECORD_INSTAGRAM,
         )
     
     # ============================================================================

@@ -14,7 +14,7 @@ from ..base import BaseWebScraper
 from ..registry import register
 from ...models import ScrapeResult
 from ...utils.function_detection import get_caller_function_name
-from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_LONG
+from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_LONG, COST_PER_RECORD_CHATGPT
 from ...exceptions import ValidationError
 
 
@@ -42,7 +42,7 @@ class ChatGPTScraper(BaseWebScraper):
     DATASET_ID = "gd_m7aof0k82r803d5bjm"  # ChatGPT dataset
     PLATFORM_NAME = "chatgpt"
     MIN_POLL_TIMEOUT = DEFAULT_TIMEOUT_LONG  # ChatGPT usually responds faster
-    COST_PER_RECORD = 0.005  # ChatGPT interactions cost more
+    COST_PER_RECORD = COST_PER_RECORD_CHATGPT  # ChatGPT interactions cost more
     
     # ============================================================================
     # PROMPT METHODS

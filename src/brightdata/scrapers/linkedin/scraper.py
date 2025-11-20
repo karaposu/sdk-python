@@ -27,7 +27,7 @@ from ..registry import register
 from ...models import ScrapeResult
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
-from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_SHORT
+from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_SHORT, COST_PER_RECORD_LINKEDIN
 from ...exceptions import ValidationError, APIError
 
 
@@ -60,7 +60,7 @@ class LinkedInScraper(BaseWebScraper):
     
     PLATFORM_NAME = "linkedin"
     MIN_POLL_TIMEOUT = DEFAULT_TIMEOUT_SHORT
-    COST_PER_RECORD = 0.002
+    COST_PER_RECORD = COST_PER_RECORD_LINKEDIN
     
     # ============================================================================
     # POSTS EXTRACTION (URL-based)

@@ -1,5 +1,6 @@
 """Base API class for all API implementations."""
 
+import asyncio
 from abc import ABC, abstractmethod
 from typing import Any
 from ..core.engine import AsyncEngine
@@ -38,8 +39,6 @@ class BaseAPI(ABC):
         
         Wraps async method using asyncio.run() for sync compatibility.
         """
-        import asyncio
-        
         try:
             loop = asyncio.get_running_loop()
             raise RuntimeError(

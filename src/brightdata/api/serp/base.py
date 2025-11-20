@@ -11,6 +11,7 @@ from .data_normalizer import BaseDataNormalizer
 from ...core.engine import AsyncEngine
 from ...models import SearchResult
 from ...types import NormalizedSERPData
+from ...constants import HTTP_OK
 from ...exceptions import ValidationError, APIError
 from ...utils.validation import validate_zone_name
 from ...utils.retry import retry_with_backoff
@@ -132,10 +133,14 @@ class BaseSERPService:
             **kwargs
         )
         
+        # Use "json" format when brd_json=1 is in URL (enables Bright Data parsing)
+        # Otherwise use "raw" to get HTML response
+        response_format = "json" if "brd_json=1" in search_url else "raw"
+        
         payload = {
             "zone": zone,
             "url": search_url,
-            "format": "raw",
+            "format": response_format,
             "method": "GET",
         }
         
@@ -151,14 +156,33 @@ class BaseSERPService:
             ) as response:
                 data_fetched_at = datetime.now(timezone.utc)
 
-                if response.status == 200:
-                    # With brd_json=1, response is JSON text (not wrapped in status_code/body)
+                if response.status == HTTP_OK:
+                    # Try to parse response - could be direct JSON or wrapped in status_code/body
                     text = await response.text()
                     try:
                         data = json.loads(text)
                     except json.JSONDecodeError:
                         # Fallback to regular JSON response
-                        data = await response.json()
+                        try:
+                            data = await response.json()
+                        except Exception:
+                            # If all else fails, treat as raw text/HTML
+                            data = {"raw_html": text}
+                    
+                    # Handle wrapped response format (status_code/headers/body)
+                    if isinstance(data, dict) and "body" in data and "status_code" in data:
+                        # This is a wrapped HTTP response - extract body
+                        body = data.get("body", "")
+                        if isinstance(body, str) and body.strip().startswith("<"):
+                            # Body is HTML - pass to normalizer which will handle it
+                            data = {"body": body, "status_code": data.get("status_code")}
+                        else:
+                            # Body might be JSON string - try to parse it
+                            try:
+                                data = json.loads(body) if isinstance(body, str) else body
+                            except (json.JSONDecodeError, TypeError):
+                                data = {"body": body, "status_code": data.get("status_code")}
+                    
                     normalized_data = self.data_normalizer.normalize(data)
                     
                     return SearchResult(

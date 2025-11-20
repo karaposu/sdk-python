@@ -11,6 +11,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timezone
 
 from ..core.engine import AsyncEngine
+from ..constants import HTTP_OK
 from ..exceptions import APIError
 
 
@@ -74,7 +75,7 @@ class DatasetAPIClient:
             json_data=payload,
             params=params
         ) as response:
-            if response.status == 200:
+            if response.status == HTTP_OK:
                 data = await response.json()
                 return data.get("snapshot_id")
             else:
@@ -97,7 +98,7 @@ class DatasetAPIClient:
         url = f"{self.STATUS_URL}/{snapshot_id}"
         
         async with self.engine.get_from_url(url) as response:
-            if response.status == 200:
+            if response.status == HTTP_OK:
                 data = await response.json()
                 return data.get("status", "unknown")
             else:
@@ -121,7 +122,7 @@ class DatasetAPIClient:
         params = {"format": format}
         
         async with self.engine.get_from_url(url, params=params) as response:
-            if response.status == 200:
+            if response.status == HTTP_OK:
                 if format == "json":
                     return await response.json()
                 else:

@@ -10,6 +10,8 @@ Philosophy:
 """
 
 import asyncio
+import os
+import concurrent.futures
 from abc import ABC
 from typing import List, Dict, Any, Optional, Union
 
@@ -69,8 +71,6 @@ class BaseWebScraper(ABC):
         Raises:
             ValidationError: If token not provided and not in environment
         """
-        import os
-        
         self.bearer_token = bearer_token or os.getenv("BRIGHTDATA_API_TOKEN")
         if not self.bearer_token:
             raise ValidationError(
@@ -239,7 +239,6 @@ def _run_blocking(coro):
     """
     try:
         loop = asyncio.get_running_loop()
-        import concurrent.futures
         with concurrent.futures.ThreadPoolExecutor() as pool:
             future = pool.submit(asyncio.run, coro)
             return future.result()

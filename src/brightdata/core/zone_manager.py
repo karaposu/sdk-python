@@ -5,8 +5,18 @@ Manages zone creation, validation, and listing through the Bright Data API.
 
 import asyncio
 import logging
+import aiohttp
 from typing import List, Dict, Any, Optional, Tuple
 from ..exceptions.errors import ZoneError, APIError, AuthenticationError
+from ..constants import (
+    HTTP_OK,
+    HTTP_CREATED,
+    HTTP_BAD_REQUEST,
+    HTTP_UNAUTHORIZED,
+    HTTP_FORBIDDEN,
+    HTTP_CONFLICT,
+    HTTP_INTERNAL_SERVER_ERROR,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -22,12 +32,11 @@ class ZoneManager:
     def __init__(self, engine):
         """
         Initialize zone manager.
-
+        
         Args:
             engine: AsyncEngine instance for making API calls
         """
-        from ..core.engine import AsyncEngine
-        self.engine: AsyncEngine = engine
+        self.engine = engine
 
     async def ensure_required_zones(
         self,
@@ -107,17 +116,17 @@ class ZoneManager:
         for attempt in range(max_retries):
             try:
                 async with self.engine.get('/zone/get_active_zones') as response:
-                    if response.status == 200:
+                    if response.status == HTTP_OK:
                         zones = await response.json()
                         return zones or []
-                    elif response.status in (401, 403):
+                    elif response.status in (HTTP_UNAUTHORIZED, HTTP_FORBIDDEN):
                         error_text = await response.text()
                         raise AuthenticationError(
                             f"Authentication failed ({response.status}): {error_text}"
                         )
                     else:
                         error_text = await response.text()
-                        if attempt < max_retries - 1 and response.status >= 500:
+                        if attempt < max_retries - 1 and response.status >= HTTP_INTERNAL_SERVER_ERROR:
                             logger.warning(
                                 f"Zone list request failed (attempt {attempt + 1}/{max_retries}): "
                                 f"{response.status} - {error_text}"
@@ -129,7 +138,7 @@ class ZoneManager:
                         )
             except (AuthenticationError, ZoneError):
                 raise
-            except Exception as e:
+            except (aiohttp.ClientError, asyncio.TimeoutError, OSError) as e:
                 if attempt < max_retries - 1:
                     logger.warning(
                         f"Error getting zones (attempt {attempt + 1}/{max_retries}): {e}"
@@ -177,10 +186,10 @@ class ZoneManager:
         for attempt in range(max_retries):
             try:
                 async with self.engine.post('/zone', json_data=payload) as response:
-                    if response.status in [200, 201]:
+                    if response.status in (HTTP_OK, HTTP_CREATED):
                         logger.info(f"Zone creation successful: {zone_name}")
                         return
-                    elif response.status == 409:
+                    elif response.status == HTTP_CONFLICT:
                         # Zone already exists - this is fine
                         logger.info(f"Zone {zone_name} already exists - this is expected")
                         return
@@ -193,19 +202,19 @@ class ZoneManager:
                             return
 
                         # Handle authentication errors
-                        if response.status in (401, 403):
+                        if response.status in (HTTP_UNAUTHORIZED, HTTP_FORBIDDEN):
                             raise AuthenticationError(
                                 f"Authentication failed ({response.status}) creating zone '{zone_name}': {error_text}"
                             )
 
                         # Handle bad request
-                        if response.status == 400:
+                        if response.status == HTTP_BAD_REQUEST:
                             raise ZoneError(
-                                f"Bad request (400) creating zone '{zone_name}': {error_text}"
+                                f"Bad request ({HTTP_BAD_REQUEST}) creating zone '{zone_name}': {error_text}"
                             )
 
                         # Retry on server errors
-                        if attempt < max_retries - 1 and response.status >= 500:
+                        if attempt < max_retries - 1 and response.status >= HTTP_INTERNAL_SERVER_ERROR:
                             logger.warning(
                                 f"Zone creation failed (attempt {attempt + 1}/{max_retries}): "
                                 f"{response.status} - {error_text}"
@@ -218,7 +227,7 @@ class ZoneManager:
                         )
             except (AuthenticationError, ZoneError):
                 raise
-            except Exception as e:
+            except (aiohttp.ClientError, asyncio.TimeoutError, OSError) as e:
                 if attempt < max_retries - 1:
                     logger.warning(
                         f"Error creating zone (attempt {attempt + 1}/{max_retries}): {e}"

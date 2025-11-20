@@ -10,6 +10,11 @@ import platform
 import ssl
 from typing import Optional
 
+try:
+    import aiohttp
+except ImportError:
+    aiohttp = None
+
 
 def is_macos() -> bool:
     """Check if running on macOS."""
@@ -26,8 +31,6 @@ def is_ssl_certificate_error(error: Exception) -> bool:
     Returns:
         True if this is an SSL certificate error
     """
-    import aiohttp
-    
     # Check for SSL errors directly
     if isinstance(error, ssl.SSLError):
         return True
@@ -35,8 +38,9 @@ def is_ssl_certificate_error(error: Exception) -> bool:
     # Check for aiohttp SSL-related errors
     # aiohttp.ClientConnectorError wraps SSL errors
     # aiohttp.ClientSSLError is the specific SSL error class
-    if isinstance(error, (aiohttp.ClientConnectorError, aiohttp.ClientSSLError)):
-        return True
+    if aiohttp is not None:
+        if isinstance(error, (aiohttp.ClientConnectorError, aiohttp.ClientSSLError)):
+            return True
     
     # Check error message for SSL-related keywords
     try:

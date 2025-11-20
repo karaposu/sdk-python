@@ -18,7 +18,7 @@ from ..registry import register
 from ...models import ScrapeResult
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
-from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM
+from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, DEFAULT_COST_PER_RECORD
 from ...exceptions import ValidationError, APIError
 
 
@@ -49,7 +49,7 @@ class AmazonScraper(BaseWebScraper):
     
     PLATFORM_NAME = "amazon"
     MIN_POLL_TIMEOUT = DEFAULT_TIMEOUT_MEDIUM  # Amazon scrapes can take longer
-    COST_PER_RECORD = 0.001
+    COST_PER_RECORD = DEFAULT_COST_PER_RECORD
     
     # ============================================================================
     # PRODUCTS EXTRACTION (URL-based)

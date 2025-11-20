@@ -27,7 +27,7 @@ from ..registry import register
 from ...models import ScrapeResult
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
-from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM
+from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, COST_PER_RECORD_INSTAGRAM
 from ...exceptions import ValidationError
 
 
@@ -61,7 +61,7 @@ class InstagramScraper(BaseWebScraper):
     
     PLATFORM_NAME = "instagram"
     MIN_POLL_TIMEOUT = DEFAULT_TIMEOUT_MEDIUM
-    COST_PER_RECORD = 0.002
+    COST_PER_RECORD = COST_PER_RECORD_INSTAGRAM
     
     # ============================================================================
     # PROFILES API - By URL

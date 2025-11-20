@@ -10,6 +10,7 @@ Philosophy:
 
 import os
 import asyncio
+import warnings
 from typing import Optional, Dict, Any, Union, List
 from datetime import datetime, timezone
 
@@ -27,6 +28,11 @@ from .api.search_service import SearchService
 from .api.crawler_service import CrawlerService
 from .models import ScrapeResult, SearchResult
 from .types import AccountInfo, URLParam, OptionalURLParam
+from .constants import (
+    HTTP_OK,
+    HTTP_UNAUTHORIZED,
+    HTTP_FORBIDDEN,
+)
 from .exceptions import (
     ValidationError,
     AuthenticationError,
@@ -62,9 +68,9 @@ class BrightDataClient:
     
     # Default configuration
     DEFAULT_TIMEOUT = 30
-    DEFAULT_WEB_UNLOCKER_ZONE = "sdk_unlocker"
-    DEFAULT_SERP_ZONE = "sdk_serp"
-    DEFAULT_BROWSER_ZONE = "sdk_browser"
+    DEFAULT_WEB_UNLOCKER_ZONE = "web_unlocker1"
+    DEFAULT_SERP_ZONE = "serp_api1"
+    DEFAULT_BROWSER_ZONE = "browser_api1"
     
     # Environment variable name for API token
     TOKEN_ENV_VAR = "BRIGHTDATA_API_TOKEN"
@@ -93,9 +99,9 @@ class BrightDataClient:
                   (supports .env files via python-dotenv)
             customer_id: Customer ID (optional, can also be set via BRIGHTDATA_CUSTOMER_ID)
             timeout: Default timeout in seconds for all requests (default: 30)
-            web_unlocker_zone: Zone name for web unlocker (default: "sdk_unlocker")
-            serp_zone: Zone name for SERP API (default: "sdk_serp")
-            browser_zone: Zone name for browser API (default: "sdk_browser")
+            web_unlocker_zone: Zone name for web unlocker (default: "web_unlocker1")
+            serp_zone: Zone name for SERP API (default: "serp_api1")
+            browser_zone: Zone name for browser API (default: "browser_api1")
             auto_create_zones: Automatically create zones if they don't exist (default: False)
             validate_token: Validate token by testing connection on init (default: False)
             rate_limit: Maximum requests per rate_period (default: 10). Set to None to disable.
@@ -324,14 +330,14 @@ class BrightDataClient:
                 async with self.engine.get_from_url(
                     f"{self.engine.BASE_URL}/zone/get_active_zones"
                 ) as response:
-                    if response.status == 200:
+                    if response.status == HTTP_OK:
                         self._is_connected = True
                         return True
                     else:
                         self._is_connected = False
                         return False
         
-        except Exception:
+        except (asyncio.TimeoutError, OSError, Exception):
             self._is_connected = False
             return False
     
@@ -366,13 +372,26 @@ class BrightDataClient:
                 async with self.engine.get_from_url(
                     f"{self.engine.BASE_URL}/zone/get_active_zones"
                 ) as zones_response:
-                    if zones_response.status == 200:
+                    if zones_response.status == HTTP_OK:
                         zones = await zones_response.json()
+                        zones = zones or []
+                        
+                        # Warn user if no active zones found (they might be inactive)
+                        if not zones:
+                            warnings.warn(
+                                "No active zones found. This could mean:\n"
+                                "1. Your zones might be inactive - activate them in the Bright Data dashboard\n"
+                                "2. You might need to create zones first\n"
+                                "3. Check your dashboard at https://brightdata.com for zone status\n\n"
+                                "Note: The API only returns active zones. Inactive zones won't appear here.",
+                                UserWarning,
+                                stacklevel=2
+                            )
                         
                         account_info = {
                             "customer_id": self.customer_id,
-                            "zones": zones or [],
-                            "zone_count": len(zones or []),
+                            "zones": zones,
+                            "zone_count": len(zones),
                             "token_valid": True,
                             "retrieved_at": datetime.now(timezone.utc).isoformat(),
                         }
@@ -380,7 +399,7 @@ class BrightDataClient:
                         self._account_info = account_info
                         return account_info
                     
-                    elif zones_response.status in (401, 403):
+                    elif zones_response.status in (HTTP_UNAUTHORIZED, HTTP_FORBIDDEN):
                         error_text = await zones_response.text()
                         raise AuthenticationError(
                             f"Invalid token (HTTP {zones_response.status}): {error_text}"

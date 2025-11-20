@@ -17,6 +17,7 @@ from ..utils.validation import (
 )
 from ..utils.url import extract_root_domain
 from ..utils.function_detection import get_caller_function_name
+from ..constants import HTTP_OK
 from ..exceptions import ValidationError, APIError
 
 
@@ -130,11 +131,11 @@ class WebUnlockerService(BaseAPI):
             ) as response:
                 data_fetched_at = datetime.now(timezone.utc)
                 
-                if response.status == 200:
+                if response.status == HTTP_OK:
                     if response_format == "json":
                         try:
                             data = await response.json()
-                        except Exception as e:
+                        except (ValueError, TypeError) as e:
                             raise APIError(f"Failed to parse JSON response: {str(e)}")
                     else:
                         data = await response.text()

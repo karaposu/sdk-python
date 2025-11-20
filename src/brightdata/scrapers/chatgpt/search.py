@@ -16,7 +16,7 @@ from ...core.engine import AsyncEngine
 from ...models import ScrapeResult
 from ...exceptions import ValidationError, APIError
 from ...utils.function_detection import get_caller_function_name
-from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_SHORT
+from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_SHORT, COST_PER_RECORD_CHATGPT
 from ..api_client import DatasetAPIClient
 from ..workflow import WorkflowExecutor
 
@@ -55,7 +55,7 @@ class ChatGPTSearchService:
         self.workflow_executor = WorkflowExecutor(
             api_client=self.api_client,
             platform_name="chatgpt",
-            cost_per_record=0.005,
+            cost_per_record=COST_PER_RECORD_CHATGPT,
         )
     
     # ============================================================================

@@ -12,7 +12,8 @@ from datetime import datetime, timezone
 
 from ..models import ScrapeResult
 from ..exceptions import APIError
-from ..constants import DEFAULT_POLL_INTERVAL, DEFAULT_POLL_TIMEOUT
+from ..constants import DEFAULT_POLL_INTERVAL, DEFAULT_POLL_TIMEOUT, DEFAULT_COST_PER_RECORD
+from ..utils.polling import poll_until_ready
 from .api_client import DatasetAPIClient
 
 
@@ -28,7 +29,7 @@ class WorkflowExecutor:
         self,
         api_client: DatasetAPIClient,
         platform_name: Optional[str] = None,
-        cost_per_record: float = 0.001,
+        cost_per_record: float = DEFAULT_COST_PER_RECORD,
     ):
         """
         Initialize workflow executor.
@@ -138,8 +139,6 @@ class WorkflowExecutor:
         Returns:
             ScrapeResult with data or error/timeout status
         """
-        from ..utils.polling import poll_until_ready
-        
         result = await poll_until_ready(
             get_status_func=self.api_client.get_status,
             fetch_result_func=self.api_client.fetch_result,

@@ -6,6 +6,7 @@ import ssl
 from typing import Optional, Dict, Any
 from datetime import datetime, timezone
 from ..exceptions import APIError, AuthenticationError, NetworkError, TimeoutError, SSLError
+from ..constants import HTTP_UNAUTHORIZED, HTTP_FORBIDDEN
 from ..utils.ssl_helpers import is_ssl_certificate_error, get_ssl_error_message
 
 # Rate limiting support
@@ -304,14 +305,14 @@ class AsyncEngine:
                         timeout=self._timeout,
                     )
                     # Check status codes that should raise exceptions
-                    if self._response.status == 401:
+                    if self._response.status == HTTP_UNAUTHORIZED:
                         text = await self._response.text()
                         await self._response.release()
-                        raise AuthenticationError(f"Unauthorized (401): {text}")
-                    elif self._response.status == 403:
+                        raise AuthenticationError(f"Unauthorized ({HTTP_UNAUTHORIZED}): {text}")
+                    elif self._response.status == HTTP_FORBIDDEN:
                         text = await self._response.text()
                         await self._response.release()
-                        raise AuthenticationError(f"Forbidden (403): {text}")
+                        raise AuthenticationError(f"Forbidden ({HTTP_FORBIDDEN}): {text}")
                     
                     return self._response
                 except (aiohttp.ClientError, ssl.SSLError, OSError) as e:
