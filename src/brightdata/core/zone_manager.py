@@ -47,14 +47,14 @@ class ZoneManager:
         """
         Check if required zones exist and create them if they don't.
 
-        Note: Browser zones are NOT auto-created because they require additional
-        configuration parameters (like "start" value) that vary by use case.
-        Only unblocker and SERP zones are auto-created.
+        Important: Only unblocker and SERP zones can be auto-created.
+        Browser zones require additional configuration parameters (like "start" value)
+        and must be created manually in the Bright Data dashboard.
 
         Args:
-            web_unlocker_zone: Web unlocker zone name
-            serp_zone: SERP zone name (optional)
-            browser_zone: Browser zone name (optional, but NOT auto-created)
+            web_unlocker_zone: Web unlocker zone name (will be created if missing)
+            serp_zone: SERP zone name (optional, will be created if missing)
+            browser_zone: Browser zone name (NOT auto-created, pass None to skip)
 
         Raises:
             ZoneError: If zone creation or validation fails
@@ -79,15 +79,9 @@ class ZoneManager:
                 zones_to_create.append((serp_zone, 'serp'))
                 logger.info(f"Need to create SERP zone: {serp_zone}")
 
-            # Browser zones are NOT auto-created because they require additional
-            # configuration (like "start" parameter) that we cannot provide automatically
-            if browser_zone and browser_zone not in zone_names:
-                logger.warning(
-                    f"Browser zone '{browser_zone}' does not exist. "
-                    f"Browser zones cannot be auto-created because they require "
-                    f"additional configuration parameters. Please create this zone "
-                    f"manually in the Bright Data dashboard."
-                )
+            # Browser zones are intentionally NOT checked here
+            # They require additional configuration (like "start" parameter)
+            # and must be created manually in the Bright Data dashboard
 
             if not zones_to_create:
                 logger.info("All required zones already exist")

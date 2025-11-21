@@ -225,10 +225,12 @@ class BrightDataClient:
         if self._zone_manager is None:
             self._zone_manager = ZoneManager(self.engine)
 
+        # Don't pass browser_zone to auto-creation because browser zones
+        # require additional configuration and cannot be auto-created
         await self._zone_manager.ensure_required_zones(
             web_unlocker_zone=self.web_unlocker_zone,
             serp_zone=self.serp_zone,
-            browser_zone=self.browser_zone
+            browser_zone=None  # Never auto-create browser zones
         )
         self._zones_ensured = True
 
@@ -341,9 +343,12 @@ class BrightDataClient:
             self._is_connected = False
             return False
     
-    async def get_account_info(self) -> AccountInfo:
+    async def get_account_info(self, refresh: bool = False) -> AccountInfo:
         """
         Get account information including usage, limits, and quotas.
+        
+        Note: This method caches the result by default. For fresh zone data,
+        use list_zones() instead, or pass refresh=True.
         
         Retrieves:
         - Account status
@@ -351,6 +356,9 @@ class BrightDataClient:
         - Usage statistics
         - Credit balance
         - Rate limits
+        
+        Args:
+            refresh: If True, bypass cache and fetch fresh data (default: False)
         
         Returns:
             Dictionary with account information
@@ -360,11 +368,18 @@ class BrightDataClient:
             APIError: If API request fails
         
         Example:
+            >>> # Cached version (fast)
             >>> info = await client.get_account_info()
             >>> print(f"Active zones: {len(info['zones'])}")
-            >>> print(f"Credit balance: ${info['balance']}")
+            
+            >>> # Fresh data (use this after creating/deleting zones)
+            >>> info = await client.get_account_info(refresh=True)
+            >>> print(f"Active zones: {len(info['zones'])}")
+            
+            >>> # Or better: use list_zones() for current zone list
+            >>> zones = await client.list_zones()
         """
-        if self._account_info is not None:
+        if self._account_info is not None and not refresh:
             return self._account_info
         
         try:
@@ -447,9 +462,14 @@ class BrightDataClient:
             finally:
                 loop.close()
     
-    def get_account_info_sync(self) -> AccountInfo:
-        """Synchronous version of get_account_info()."""
-        return self._run_async_with_cleanup(self.get_account_info())
+    def get_account_info_sync(self, refresh: bool = False) -> AccountInfo:
+        """
+        Synchronous version of get_account_info().
+        
+        Args:
+            refresh: If True, bypass cache and fetch fresh data (default: False)
+        """
+        return self._run_async_with_cleanup(self.get_account_info(refresh=refresh))
     
     def test_connection_sync(self) -> bool:
         """Synchronous version of test_connection()."""
