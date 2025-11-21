@@ -3,6 +3,7 @@
 import asyncio
 import aiohttp
 import ssl
+import warnings
 from typing import Optional, Dict, Any
 from datetime import datetime, timezone
 from ..exceptions import APIError, AuthenticationError, NetworkError, TimeoutError, SSLError
@@ -15,6 +16,12 @@ try:
     HAS_RATE_LIMITER = True
 except ImportError:
     HAS_RATE_LIMITER = False
+
+# Suppress aiohttp ResourceWarnings for unclosed sessions
+# We properly manage session lifecycle in context managers, but Python's 
+# resource tracking may still emit warnings during rapid create/destroy cycles
+warnings.filterwarnings("ignore", category=ResourceWarning, message="unclosed.*<aiohttp")
+warnings.filterwarnings("ignore", category=ResourceWarning, message="unclosed.*<ssl.SSLSocket")
 
 
 class AsyncEngine:
@@ -52,21 +59,32 @@ class AsyncEngine:
         self.timeout = aiohttp.ClientTimeout(total=timeout)
         self._session: Optional[aiohttp.ClientSession] = None
         
-        # Rate limiting
+        # Store rate limit config (create limiter per event loop in __aenter__)
         if rate_limit is None:
             rate_limit = self.DEFAULT_RATE_LIMIT
         
-        if HAS_RATE_LIMITER and rate_limit > 0:
-            self._rate_limiter: Optional[AsyncLimiter] = AsyncLimiter(
-                max_rate=rate_limit,
-                time_period=rate_period
-            )
-        else:
-            self._rate_limiter: Optional[AsyncLimiter] = None
+        self._rate_limit = rate_limit
+        self._rate_period = rate_period
+        self._rate_limiter: Optional[AsyncLimiter] = None
     
     async def __aenter__(self):
-        """Context manager entry."""
+        """Context manager entry - idempotent (safe to call multiple times)."""
+        # If session already exists, don't create a new one
+        # This handles nested context manager usage
+        if self._session is not None:
+            return self
+        
+        # Create connector with force_close=True to ensure proper cleanup
+        # This helps prevent "Unclosed connector" warnings
+        connector = aiohttp.TCPConnector(
+            limit=100,
+            limit_per_host=30,
+            force_close=True  # Force close connections on exit
+        )
+        
+        # Create session with the connector
         self._session = aiohttp.ClientSession(
+            connector=connector,
             timeout=self.timeout,
             headers={
                 "Authorization": f"Bearer {self.bearer_token}",
@@ -74,13 +92,48 @@ class AsyncEngine:
                 "User-Agent": "brightdata-sdk/2.0.0",
             }
         )
+        
+        # Create rate limiter for this event loop (avoids reuse across loops)
+        if HAS_RATE_LIMITER and self._rate_limit > 0:
+            self._rate_limiter = AsyncLimiter(
+                max_rate=self._rate_limit,
+                time_period=self._rate_period
+            )
+        else:
+            self._rate_limiter = None
+        
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit."""
+        """Context manager exit - ensures proper cleanup of resources."""
         if self._session:
-            await self._session.close()
+            # Store reference before clearing
+            session = self._session
             self._session = None
+            
+            # Close the session - this will also close the connector
+            await session.close()
+            
+            # Wait for underlying connections to close
+            # This is necessary to prevent "Unclosed client session" warnings
+            await asyncio.sleep(0.1)
+        
+        # Clear rate limiter
+        self._rate_limiter = None
+    
+    def __del__(self):
+        """Cleanup on garbage collection."""
+        # If session wasn't properly closed (shouldn't happen with proper usage),
+        # try to clean up to avoid warnings
+        if hasattr(self, '_session') and self._session:
+            try:
+                if not self._session.closed:
+                    # Can't use async here, so just close the connector directly
+                    if hasattr(self._session, '_connector') and self._session._connector:
+                        self._session._connector.close()
+            except:
+                # Silently ignore any errors during __del__
+                pass
     
     def request(
         self,

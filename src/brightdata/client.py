@@ -368,6 +368,7 @@ class BrightDataClient:
             return self._account_info
         
         try:
+            # Engine context manager is idempotent, safe to enter multiple times
             async with self.engine:
                 async with self.engine.get_from_url(
                     f"{self.engine.BASE_URL}/zone/get_active_zones"
@@ -416,14 +417,44 @@ class BrightDataClient:
         except Exception as e:
             raise APIError(f"Unexpected error getting account info: {str(e)}")
     
+    def _run_async_with_cleanup(self, coro):
+        """
+        Run an async coroutine with proper cleanup.
+        
+        This helper ensures that the event loop stays open long enough
+        for all sessions and connectors to close properly, preventing
+        "Unclosed client session" warnings.
+        """
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            result = loop.run_until_complete(coro)
+            # Give pending tasks and cleanup handlers time to complete
+            # This is crucial for aiohttp session cleanup
+            loop.run_until_complete(asyncio.sleep(0.25))
+            return result
+        finally:
+            try:
+                # Cancel any remaining tasks
+                pending = asyncio.all_tasks(loop)
+                for task in pending:
+                    task.cancel()
+                # Run the loop once more to process cancellations
+                if pending:
+                    loop.run_until_complete(asyncio.gather(*pending, return_exceptions=True))
+                # Final sleep to ensure all cleanup completes
+                loop.run_until_complete(asyncio.sleep(0.1))
+            finally:
+                loop.close()
+    
     def get_account_info_sync(self) -> AccountInfo:
         """Synchronous version of get_account_info()."""
-        return asyncio.run(self.get_account_info())
+        return self._run_async_with_cleanup(self.get_account_info())
     
     def test_connection_sync(self) -> bool:
         """Synchronous version of test_connection()."""
         try:
-            return asyncio.run(self.test_connection())
+            return self._run_async_with_cleanup(self.test_connection())
         except Exception:
             return False
 

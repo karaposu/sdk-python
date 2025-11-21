@@ -47,10 +47,14 @@ class ZoneManager:
         """
         Check if required zones exist and create them if they don't.
 
+        Note: Browser zones are NOT auto-created because they require additional
+        configuration parameters (like "start" value) that vary by use case.
+        Only unblocker and SERP zones are auto-created.
+
         Args:
             web_unlocker_zone: Web unlocker zone name
             serp_zone: SERP zone name (optional)
-            browser_zone: Browser zone name (optional)
+            browser_zone: Browser zone name (optional, but NOT auto-created)
 
         Raises:
             ZoneError: If zone creation or validation fails
@@ -75,10 +79,15 @@ class ZoneManager:
                 zones_to_create.append((serp_zone, 'serp'))
                 logger.info(f"Need to create SERP zone: {serp_zone}")
 
-            # Check browser zone
+            # Browser zones are NOT auto-created because they require additional
+            # configuration (like "start" parameter) that we cannot provide automatically
             if browser_zone and browser_zone not in zone_names:
-                zones_to_create.append((browser_zone, 'browser'))
-                logger.info(f"Need to create browser zone: {browser_zone}")
+                logger.warning(
+                    f"Browser zone '{browser_zone}' does not exist. "
+                    f"Browser zones cannot be auto-created because they require "
+                    f"additional configuration parameters. Please create this zone "
+                    f"manually in the Bright Data dashboard."
+                )
 
             if not zones_to_create:
                 logger.info("All required zones already exist")
