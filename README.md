@@ -607,8 +607,7 @@ brightdata --help
 
 # Scrape Amazon product (URL is positional argument)
 brightdata scrape amazon products \
-  "https://amazon.com/dp/B0CRMZHDG8" \
-  --output-format json
+  "https://amazon.com/dp/B0CRMZHDG8"
 
 # Search LinkedIn jobs
 brightdata search linkedin jobs \
@@ -625,7 +624,7 @@ brightdata search google \
 # Generic web scraping (URL is positional argument)
 brightdata scrape generic \
   "https://example.com" \
-  --output-format pretty
+  --response-format pretty
 ```
 
 ### Available Commands

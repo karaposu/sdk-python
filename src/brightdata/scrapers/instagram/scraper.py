@@ -109,7 +109,10 @@ class InstagramScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect profile details from Instagram profile URL (sync wrapper)."""
-        return asyncio.run(self.profiles_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.profiles_async(url, timeout)
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -185,7 +188,10 @@ class InstagramScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect detailed data from Instagram post URLs (sync wrapper)."""
-        return asyncio.run(self.posts_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.posts_async(url, timeout)
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -261,7 +267,10 @@ class InstagramScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect comments from Instagram post URL (sync wrapper)."""
-        return asyncio.run(self.comments_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.comments_async(url, timeout)
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -337,7 +346,10 @@ class InstagramScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect detailed data from Instagram reel URLs (sync wrapper)."""
-        return asyncio.run(self.reels_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.reels_async(url, timeout)
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     

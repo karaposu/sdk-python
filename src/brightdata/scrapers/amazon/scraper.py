@@ -107,7 +107,10 @@ class AmazonScraper(BaseWebScraper):
             ...     timeout=240
             ... )
         """
-        return asyncio.run(self.products_async(url, timeout=timeout))
+        async def _run():
+            async with self.engine:
+                return await self.products_async(url, timeout=timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # PRODUCTS TRIGGER/STATUS/FETCH (Manual Control)
@@ -280,7 +283,10 @@ class AmazonScraper(BaseWebScraper):
             ...     timeout=240
             ... )
         """
-        return asyncio.run(self.reviews_async(url, pastDays, keyWord, numOfReviews, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.reviews_async(url, pastDays, keyWord, numOfReviews, timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # REVIEWS TRIGGER/STATUS/FETCH (Manual Control)
@@ -394,7 +400,10 @@ class AmazonScraper(BaseWebScraper):
         
         See sellers_async() for documentation.
         """
-        return asyncio.run(self.sellers_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.sellers_async(url, timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # SELLERS TRIGGER/STATUS/FETCH (Manual Control)

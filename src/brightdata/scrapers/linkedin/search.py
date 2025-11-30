@@ -128,7 +128,10 @@ class LinkedInSearchScraper:
         
         See posts_async() for documentation.
         """
-        return asyncio.run(self.posts_async(profile_url, start_date, end_date, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.posts_async(profile_url, start_date, end_date, timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # PROFILES DISCOVERY (by name)
@@ -188,7 +191,10 @@ class LinkedInSearchScraper:
         
         See profiles_async() for documentation.
         """
-        return asyncio.run(self.profiles_async(firstName, lastName, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.profiles_async(firstName, lastName, timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # JOBS DISCOVERY (by keyword + extensive filters)
@@ -325,19 +331,22 @@ class LinkedInSearchScraper:
             ...     remote=True
             ... )
         """
-        return asyncio.run(self.jobs_async(
-            url=url,
-            location=location,
-            keyword=keyword,
-            country=country,
-            timeRange=timeRange,
-            jobType=jobType,
-            experienceLevel=experienceLevel,
-            remote=remote,
-            company=company,
-            locationRadius=locationRadius,
-            timeout=timeout
-        ))
+        async def _run():
+            async with self.engine:
+                return await self.jobs_async(
+                    url=url,
+                    location=location,
+                    keyword=keyword,
+                    country=country,
+                    timeRange=timeRange,
+                    jobType=jobType,
+                    experienceLevel=experienceLevel,
+                    remote=remote,
+                    company=company,
+                    locationRadius=locationRadius,
+                    timeout=timeout
+                )
+        return asyncio.run(_run())
     
     # ============================================================================
     # HELPER METHODS

@@ -129,9 +129,12 @@ class FacebookScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect posts from Facebook profile URL (sync wrapper)."""
-        return asyncio.run(self.posts_by_profile_async(
-            url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
-        ))
+        async def _run():
+            async with self.engine:
+                return await self.posts_by_profile_async(
+                    url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
+                )
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -253,9 +256,12 @@ class FacebookScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect posts from Facebook group URL (sync wrapper)."""
-        return asyncio.run(self.posts_by_group_async(
-            url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
-        ))
+        async def _run():
+            async with self.engine:
+                return await self.posts_by_group_async(
+                    url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
+                )
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -339,7 +345,10 @@ class FacebookScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect detailed data from specific Facebook post URLs (sync wrapper)."""
-        return asyncio.run(self.posts_by_url_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.posts_by_url_async(url, timeout)
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -434,9 +443,12 @@ class FacebookScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect comments from Facebook post URL (sync wrapper)."""
-        return asyncio.run(self.comments_async(
-            url, num_of_comments, comments_to_not_include, start_date, end_date, timeout
-        ))
+        async def _run():
+            async with self.engine:
+                return await self.comments_async(
+                    url, num_of_comments, comments_to_not_include, start_date, end_date, timeout
+                )
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -537,9 +549,12 @@ class FacebookScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Collect reels from Facebook profile URL (sync wrapper)."""
-        return asyncio.run(self.reels_async(
-            url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
-        ))
+        async def _run():
+            async with self.engine:
+                return await self.reels_async(
+                    url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
+                )
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     

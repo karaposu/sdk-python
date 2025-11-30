@@ -121,7 +121,10 @@ class ChatGPTScraper(BaseWebScraper):
         Example:
             >>> result = scraper.prompt("Explain Python asyncio")
         """
-        return asyncio.run(self.prompt_async(prompt, **kwargs))
+        async def _run():
+            async with self.engine:
+                return await self.prompt_async(prompt, **kwargs)
+        return asyncio.run(_run())
     
     # ============================================================================
     # PROMPT TRIGGER/STATUS/FETCH (Manual Control)
@@ -267,7 +270,10 @@ class ChatGPTScraper(BaseWebScraper):
         
         See prompts_async() for full documentation.
         """
-        return asyncio.run(self.prompts_async(prompts, **kwargs))
+        async def _run():
+            async with self.engine:
+                return await self.prompts_async(prompts, **kwargs)
+        return asyncio.run(_run())
     
     # ============================================================================
     # PROMPTS TRIGGER/STATUS/FETCH (Manual Control for batch)

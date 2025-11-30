@@ -128,9 +128,12 @@ class InstagramSearchScraper:
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Discover recent Instagram posts from a public profile (sync wrapper)."""
-        return asyncio.run(self.posts_async(
-            url, num_of_posts, posts_to_not_include, start_date, end_date, post_type, timeout
-        ))
+        async def _run():
+            async with self.engine:
+                return await self.posts_async(
+                    url, num_of_posts, posts_to_not_include, start_date, end_date, post_type, timeout
+                )
+        return asyncio.run(_run())
     
     # ============================================================================
     # REELS DISCOVERY (by profile or search URL with filters)
@@ -197,9 +200,12 @@ class InstagramSearchScraper:
         timeout: int = DEFAULT_TIMEOUT_MEDIUM,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Discover Instagram Reels from profile or search URL (sync wrapper)."""
-        return asyncio.run(self.reels_async(
-            url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
-        ))
+        async def _run():
+            async with self.engine:
+                return await self.reels_async(
+                    url, num_of_posts, posts_to_not_include, start_date, end_date, timeout
+                )
+        return asyncio.run(_run())
     
     # ============================================================================
     # CORE DISCOVERY LOGIC

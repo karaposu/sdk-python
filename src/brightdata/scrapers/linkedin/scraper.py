@@ -112,7 +112,10 @@ class LinkedInScraper(BaseWebScraper):
         
         See posts_async() for documentation.
         """
-        return asyncio.run(self.posts_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.posts_async(url, timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # POSTS TRIGGER/STATUS/FETCH (Manual Control)
@@ -191,7 +194,10 @@ class LinkedInScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_SHORT,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Scrape LinkedIn jobs (sync wrapper)."""
-        return asyncio.run(self.jobs_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.jobs_async(url, timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # JOBS TRIGGER/STATUS/FETCH (Manual Control)
@@ -270,7 +276,10 @@ class LinkedInScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_SHORT,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Scrape LinkedIn profiles (sync wrapper)."""
-        return asyncio.run(self.profiles_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.profiles_async(url, timeout)
+        return asyncio.run(_run())
     
     # --- Trigger Interface (Manual Control) ---
     
@@ -346,7 +355,10 @@ class LinkedInScraper(BaseWebScraper):
         timeout: int = DEFAULT_TIMEOUT_SHORT,
     ) -> Union[ScrapeResult, List[ScrapeResult]]:
         """Scrape LinkedIn companies (sync wrapper)."""
-        return asyncio.run(self.companies_async(url, timeout))
+        async def _run():
+            async with self.engine:
+                return await self.companies_async(url, timeout)
+        return asyncio.run(_run())
     
     # ============================================================================
     # COMPANIES TRIGGER/STATUS/FETCH (Manual Control)
