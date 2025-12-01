@@ -1,10 +1,7 @@
 """Unit tests for LinkedIn scraper and search services."""
 
-import pytest
-from unittest.mock import patch
 from brightdata import BrightDataClient
 from brightdata.scrapers.linkedin import LinkedInScraper, LinkedInSearchScraper
-from brightdata.exceptions import ValidationError
 
 
 class TestLinkedInScraperURLBased:

@@ -245,7 +245,7 @@ class TestPhilosophicalPrinciples:
         # Should fail immediately on initialization
         with patch.dict(os.environ, {}, clear=True):
             try:
-                client = BrightDataClient()
+                BrightDataClient()
                 pytest.fail("Should have raised error immediately")
             except Exception as e:
                 # Should fail fast, not during first API call
@@ -306,8 +306,8 @@ if __name__ == "__main__":
     try:
         client = BrightDataClient()
         print(f"✅ Client initialized: {client}")
-        print(f"✅ Token loaded from environment")
-        print(f"✅ Services available: scrape, search, crawler")
+        print("✅ Token loaded from environment")
+        print("✅ Services available: scrape, search, crawler")
         print()
         print("Example usage:")
         print("  result = client.scrape.generic.url('https://example.com')")

@@ -191,7 +191,7 @@ def test_list_zones():
         try:
             export_file.write_text(json.dumps(zones_data, indent=2))
             print(f"✅ Zones configuration exported to: {export_file}")
-            print(f"   You can use this file to configure your SDK")
+            print("   You can use this file to configure your SDK")
         except Exception as e:
             print(f"❌ Failed to export zones: {e}")
 

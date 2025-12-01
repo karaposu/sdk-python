@@ -2,7 +2,7 @@
 
 import warnings
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import Any
 from ...types import NormalizedSERPData
 
 

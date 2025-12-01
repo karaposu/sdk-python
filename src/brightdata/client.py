@@ -24,17 +24,17 @@ except ImportError:
 from .core.engine import AsyncEngine
 from .core.zone_manager import ZoneManager
 from .api.web_unlocker import WebUnlockerService
-from .api.scrape_service import ScrapeService, GenericScraper
+from .api.scrape_service import ScrapeService
 from .api.search_service import SearchService
 from .api.crawler_service import CrawlerService
-from .models import ScrapeResult, SearchResult
-from .types import AccountInfo, URLParam, OptionalURLParam
+from .models import ScrapeResult
+from .types import AccountInfo
 from .constants import (
     HTTP_OK,
     HTTP_UNAUTHORIZED,
     HTTP_FORBIDDEN,
 )
-from .exceptions import ValidationError, AuthenticationError, APIError, BrightDataError
+from .exceptions import ValidationError, AuthenticationError, APIError
 
 
 class BrightDataClient:
@@ -190,8 +190,8 @@ class BrightDataClient:
             is_valid = asyncio.run(self.test_connection())
             if not is_valid:
                 raise AuthenticationError(
-                    f"Token validation failed. Token appears to be invalid.\n"
-                    f"Check your token at: https://brightdata.com/cp/api_keys"
+                    "Token validation failed. Token appears to be invalid.\n"
+                    "Check your token at: https://brightdata.com/cp/api_keys"
                 )
         except AuthenticationError:
             raise

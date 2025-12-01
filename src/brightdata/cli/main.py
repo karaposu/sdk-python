@@ -6,7 +6,6 @@ Provides a unified command-line interface for all search and scrape operations.
 
 import click
 import sys
-import io
 
 from .commands import scrape_group, search_group
 from .banner import print_banner

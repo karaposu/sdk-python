@@ -9,11 +9,10 @@ Implements:
 
 import asyncio
 from typing import Union, List, Optional, Dict, Any
-from datetime import datetime, timezone
 
 from ...core.engine import AsyncEngine
 from ...models import ScrapeResult
-from ...exceptions import ValidationError, APIError
+from ...exceptions import ValidationError
 from ...utils.function_detection import get_caller_function_name
 from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_SHORT, COST_PER_RECORD_LINKEDIN
 from ..api_client import DatasetAPIClient
@@ -414,7 +413,7 @@ class LinkedInSearchScraper:
             ... )
             'https://www.linkedin.com/jobs/search/?keywords=python%20developer&location=New%20York&f_WT=2'
         """
-        from urllib.parse import urlencode, quote_plus
+        from urllib.parse import urlencode
 
         base_url = "https://www.linkedin.com/jobs/search/"
         params = {}

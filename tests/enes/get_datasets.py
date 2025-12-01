@@ -2,7 +2,6 @@
 """Get list of available datasets from Bright Data API."""
 
 import sys
-import os
 import asyncio
 from pathlib import Path
 
@@ -21,7 +20,7 @@ async def get_datasets():
     client = BrightDataClient()
 
     async with client.engine:
-        print(f"\n🔍 Fetching dataset list from API...")
+        print("\n🔍 Fetching dataset list from API...")
 
         try:
             # Make API call to get dataset list
@@ -32,7 +31,7 @@ async def get_datasets():
                 if response.status == 200:
                     data = await response.json()
 
-                    print(f"\n✅ Got response!")
+                    print("\n✅ Got response!")
                     print(f"📊 Response type: {type(data)}")
 
                     if isinstance(data, list):
@@ -58,13 +57,13 @@ async def get_datasets():
                                 print(f"   {ds['name']}: {ds['id']}")
 
                     elif isinstance(data, dict):
-                        print(f"\n📦 Response data:")
+                        print("\n📦 Response data:")
                         import json
 
                         print(json.dumps(data, indent=2))
 
                     else:
-                        print(f"\n⚠️  Unexpected response format")
+                        print("\n⚠️  Unexpected response format")
                         print(f"Data: {data}")
 
                 else:

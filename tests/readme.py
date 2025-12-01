@@ -18,9 +18,7 @@ All tests use real API calls (no mocking) to ensure documentation accuracy.
 """
 
 import os
-import sys
 import json
-import asyncio
 import subprocess
 import pytest
 from pathlib import Path
@@ -38,7 +36,6 @@ except ImportError:
 from brightdata import BrightDataClient
 from brightdata.payloads import (
     AmazonProductPayload,
-    AmazonReviewPayload,
     LinkedInJobSearchPayload,
     ChatGPTPromptPayload,
 )

@@ -27,17 +27,17 @@ async def test_serp_raw_html_issue():
     async with client.engine:
         print("\n🔍 Searching for 'pizza' using Google SERP API...")
         print(f"📍 Zone: {client.serp_zone}")
-        print(f"📋 Payload sent to API: format='json' (hardcoded in SDK)")
+        print("📋 Payload sent to API: format='json' (hardcoded in SDK)")
 
         try:
             # Make the search request
             result = await client.search.google_async(query="pizza")
 
-            print(f"\n✅ API call succeeded")
+            print("\n✅ API call succeeded")
             print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
             # Show what we got back
-            print(f"\n📊 Result analysis:")
+            print("\n📊 Result analysis:")
             print(f"   - result.success: {result.success}")
             print(f"   - result.data type: {type(result.data)}")
             print(f"   - result.data length: {len(result.data) if result.data else 0}")
@@ -47,19 +47,17 @@ async def test_serp_raw_html_issue():
                 first = result.data[0]
                 print(f"   First result: {first}")
             else:
-                print(f"\n❌ Got 0 results (empty list)")
-                print(f"\n🔍 Why this happens:")
-                print(f"   1. SDK sends: format='json' (expecting parsed data)")
+                print("\n❌ Got 0 results (empty list)")
+                print("\n🔍 Why this happens:")
+                print("   1. SDK sends: format='json' (expecting parsed data)")
                 print(
-                    f"   2. API returns: {{'status_code': 200, 'headers': {{...}}, 'body': '<html>...'}}"
+                    "   2. API returns: {'status_code': 200, 'headers': {...}, 'body': '<html>...'}"
                 )
-                print(
-                    f"   3. SDK's normalizer looks for 'organic' field but finds 'body' with HTML"
-                )
-                print(f"   4. Normalizer returns empty list since it can't parse HTML")
+                print("   3. SDK's normalizer looks for 'organic' field but finds 'body' with HTML")
+                print("   4. Normalizer returns empty list since it can't parse HTML")
 
                 # Make a direct API call to show what's really returned
-                print(f"\n📡 Making direct API call to show actual response...")
+                print("\n📡 Making direct API call to show actual response...")
                 from brightdata.api.serp import GoogleSERPService
 
                 service = GoogleSERPService(
@@ -82,7 +80,7 @@ async def test_serp_raw_html_issue():
                 await service.search_async(query="pizza", zone=client.serp_zone)
 
                 if raw_response:
-                    print(f"\n📦 Raw API response structure:")
+                    print("\n📦 Raw API response structure:")
                     if isinstance(raw_response, dict):
                         for key in raw_response.keys():
                             value = raw_response[key]
@@ -94,14 +92,14 @@ async def test_serp_raw_html_issue():
                             else:
                                 print(f"   - {key}: {value}")
 
-                    print(f"\n⚠️  The problem:")
+                    print("\n⚠️  The problem:")
                     print(
-                        f"   - SDK expects: {{'organic': [...], 'ads': [...], 'featured_snippet': {{...}}}}"
+                        "   - SDK expects: {'organic': [...], 'ads': [...], 'featured_snippet': {...}}"
                     )
                     print(
-                        f"   - API returns: {{'status_code': 200, 'headers': {{...}}, 'body': '<html>'}}"
+                        "   - API returns: {'status_code': 200, 'headers': {...}, 'body': '<html>'}"
                     )
-                    print(f"   - Result: SDK can't extract search results from raw HTML")
+                    print("   - Result: SDK can't extract search results from raw HTML")
 
         except Exception as e:
             print(f"\n❌ Error: {e}")

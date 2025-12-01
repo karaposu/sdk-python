@@ -15,7 +15,7 @@ except ImportError:
     pass
 
 from brightdata import BrightDataClient
-from brightdata.exceptions import AuthenticationError, ValidationError
+from brightdata.exceptions import AuthenticationError
 
 
 @pytest.fixture

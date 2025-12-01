@@ -7,7 +7,7 @@ Handles the complete async workflow for dataset operations:
 3. Fetch results when ready
 """
 
-from typing import List, Dict, Any, Optional, Callable, Awaitable
+from typing import List, Dict, Any, Optional, Callable
 from datetime import datetime, timezone
 
 from ..models import ScrapeResult

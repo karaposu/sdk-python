@@ -20,13 +20,11 @@ import sys
 import time
 import asyncio
 from pathlib import Path
-from datetime import datetime
 
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from brightdata import BrightDataClient
-from brightdata.exceptions import AuthenticationError, APIError, ZoneError
 
 
 def test_auto_zone_creation():
@@ -86,8 +84,6 @@ def test_auto_zone_creation():
     print("\n🚀 Triggering zone creation...")
     print("   (Using services to force zone creation)")
 
-    zones_created = []
-
     # Run all zone creation attempts in a single async context
     async def attempt_zone_creations():
         results = []
@@ -96,20 +92,20 @@ def test_auto_zone_creation():
         print(f"\n1️⃣ Attempting to create Web Unlocker zone: {client.web_unlocker_zone}")
         try:
             async with client:
-                result = await client.scrape_url_async(
+                await client.scrape_url_async(
                     url="https://example.com", zone=client.web_unlocker_zone
                 )
-                print(f"   ✅ Zone operation completed")
+                print("   ✅ Zone operation completed")
                 results.append(("Web Unlocker", client.web_unlocker_zone, True))
         except Exception as e:
             error_msg = str(e).lower()
             if "already exists" in error_msg:
-                print(f"   ⚠️  Zone already exists (name collision)")
+                print("   ⚠️  Zone already exists (name collision)")
             elif "not found" in error_msg:
-                print(f"   ❌ Zone creation failed - zone not found after creation attempt")
-                print(f"   📝 This means auto-creation doesn't actually create zones via API")
+                print("   ❌ Zone creation failed - zone not found after creation attempt")
+                print("   📝 This means auto-creation doesn't actually create zones via API")
             elif "permission" in error_msg or "unauthorized" in error_msg:
-                print(f"   ❌ No permission to create zones")
+                print("   ❌ No permission to create zones")
             else:
                 print(f"   ❌ Error: {e}")
             results.append(("Web Unlocker", client.web_unlocker_zone, False))
@@ -118,25 +114,25 @@ def test_auto_zone_creation():
         print(f"\n2️⃣ Attempting to create SERP zone: {client.serp_zone}")
         try:
             async with client:
-                result = await client.search.google_async(query="test", zone=client.serp_zone)
-                print(f"   ✅ Zone operation completed")
+                await client.search.google_async(query="test", zone=client.serp_zone)
+                print("   ✅ Zone operation completed")
                 results.append(("SERP", client.serp_zone, True))
         except Exception as e:
             error_msg = str(e).lower()
             if "already exists" in error_msg:
-                print(f"   ⚠️  Zone already exists (name collision)")
+                print("   ⚠️  Zone already exists (name collision)")
             elif "not found" in error_msg:
-                print(f"   ❌ Zone creation failed - zone not found after creation attempt")
-                print(f"   📝 This means auto-creation doesn't actually create zones via API")
+                print("   ❌ Zone creation failed - zone not found after creation attempt")
+                print("   📝 This means auto-creation doesn't actually create zones via API")
             elif "permission" in error_msg or "unauthorized" in error_msg:
-                print(f"   ❌ No permission to create zones")
+                print("   ❌ No permission to create zones")
             else:
                 print(f"   ❌ Error: {e}")
             results.append(("SERP", client.serp_zone, False))
 
         return results
 
-    zones_created = asyncio.run(attempt_zone_creations())
+    asyncio.run(attempt_zone_creations())
 
     # Get final zone list
     print("\n📊 Getting final zone list...")
@@ -148,7 +144,7 @@ def test_auto_zone_creation():
         # Identify newly created zones
         new_zone_names = final_zone_names - initial_zone_names
 
-        print(f"\n📈 Zone Statistics:")
+        print("\n📈 Zone Statistics:")
         print(f"   - Initial zones: {len(initial_zones)}")
         print(f"   - Final zones: {len(final_zones)}")
         print(f"   - Zones added: {len(new_zone_names)}")
@@ -171,11 +167,11 @@ def test_auto_zone_creation():
 
                     # Check if this was one of our requested zones
                     if zone_name == client.web_unlocker_zone:
-                        print(f"      ✓ This is our Web Unlocker zone")
+                        print("      ✓ This is our Web Unlocker zone")
                     elif zone_name == client.serp_zone:
-                        print(f"      ✓ This is our SERP zone")
+                        print("      ✓ This is our SERP zone")
                     elif zone_name == client.browser_zone:
-                        print(f"      ✓ This is our Browser zone")
+                        print("      ✓ This is our Browser zone")
 
             print("\n" + "=" * 60)
             print("TEST RESULT: ✅ PASSED")

@@ -10,8 +10,7 @@ All methods use standard async workflow (trigger/poll/fetch).
 """
 
 import asyncio
-from typing import Union, List, Optional, Dict, Any
-from datetime import datetime, timezone
+from typing import Union, List, Optional, Any
 
 from ..base import BaseWebScraper
 from ..registry import register
@@ -20,7 +19,6 @@ from ...models import ScrapeResult
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
 from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, DEFAULT_COST_PER_RECORD
-from ...exceptions import ValidationError, APIError
 
 
 @register("amazon")

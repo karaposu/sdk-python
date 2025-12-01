@@ -45,14 +45,14 @@ async def test_new_amazon_search_api():
         async with client.engine:
             result = await client.search.amazon.products_async(keyword="laptop")
 
-        print(f"   ✅ API call succeeded")
+        print("   ✅ API call succeeded")
         print(f"   Success: {result.success}")
         print(f"   Status: {result.status}")
 
         if result.success:
             if isinstance(result.data, dict) and "error" in result.data:
                 print(f"   ⚠️  Crawler blocked by Amazon: {result.data['error']}")
-                print(f"   (This is expected - Amazon blocks search pages)")
+                print("   (This is expected - Amazon blocks search pages)")
                 test_results.append(True)  # API worked, Amazon blocked
             elif isinstance(result.data, list):
                 print(f"   ✅ SUCCESS! Got {len(result.data)} products")
@@ -84,12 +84,12 @@ async def test_new_amazon_search_api():
                 keyword="headphones", min_price=5000, max_price=20000
             )
 
-        print(f"   ✅ API call succeeded")
+        print("   ✅ API call succeeded")
         print(f"   Success: {result.success}")
 
         if result.success:
             if isinstance(result.data, dict) and "error" in result.data:
-                print(f"   ⚠️  Crawler blocked by Amazon")
+                print("   ⚠️  Crawler blocked by Amazon")
                 test_results.append(True)
             elif isinstance(result.data, list):
                 print(f"   ✅ SUCCESS! Got {len(result.data)} products")
@@ -119,12 +119,12 @@ async def test_new_amazon_search_api():
                 keyword="phone charger", prime_eligible=True
             )
 
-        print(f"   ✅ API call succeeded")
+        print("   ✅ API call succeeded")
         print(f"   Success: {result.success}")
 
         if result.success:
             if isinstance(result.data, dict) and "error" in result.data:
-                print(f"   ⚠️  Crawler blocked by Amazon")
+                print("   ⚠️  Crawler blocked by Amazon")
                 test_results.append(True)
             elif isinstance(result.data, list):
                 print(f"   ✅ SUCCESS! Got {len(result.data)} products")

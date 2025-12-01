@@ -1,6 +1,5 @@
 """Unit tests for result models."""
 
-import pytest
 from datetime import datetime, timezone
 from brightdata.models import (
     BaseResult,

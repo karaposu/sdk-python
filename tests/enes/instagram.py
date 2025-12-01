@@ -34,15 +34,15 @@ async def test_instagram_profiles():
                     url="https://www.instagram.com/instagram", timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
                 if result.data:
-                    print(f"\n✅ Got profile data:")
+                    print("\n✅ Got profile data:")
                     if isinstance(result.data, dict):
                         print(f"   - Username: {result.data.get('username', 'N/A')}")
                         print(f"   - Full Name: {result.data.get('full_name', 'N/A')}")
@@ -53,7 +53,7 @@ async def test_instagram_profiles():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No profile data returned")
+                    print("\n❌ No profile data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -82,15 +82,15 @@ async def test_instagram_posts():
                     url="https://www.instagram.com/p/C9z9z9z9z9z", timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
                 if result.data:
-                    print(f"\n✅ Got post data:")
+                    print("\n✅ Got post data:")
                     if isinstance(result.data, dict):
                         print(f"   - Caption: {result.data.get('caption', 'N/A')[:60]}...")
                         print(f"   - Likes: {result.data.get('likes', 'N/A')}")
@@ -99,7 +99,7 @@ async def test_instagram_posts():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No post data returned")
+                    print("\n❌ No post data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -128,15 +128,15 @@ async def test_instagram_reels():
                     url="https://www.instagram.com/reel/ABC123", timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
                 if result.data:
-                    print(f"\n✅ Got reel data:")
+                    print("\n✅ Got reel data:")
                     if isinstance(result.data, dict):
                         print(f"   - Caption: {result.data.get('caption', 'N/A')[:60]}...")
                         print(f"   - Likes: {result.data.get('likes', 'N/A')}")
@@ -145,7 +145,7 @@ async def test_instagram_reels():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No reel data returned")
+                    print("\n❌ No reel data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -174,10 +174,10 @@ async def test_instagram_search_posts():
                     url="https://www.instagram.com/instagram", num_of_posts=10, timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
@@ -192,7 +192,7 @@ async def test_instagram_search_posts():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No search results returned")
+                    print("\n❌ No search results returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")

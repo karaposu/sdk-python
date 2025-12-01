@@ -3,16 +3,15 @@
 import asyncio
 import aiohttp
 import json
-from typing import Union, List, Optional, Dict, Any
+from typing import Union, List, Optional
 from datetime import datetime, timezone
 
 from .url_builder import BaseURLBuilder
 from .data_normalizer import BaseDataNormalizer
 from ...core.engine import AsyncEngine
 from ...models import SearchResult
-from ...types import NormalizedSERPData
 from ...constants import HTTP_OK
-from ...exceptions import ValidationError, APIError
+from ...exceptions import ValidationError
 from ...utils.validation import validate_zone_name
 from ...utils.retry import retry_with_backoff
 from ...utils.function_detection import get_caller_function_name

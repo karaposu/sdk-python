@@ -34,15 +34,15 @@ async def test_linkedin_profiles():
                     url="https://www.linkedin.com/in/williamhgates", timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
                 if result.data:
-                    print(f"\n✅ Got profile data:")
+                    print("\n✅ Got profile data:")
                     if isinstance(result.data, dict):
                         print(f"   - Name: {result.data.get('name', 'N/A')}")
                         print(f"   - Headline: {result.data.get('headline', 'N/A')}")
@@ -51,7 +51,7 @@ async def test_linkedin_profiles():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No profile data returned")
+                    print("\n❌ No profile data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -80,15 +80,15 @@ async def test_linkedin_companies():
                     url="https://www.linkedin.com/company/microsoft", timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
                 if result.data:
-                    print(f"\n✅ Got company data:")
+                    print("\n✅ Got company data:")
                     if isinstance(result.data, dict):
                         print(f"   - Name: {result.data.get('name', 'N/A')}")
                         print(f"   - Industry: {result.data.get('industry', 'N/A')}")
@@ -97,7 +97,7 @@ async def test_linkedin_companies():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No company data returned")
+                    print("\n❌ No company data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -126,15 +126,15 @@ async def test_linkedin_jobs():
                     url="https://www.linkedin.com/jobs/view/3787241244", timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
                 if result.data:
-                    print(f"\n✅ Got job data:")
+                    print("\n✅ Got job data:")
                     if isinstance(result.data, dict):
                         print(f"   - Title: {result.data.get('title', 'N/A')}")
                         print(f"   - Company: {result.data.get('company', 'N/A')}")
@@ -143,7 +143,7 @@ async def test_linkedin_jobs():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No job data returned")
+                    print("\n❌ No job data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -172,10 +172,10 @@ async def test_linkedin_search_jobs():
                     keyword="python developer", location="New York", timeout=180
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
                 print(
@@ -194,7 +194,7 @@ async def test_linkedin_search_jobs():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No search results returned")
+                    print("\n❌ No search results returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")

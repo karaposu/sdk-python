@@ -4,7 +4,7 @@ CLI utilities for formatting output, handling errors, and managing API keys.
 
 import json
 import sys
-from typing import Optional, Any, Dict
+from typing import Optional, Any
 import click
 
 from ..client import BrightDataClient

@@ -22,7 +22,7 @@ def _supports_color() -> bool:
             # Enable ANSI escape sequences on Windows
             kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
             return True
-        except:
+        except Exception:
             return False
 
     # Check for common environment variables

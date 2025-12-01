@@ -3,7 +3,7 @@ CLI commands for search operations (parameter-based discovery).
 """
 
 import click
-from typing import Optional, List
+from typing import Optional
 
 from ..utils import create_client, output_result, handle_error
 

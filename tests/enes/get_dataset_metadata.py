@@ -29,11 +29,11 @@ async def get_metadata(dataset_id: str, name: str):
                 if response.status == 200:
                     data = await response.json()
 
-                    print(f"\n✅ Got metadata!")
+                    print("\n✅ Got metadata!")
 
                     # Display input schema
                     if "input_schema" in data:
-                        print(f"\n📋 INPUT SCHEMA:")
+                        print("\n📋 INPUT SCHEMA:")
                         print(json.dumps(data["input_schema"], indent=2))
 
                     # Display other useful info

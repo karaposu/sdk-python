@@ -2,9 +2,9 @@
 
 import os
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from brightdata import BrightDataClient, BrightData
-from brightdata.exceptions import ValidationError, AuthenticationError
+from brightdata.exceptions import ValidationError
 
 
 class TestClientInitialization:
@@ -157,7 +157,6 @@ class TestClientBackwardCompatibility:
 
     def test_brightdata_alias_exists(self):
         """Test BrightData alias exists for backward compatibility."""
-        from brightdata import BrightData
 
         client = BrightData(token="test_token_123456789")
         assert isinstance(client, BrightDataClient)

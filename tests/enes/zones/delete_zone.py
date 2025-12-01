@@ -48,7 +48,7 @@ async def demo_delete_zone():
             # Step 1: List initial zones
             print("\n📊 Step 1: Listing current zones...")
             initial_zones = await client.list_zones()
-            initial_zone_names = {z.get("name") for z in initial_zones}
+            {z.get("name") for z in initial_zones}
             print(f"✅ Found {len(initial_zones)} zones")
 
             # Step 2: Create a test zone

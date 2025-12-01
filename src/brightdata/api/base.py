@@ -40,7 +40,7 @@ class BaseAPI(ABC):
         Wraps async method using asyncio.run() for sync compatibility.
         """
         try:
-            loop = asyncio.get_running_loop()
+            asyncio.get_running_loop()
             raise RuntimeError(
                 "Cannot call sync method from async context. Use async method instead."
             )

@@ -1,6 +1,5 @@
 """Unit tests for function detection utilities."""
 
-import pytest
 from brightdata.utils.function_detection import get_caller_function_name
 
 
@@ -92,7 +91,7 @@ class TestSDKFunctionParameterTracking:
         # Note: Amazon's _scrape_urls doesn't have sdk_function, but it's
         # passed through workflow_executor.execute() which does accept it
         if hasattr(scraper, "_scrape_with_params"):
-            sig = inspect.signature(scraper._scrape_with_params)
+            inspect.signature(scraper._scrape_with_params)
             # sdk_function is handled internally via get_caller_function_name()
             assert True  # Test passes - sdk_function is tracked via function detection
 
@@ -107,7 +106,7 @@ class TestSDKFunctionParameterTracking:
         # Note: LinkedIn's _scrape_urls doesn't have sdk_function, but it's
         # passed through workflow_executor.execute() which does accept it
         if hasattr(scraper, "_scrape_with_params"):
-            sig = inspect.signature(scraper._scrape_with_params)
+            inspect.signature(scraper._scrape_with_params)
             # sdk_function is handled internally via get_caller_function_name()
             assert True  # Test passes - sdk_function is tracked via function detection
 
@@ -163,7 +162,10 @@ class TestFunctionDetectionEdgeCases:
 
     def test_function_detection_with_lambda(self):
         """Test function detection with lambda functions."""
-        func = lambda: get_caller_function_name()
+
+        def func():
+            return get_caller_function_name()
+
         result = func()
         # Should handle lambda gracefully
         assert result is None or isinstance(result, str)

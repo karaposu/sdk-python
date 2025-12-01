@@ -1,9 +1,7 @@
 """Unit tests for Instagram scraper."""
 
-import pytest
 from brightdata import BrightDataClient
 from brightdata.scrapers.instagram import InstagramScraper, InstagramSearchScraper
-from brightdata.exceptions import ValidationError
 
 
 class TestInstagramScraperURLBased:

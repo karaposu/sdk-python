@@ -117,7 +117,7 @@ async def cleanup_test_zones():
             await asyncio.sleep(2)
 
             # Verify
-            print(f"\n🔍 Verifying cleanup...")
+            print("\n🔍 Verifying cleanup...")
             final_zones = await client.list_zones()
             print(f"✅ Current zone count: {len(final_zones)}")
 

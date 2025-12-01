@@ -94,7 +94,7 @@ class ZoneManager:
                 try:
                     await self._create_zone(zone_name, zone_type)
                     logger.info(f"Successfully created zone: {zone_name}")
-                except AuthenticationError as e:
+                except AuthenticationError:
                     # Re-raise with clear message - this is a permission issue
                     logger.error(
                         f"Failed to create zone '{zone_name}' due to insufficient permissions"
@@ -251,8 +251,8 @@ class ZoneManager:
                                 )
                                 logger.error(error_msg)
                                 raise AuthenticationError(
-                                    f"API key lacks permission to create zones. "
-                                    f"Update permissions at https://brightdata.com/cp/setting/users"
+                                    "API key lacks permission to create zones. "
+                                    "Update permissions at https://brightdata.com/cp/setting/users"
                                 )
                             else:
                                 # Generic auth error

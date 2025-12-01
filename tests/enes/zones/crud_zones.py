@@ -17,7 +17,7 @@ import sys
 import asyncio
 import time
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
@@ -73,7 +73,7 @@ class ZoneCRUDTester:
                             )
                         else:  # serp
                             await temp_client.search.google_async(query="test", zone=zone_name)
-                    except Exception as e:
+                    except Exception:
                         # Zone might be created even if operation fails
                         pass
 
@@ -118,7 +118,7 @@ class ZoneCRUDTester:
             else:
                 missing_zones.append(test_zone)
 
-        print(f"\n   Our test zones:")
+        print("\n   Our test zones:")
         for zone in found_zones:
             print(f"      ✅ {zone}")
         for zone in missing_zones:
@@ -173,7 +173,7 @@ class ZoneCRUDTester:
                 print(f"❌ {e}")
                 failed_count += 1
 
-        print(f"\n📊 Deletion Summary:")
+        print("\n📊 Deletion Summary:")
         print(f"   Successfully deleted: {deleted_count}")
         print(f"   Failed to delete: {failed_count}")
 
@@ -201,12 +201,12 @@ class ZoneCRUDTester:
             else:
                 successfully_deleted.append(test_zone)
 
-        print(f"\n   Zones successfully deleted:")
+        print("\n   Zones successfully deleted:")
         for zone in successfully_deleted:
             print(f"      ✅ {zone}")
 
         if still_present:
-            print(f"\n   Zones still present (deletion might be delayed):")
+            print("\n   Zones still present (deletion might be delayed):")
             for zone in still_present:
                 print(f"      ⚠️  {zone}")
 

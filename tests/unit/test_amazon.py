@@ -1,9 +1,7 @@
 """Unit tests for Amazon scraper."""
 
-import pytest
 from brightdata import BrightDataClient
 from brightdata.scrapers.amazon import AmazonScraper
-from brightdata.exceptions import ValidationError
 
 
 class TestAmazonScraperURLBased:

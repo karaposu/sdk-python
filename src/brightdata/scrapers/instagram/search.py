@@ -8,11 +8,9 @@ Implements:
 
 import asyncio
 from typing import Union, List, Optional, Dict, Any
-from datetime import datetime, timezone
 
 from ...core.engine import AsyncEngine
 from ...models import ScrapeResult
-from ...exceptions import ValidationError, APIError
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
 from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, COST_PER_RECORD_INSTAGRAM

@@ -17,7 +17,7 @@ from typing import List, Dict, Any, Optional, Union
 
 from ..core.engine import AsyncEngine
 from ..models import ScrapeResult
-from ..exceptions import ValidationError
+from ..exceptions import ValidationError, APIError
 from ..utils.validation import validate_url, validate_url_list
 from ..utils.function_detection import get_caller_function_name
 from ..constants import (
@@ -334,7 +334,7 @@ def _run_blocking(coro):
     Handles both inside and outside event loop contexts.
     """
     try:
-        loop = asyncio.get_running_loop()
+        asyncio.get_running_loop()
         with concurrent.futures.ThreadPoolExecutor() as pool:
             future = pool.submit(asyncio.run, coro)
             return future.result()

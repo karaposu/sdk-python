@@ -34,10 +34,10 @@ async def test_amazon_products():
                     url="https://www.amazon.com/dp/B0CRMZHDG8", timeout=240
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
                 print(
@@ -46,7 +46,7 @@ async def test_amazon_products():
                 print(f"   - result.error: {result.error if hasattr(result, 'error') else 'N/A'}")
 
                 if result.data:
-                    print(f"\n✅ Got product data:")
+                    print("\n✅ Got product data:")
                     if isinstance(result.data, dict):
                         print(f"   - Title: {result.data.get('title', 'N/A')}")
                         print(f"   - Price: {result.data.get('price', 'N/A')}")
@@ -56,7 +56,7 @@ async def test_amazon_products():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No product data returned")
+                    print("\n❌ No product data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -89,10 +89,10 @@ async def test_amazon_reviews():
                     timeout=240,
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
                 print(
@@ -114,7 +114,7 @@ async def test_amazon_reviews():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No reviews data returned")
+                    print("\n❌ No reviews data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")

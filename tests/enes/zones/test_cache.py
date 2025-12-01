@@ -53,7 +53,7 @@ async def test_caching_issue():
             async with temp:
                 try:
                     await temp.scrape_url_async("https://example.com", zone=test_zone)
-                except:
+                except Exception:
                     pass
             print(f"   Zone '{test_zone}' created")
 
@@ -65,13 +65,13 @@ async def test_caching_issue():
             zones3 = info2.get("zones", [])
             print(f"   Found {len(zones3)} zones via get_account_info()")
             print(f"   ⚠️  Same as before: {len(zones3) == len(zones1)}")
-            print(f"   🔍 This is CACHED data!")
+            print("   🔍 This is CACHED data!")
 
             print("\n5️⃣ Using list_zones() (second call - FRESH)...")
             zones4 = await client.list_zones()
             print(f"   Found {len(zones4)} zones via list_zones()")
             print(f"   ✅ New data: {len(zones4) > len(zones2)}")
-            print(f"   🔍 This is FRESH data from API!")
+            print("   🔍 This is FRESH data from API!")
 
             print("\n" + "=" * 70)
             print("🔍 PROBLEM IDENTIFIED:")

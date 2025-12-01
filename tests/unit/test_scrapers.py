@@ -1,7 +1,7 @@
 """Unit tests for base scraper and platform scrapers."""
 
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from brightdata.scrapers import (
     BaseWebScraper,
     AmazonScraper,
@@ -26,7 +26,7 @@ class TestBaseWebScraper:
             pass
 
         with pytest.raises(NotImplementedError) as exc_info:
-            scraper = TestScraper(bearer_token="test_token_123456789")
+            TestScraper(bearer_token="test_token_123456789")
 
         assert "DATASET_ID" in str(exc_info.value)
 
@@ -38,7 +38,7 @@ class TestBaseWebScraper:
 
         with patch.dict("os.environ", {}, clear=True):
             with pytest.raises(ValidationError) as exc_info:
-                scraper = TestScraper()
+                TestScraper()
 
             assert "token" in str(exc_info.value).lower()
 

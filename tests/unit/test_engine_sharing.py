@@ -161,7 +161,7 @@ def test_standalone_scraper():
 
     try:
         token = os.getenv("BRIGHTDATA_API_TOKEN", "test_token_placeholder_12345")
-        scraper = AmazonScraper(bearer_token=token)
+        AmazonScraper(bearer_token=token)
 
         standalone_count = count_engines()
         print(f"✓ After creating standalone scraper: {standalone_count} engine(s)")

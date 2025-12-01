@@ -1,9 +1,7 @@
 """Unit tests for Facebook scraper."""
 
-import pytest
 from brightdata import BrightDataClient
 from brightdata.scrapers.facebook import FacebookScraper
-from brightdata.exceptions import ValidationError
 
 
 class TestFacebookScraperURLBased:

@@ -1,8 +1,6 @@
 """Unit tests for SSL error handling utilities."""
 
-import pytest
 import ssl
-import sys
 from unittest.mock import Mock, patch
 from brightdata.utils.ssl_helpers import is_macos, is_ssl_certificate_error, get_ssl_error_message
 

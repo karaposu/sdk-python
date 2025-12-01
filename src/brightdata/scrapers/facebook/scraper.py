@@ -20,15 +20,14 @@ All methods accept:
 
 import asyncio
 from typing import Union, List, Optional, Dict, Any
-from datetime import datetime, timezone
 
 from ..base import BaseWebScraper
 from ..registry import register
+from ..job import ScrapeJob
 from ...models import ScrapeResult
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
 from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, COST_PER_RECORD_FACEBOOK
-from ...exceptions import ValidationError
 
 
 @register("facebook")
@@ -151,7 +150,7 @@ class FacebookScraper(BaseWebScraper):
         """Trigger Facebook posts by profile scrape (async - manual control)."""
         from ..job import ScrapeJob
 
-        sdk_function = get_caller_function_name()
+        get_caller_function_name()
 
         url_list = [url] if isinstance(url, str) else url
         payload = []
@@ -278,7 +277,7 @@ class FacebookScraper(BaseWebScraper):
         """Trigger Facebook posts by group scrape (async - manual control)."""
         from ..job import ScrapeJob
 
-        sdk_function = get_caller_function_name()
+        get_caller_function_name()
         url_list = [url] if isinstance(url, str) else url
         payload = [
             {"url": u, **{k: v for k, v in kwargs.items() if v is not None}} for u in url_list
@@ -370,7 +369,6 @@ class FacebookScraper(BaseWebScraper):
 
     async def posts_by_url_trigger_async(self, url: Union[str, List[str]]) -> "ScrapeJob":
         """Trigger Facebook posts by URL scrape (async - manual control)."""
-        from ..job import ScrapeJob
 
         sdk_function = get_caller_function_name()
         return await self._trigger_scrape_async(
@@ -479,7 +477,7 @@ class FacebookScraper(BaseWebScraper):
         """Trigger Facebook comments scrape (async - manual control)."""
         from ..job import ScrapeJob
 
-        sdk_function = get_caller_function_name()
+        get_caller_function_name()
         url_list = [url] if isinstance(url, str) else url
         payload = [
             {"url": u, **{k: v for k, v in kwargs.items() if v is not None}} for u in url_list
@@ -592,7 +590,7 @@ class FacebookScraper(BaseWebScraper):
         """Trigger Facebook reels scrape (async - manual control)."""
         from ..job import ScrapeJob
 
-        sdk_function = get_caller_function_name()
+        get_caller_function_name()
         url_list = [url] if isinstance(url, str) else url
         payload = [
             {"url": u, **{k: v for k, v in kwargs.items() if v is not None}} for u in url_list

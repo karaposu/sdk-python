@@ -3,7 +3,7 @@ CLI commands for scraping operations (URL-based extraction).
 """
 
 import click
-from typing import Optional, List
+from typing import Optional
 
 from ..utils import create_client, output_result, handle_error
 

@@ -35,14 +35,14 @@ async def test_chatgpt():
         try:
             prompt = "What is 2+2?"
             print(f"   Prompt: '{prompt}'")
-            print(f"   Web search: False")
-            print(f"   Country: US (default)")
+            print("   Web search: False")
+            print("   Country: US (default)")
 
             scraper = client.scrape.chatgpt
             result = await scraper.prompt_async(prompt=prompt, web_search=False, poll_timeout=60)
 
             if result.success:
-                print(f"   ✅ Prompt successful!")
+                print("   ✅ Prompt successful!")
                 print(f"   Data type: {type(result.data)}")
                 if result.elapsed_ms():
                     print(f"   Elapsed: {result.elapsed_ms():.2f}ms")
@@ -52,12 +52,12 @@ async def test_chatgpt():
                 # Show response
                 if result.data and len(result.data) > 0:
                     response = result.data[0]
-                    print(f"\n   Response:")
+                    print("\n   Response:")
                     print(f"   - Answer: {response.get('answer_text', 'N/A')[:100]}...")
                     print(f"   - Model: {response.get('model', 'N/A')}")
                     print(f"   - Country: {response.get('country', 'N/A')}")
                 else:
-                    print(f"   ⚠️  No response data")
+                    print("   ⚠️  No response data")
             else:
                 print(f"   ❌ Prompt failed: {result.error}")
 
@@ -69,15 +69,15 @@ async def test_chatgpt():
         try:
             prompt = "What are the latest AI developments in 2024?"
             print(f"   Prompt: '{prompt}'")
-            print(f"   Web search: True")
-            print(f"   Country: US")
+            print("   Web search: True")
+            print("   Country: US")
 
             result = await scraper.prompt_async(
                 prompt=prompt, country="us", web_search=True, poll_timeout=90
             )
 
             if result.success:
-                print(f"   ✅ Web search prompt successful!")
+                print("   ✅ Web search prompt successful!")
                 print(f"   Results count: {len(result.data) if result.data else 0}")
 
                 if result.data and len(result.data) > 0:
@@ -95,7 +95,7 @@ async def test_chatgpt():
         try:
             prompts = ["What is Python in one sentence?", "What is JavaScript in one sentence?"]
             print(f"   Prompts: {prompts}")
-            print(f"   Countries: ['us', 'us']")
+            print("   Countries: ['us', 'us']")
 
             result = await scraper.prompts_async(
                 prompts=prompts,
@@ -105,7 +105,7 @@ async def test_chatgpt():
             )
 
             if result.success:
-                print(f"   ✅ Batch prompts successful!")
+                print("   ✅ Batch prompts successful!")
                 print(f"   Responses: {len(result.data) if result.data else 0}")
 
                 if result.data:
@@ -133,7 +133,7 @@ async def test_chatgpt():
             )
 
             if result.success:
-                print(f"   ✅ Follow-up prompt successful!")
+                print("   ✅ Follow-up prompt successful!")
 
                 if result.data and len(result.data) > 0:
                     response = result.data[0]
@@ -149,9 +149,9 @@ async def test_chatgpt():
         try:
             # This should raise NotImplementedError
             await scraper.scrape_async("https://example.com")
-            print(f"   ❌ scrape_async() should have raised NotImplementedError")
+            print("   ❌ scrape_async() should have raised NotImplementedError")
         except NotImplementedError as e:
-            print(f"   ✅ Correctly raises NotImplementedError")
+            print("   ✅ Correctly raises NotImplementedError")
             print(f"   - Message: {str(e)[:60]}...")
         except Exception as e:
             print(f"   ❌ Unexpected error: {e}")
@@ -172,9 +172,9 @@ async def test_chatgpt():
             ]
 
             if all(checks):
-                print(f"   ✅ All ChatGPT-specific attributes correct")
+                print("   ✅ All ChatGPT-specific attributes correct")
             else:
-                print(f"   ⚠️  Some attributes don't match expected values")
+                print("   ⚠️  Some attributes don't match expected values")
 
         except Exception as e:
             print(f"   ❌ Error: {e}")
@@ -201,14 +201,14 @@ async def test_chatgpt():
                     print(f"   Status ready after {attempt + 1} checks")
                     break
                 elif status == "error":
-                    print(f"   ❌ Job failed with error status")
+                    print("   ❌ Job failed with error status")
                     break
                 await asyncio.sleep(2)
 
             # Fetch results
             if status == "ready":
                 data = await scraper.prompt_fetch_async(job.snapshot_id)
-                print(f"   ✅ Fetched data successfully")
+                print("   ✅ Fetched data successfully")
                 if data and len(data) > 0:
                     print(f"   - Answer: {data[0].get('answer_text', 'N/A')[:100]}...")
 
@@ -219,7 +219,7 @@ async def test_chatgpt():
     print("SUMMARY:")
     print("-" * 40)
     print(
-        f"""
+        """
 ChatGPT Scraper Configuration:
 - Dataset ID: gd_m7aof0k82r803d5bjm
 - Platform: chatgpt

@@ -1,6 +1,6 @@
 """Location parsing utilities for SERP services."""
 
-from typing import Dict, Literal
+from typing import Dict
 from enum import Enum
 
 

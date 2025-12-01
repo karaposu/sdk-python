@@ -37,10 +37,10 @@ async def test_web_unlocker_single_url():
                 url="https://httpbin.org/html", response_format="raw"
             )
 
-            print(f"\n✅ API call succeeded")
+            print("\n✅ API call succeeded")
             print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
+            print("\n📊 Result analysis:")
             print(f"   - result.success: {result.success}")
             print(f"   - result.data type: {type(result.data)}")
             print(f"   - result.status: {result.status if hasattr(result, 'status') else 'N/A'}")
@@ -48,7 +48,7 @@ async def test_web_unlocker_single_url():
             print(f"   - result.method: {result.method if hasattr(result, 'method') else 'N/A'}")
 
             if result.data:
-                print(f"\n✅ Got data:")
+                print("\n✅ Got data:")
                 if isinstance(result.data, str):
                     print(f"   - Data length: {len(result.data)} characters")
                     print(f"   - First 200 chars: {result.data[:200]}...")
@@ -61,7 +61,7 @@ async def test_web_unlocker_single_url():
                 else:
                     print(f"   Data: {result.data}")
             else:
-                print(f"\n❌ No data returned")
+                print("\n❌ No data returned")
 
             return result
 
@@ -90,17 +90,17 @@ async def test_web_unlocker_json_format():
                 url="https://httpbin.org/json", response_format="json"
             )
 
-            print(f"\n✅ API call succeeded")
+            print("\n✅ API call succeeded")
             print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
+            print("\n📊 Result analysis:")
             print(f"   - result.success: {result.success}")
             print(f"   - result.data type: {type(result.data)}")
             print(f"   - result.status: {result.status if hasattr(result, 'status') else 'N/A'}")
             print(f"   - result.method: {result.method if hasattr(result, 'method') else 'N/A'}")
 
             if result.data:
-                print(f"\n✅ Got JSON data:")
+                print("\n✅ Got JSON data:")
                 if isinstance(result.data, dict):
                     print(f"   - Keys: {list(result.data.keys())}")
                     for key, value in list(result.data.items())[:5]:
@@ -113,7 +113,7 @@ async def test_web_unlocker_json_format():
                 else:
                     print(f"   Data: {result.data}")
             else:
-                print(f"\n❌ No data returned")
+                print("\n❌ No data returned")
 
             return result
 
@@ -141,7 +141,7 @@ async def test_web_unlocker_multiple_urls():
         try:
             results = await client.scrape.generic.url_async(url=urls, response_format="raw")
 
-            print(f"\n✅ API call succeeded")
+            print("\n✅ API call succeeded")
             print(f"📊 Got {len(results)} results")
 
             for i, result in enumerate(results, 1):
@@ -195,15 +195,15 @@ async def test_web_unlocker_with_country():
                 url="https://httpbin.org/headers", country="us", response_format="raw"
             )
 
-            print(f"\n✅ API call succeeded")
+            print("\n✅ API call succeeded")
             print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-            print(f"\n📊 Result analysis:")
+            print("\n📊 Result analysis:")
             print(f"   - result.success: {result.success}")
             print(f"   - result.status: {result.status if hasattr(result, 'status') else 'N/A'}")
 
             if result.data:
-                print(f"\n✅ Got data:")
+                print("\n✅ Got data:")
                 if isinstance(result.data, str):
                     print(f"   - Data length: {len(result.data)} characters")
                     print(f"   - First 300 chars: {result.data[:300]}...")
@@ -215,7 +215,7 @@ async def test_web_unlocker_with_country():
                 else:
                     print(f"   Data: {result.data}")
             else:
-                print(f"\n❌ No data returned")
+                print("\n❌ No data returned")
 
             return result
 

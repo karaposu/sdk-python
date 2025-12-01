@@ -19,16 +19,15 @@ For discovery/search operations, see search.py which contains InstagramSearchScr
 """
 
 import asyncio
-from typing import Union, List, Optional, Dict, Any
-from datetime import datetime, timezone
+from typing import Union, List, Optional, Any
 
 from ..base import BaseWebScraper
 from ..registry import register
+from ..job import ScrapeJob
 from ...models import ScrapeResult
 from ...utils.validation import validate_url, validate_url_list
 from ...utils.function_detection import get_caller_function_name
 from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, COST_PER_RECORD_INSTAGRAM
-from ...exceptions import ValidationError
 
 
 @register("instagram")
@@ -120,7 +119,6 @@ class InstagramScraper(BaseWebScraper):
 
     async def profiles_trigger_async(self, url: Union[str, List[str]]) -> "ScrapeJob":
         """Trigger Instagram profiles scrape (async - manual control)."""
-        from ..job import ScrapeJob
 
         sdk_function = get_caller_function_name()
         return await self._trigger_scrape_async(
@@ -206,7 +204,6 @@ class InstagramScraper(BaseWebScraper):
 
     async def posts_trigger_async(self, url: Union[str, List[str]]) -> "ScrapeJob":
         """Trigger Instagram posts scrape (async - manual control)."""
-        from ..job import ScrapeJob
 
         sdk_function = get_caller_function_name()
         return await self._trigger_scrape_async(
@@ -290,7 +287,6 @@ class InstagramScraper(BaseWebScraper):
 
     async def comments_trigger_async(self, url: Union[str, List[str]]) -> "ScrapeJob":
         """Trigger Instagram comments scrape (async - manual control)."""
-        from ..job import ScrapeJob
 
         sdk_function = get_caller_function_name()
         return await self._trigger_scrape_async(
@@ -376,7 +372,6 @@ class InstagramScraper(BaseWebScraper):
 
     async def reels_trigger_async(self, url: Union[str, List[str]]) -> "ScrapeJob":
         """Trigger Instagram reels scrape (async - manual control)."""
-        from ..job import ScrapeJob
 
         sdk_function = get_caller_function_name()
         return await self._trigger_scrape_async(

@@ -5,8 +5,7 @@ import aiohttp
 import ssl
 import warnings
 from typing import Optional, Dict, Any
-from datetime import datetime, timezone
-from ..exceptions import APIError, AuthenticationError, NetworkError, TimeoutError, SSLError
+from ..exceptions import AuthenticationError, NetworkError, TimeoutError, SSLError
 from ..constants import HTTP_UNAUTHORIZED, HTTP_FORBIDDEN
 from ..utils.ssl_helpers import is_ssl_certificate_error, get_ssl_error_message
 
@@ -129,7 +128,7 @@ class AsyncEngine:
                     # Can't use async here, so just close the connector directly
                     if hasattr(self._session, "_connector") and self._session._connector:
                         self._session._connector.close()
-            except:
+            except Exception:
                 # Silently ignore any errors during __del__
                 pass
 

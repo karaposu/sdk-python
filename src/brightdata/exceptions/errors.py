@@ -1,5 +1,7 @@
 """Exception hierarchy for Bright Data SDK."""
 
+from __future__ import annotations
+
 
 class BrightDataError(Exception):
     """Base exception for all Bright Data errors."""

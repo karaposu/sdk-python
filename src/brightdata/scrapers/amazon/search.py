@@ -8,11 +8,10 @@ Implements:
 
 import asyncio
 from typing import Union, List, Optional, Dict, Any
-from datetime import datetime, timezone
 
 from ...core.engine import AsyncEngine
 from ...models import ScrapeResult
-from ...exceptions import ValidationError, APIError
+from ...exceptions import ValidationError
 from ...utils.function_detection import get_caller_function_name
 from ...constants import DEFAULT_POLL_INTERVAL, DEFAULT_TIMEOUT_MEDIUM, DEFAULT_COST_PER_RECORD
 from ..api_client import DatasetAPIClient
@@ -259,7 +258,7 @@ class AmazonSearchScraper:
             ... )
             'https://www.amazon.com/s?k=laptop&rh=p_36%3A50000-200000%2Cp_85%3A2470955011'
         """
-        from urllib.parse import urlencode, quote_plus
+        from urllib.parse import urlencode
 
         # Determine domain based on country
         domain_map = {

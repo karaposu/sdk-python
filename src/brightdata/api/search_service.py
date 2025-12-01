@@ -12,6 +12,13 @@ from ..models import SearchResult
 
 if TYPE_CHECKING:
     from ..client import BrightDataClient
+    from .serp.google import GoogleSERPService
+    from .serp.bing import BingSERPService
+    from .serp.yandex import YandexSERPService
+    from ..scrapers.amazon.search import AmazonSearchScraper
+    from ..scrapers.linkedin.search import LinkedInSearchScraper
+    from ..scrapers.chatgpt.search import ChatGPTSearchService
+    from ..scrapers.instagram.search import InstagramSearchScraper
 
 
 class SearchService:

@@ -1,8 +1,7 @@
 """Unit tests for ZoneManager."""
 
 import pytest
-import asyncio
-from unittest.mock import AsyncMock, Mock, MagicMock, patch
+from unittest.mock import MagicMock
 from brightdata.core.zone_manager import ZoneManager
 from brightdata.exceptions.errors import ZoneError, AuthenticationError
 

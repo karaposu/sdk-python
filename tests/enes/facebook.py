@@ -35,10 +35,10 @@ async def test_facebook_posts_by_profile():
                     url="https://www.facebook.com/facebook", num_of_posts=5, timeout=240
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
@@ -56,13 +56,13 @@ async def test_facebook_posts_by_profile():
                             print(f"   - Comments: {post.get('comments', 'N/A')}")
                             print(f"   - Shares: {post.get('shares', 'N/A')}")
                     elif isinstance(result.data, dict):
-                        print(f"\n✅ Got post data:")
+                        print("\n✅ Got post data:")
                         print(f"   - Text: {result.data.get('text', 'N/A')[:60]}...")
                         print(f"   - Likes: {result.data.get('likes', 'N/A')}")
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No post data returned")
+                    print("\n❌ No post data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -92,10 +92,10 @@ async def test_facebook_posts_by_group():
                     url="https://www.facebook.com/groups/example", num_of_posts=5, timeout=240
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
@@ -112,11 +112,11 @@ async def test_facebook_posts_by_group():
                             print(f"   - Author: {post.get('author', 'N/A')}")
                             print(f"   - Likes: {post.get('likes', 'N/A')}")
                     elif isinstance(result.data, dict):
-                        print(f"\n✅ Got post data")
+                        print("\n✅ Got post data")
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No post data returned")
+                    print("\n❌ No post data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -145,15 +145,15 @@ async def test_facebook_posts_by_url():
                     url="https://www.facebook.com/facebook/posts/123456789", timeout=240
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
                 if result.data:
-                    print(f"\n✅ Got post data:")
+                    print("\n✅ Got post data:")
                     if isinstance(result.data, dict):
                         print(
                             f"   - Text: {result.data.get('text', 'N/A')[:60]}..."
@@ -167,7 +167,7 @@ async def test_facebook_posts_by_url():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No post data returned")
+                    print("\n❌ No post data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -199,10 +199,10 @@ async def test_facebook_comments():
                     timeout=240,
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
@@ -224,7 +224,7 @@ async def test_facebook_comments():
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No comments data returned")
+                    print("\n❌ No comments data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")
@@ -254,10 +254,10 @@ async def test_facebook_reels():
                     url="https://www.facebook.com/facebook", num_of_posts=5, timeout=240
                 )
 
-                print(f"\n✅ API call succeeded")
+                print("\n✅ API call succeeded")
                 print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
 
-                print(f"\n📊 Result analysis:")
+                print("\n📊 Result analysis:")
                 print(f"   - result.success: {result.success}")
                 print(f"   - result.data type: {type(result.data)}")
 
@@ -274,11 +274,11 @@ async def test_facebook_reels():
                             print(f"   - Views: {reel.get('views', 'N/A')}")
                             print(f"   - Likes: {reel.get('likes', 'N/A')}")
                     elif isinstance(result.data, dict):
-                        print(f"\n✅ Got reel data")
+                        print("\n✅ Got reel data")
                     else:
                         print(f"   Data: {result.data}")
                 else:
-                    print(f"\n❌ No reels data returned")
+                    print("\n❌ No reels data returned")
 
             except Exception as e:
                 print(f"\n❌ Error: {e}")

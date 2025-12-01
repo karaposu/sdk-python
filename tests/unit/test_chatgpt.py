@@ -1,10 +1,8 @@
 """Unit tests for ChatGPT search service."""
 
-import pytest
 import inspect
 from brightdata import BrightDataClient
 from brightdata.scrapers.chatgpt import ChatGPTSearchService
-from brightdata.exceptions import ValidationError
 
 
 class TestChatGPTSearchService:

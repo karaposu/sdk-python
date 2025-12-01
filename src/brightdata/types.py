@@ -15,33 +15,8 @@ New code should use dataclasses from payloads.py instead.
 
 from typing import TypedDict, Optional, List, Literal, Union, Any, Dict
 from typing_extensions import NotRequired
-import warnings
 
 # Import dataclass payloads for backward compatibility
-from .payloads import (
-    DatasetTriggerPayload as DatasetTriggerPayloadDataclass,
-    AmazonProductPayload as AmazonProductPayloadDataclass,
-    AmazonReviewPayload as AmazonReviewPayloadDataclass,
-    LinkedInProfilePayload as LinkedInProfilePayloadDataclass,
-    LinkedInJobPayload as LinkedInJobPayloadDataclass,
-    LinkedInCompanyPayload as LinkedInCompanyPayloadDataclass,
-    LinkedInPostPayload as LinkedInPostPayloadDataclass,
-    LinkedInProfileSearchPayload as LinkedInProfileSearchPayloadDataclass,
-    LinkedInJobSearchPayload as LinkedInJobSearchPayloadDataclass,
-    LinkedInPostSearchPayload as LinkedInPostSearchPayloadDataclass,
-    ChatGPTPromptPayload as ChatGPTPromptPayloadDataclass,
-    FacebookPostsProfilePayload as FacebookPostsProfilePayloadDataclass,
-    FacebookPostsGroupPayload as FacebookPostsGroupPayloadDataclass,
-    FacebookPostPayload as FacebookPostPayloadDataclass,
-    FacebookCommentsPayload as FacebookCommentsPayloadDataclass,
-    FacebookReelsPayload as FacebookReelsPayloadDataclass,
-    InstagramProfilePayload as InstagramProfilePayloadDataclass,
-    InstagramPostPayload as InstagramPostPayloadDataclass,
-    InstagramCommentPayload as InstagramCommentPayloadDataclass,
-    InstagramReelPayload as InstagramReelPayloadDataclass,
-    InstagramPostsDiscoverPayload as InstagramPostsDiscoverPayloadDataclass,
-    InstagramReelsDiscoverPayload as InstagramReelsDiscoverPayloadDataclass,
-)
 
 
 # DEPRECATED: TypedDict payloads kept for backward compatibility only

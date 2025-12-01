@@ -14,12 +14,7 @@ from brightdata.payloads import (
     # Amazon
     AmazonProductPayload,
     AmazonReviewPayload,
-    AmazonSellerPayload,
-    # LinkedIn
     LinkedInProfilePayload,
-    LinkedInJobPayload,
-    LinkedInCompanyPayload,
-    LinkedInPostPayload,
     LinkedInProfileSearchPayload,
     LinkedInJobSearchPayload,
     LinkedInPostSearchPayload,
@@ -30,14 +25,10 @@ from brightdata.payloads import (
     FacebookPostsGroupPayload,
     FacebookPostPayload,
     FacebookCommentsPayload,
-    FacebookReelsPayload,
-    # Instagram
     InstagramProfilePayload,
     InstagramPostPayload,
-    InstagramCommentPayload,
     InstagramReelPayload,
     InstagramPostsDiscoverPayload,
-    InstagramReelsDiscoverPayload,
 )
 
 

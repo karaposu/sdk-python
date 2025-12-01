@@ -8,12 +8,13 @@ Provides shared polling logic for:
 - Timeout handling
 """
 
+from __future__ import annotations
+
 import asyncio
 from typing import Any, List, Callable, Awaitable
 from datetime import datetime, timezone
 
 from ..models import ScrapeResult
-from ..exceptions import APIError
 from ..constants import DEFAULT_POLL_INTERVAL, DEFAULT_POLL_TIMEOUT
 
 

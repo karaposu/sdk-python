@@ -1,15 +1,11 @@
 """Unit tests for SERP service."""
 
-import pytest
-from unittest.mock import patch
 from brightdata.api.serp import (
     BaseSERPService,
     GoogleSERPService,
     BingSERPService,
     YandexSERPService,
 )
-from brightdata.exceptions import ValidationError
-from brightdata.models import SearchResult
 
 
 class TestBaseSERPService:
@@ -510,7 +506,7 @@ class TestLocationLanguageSupport:
         engine = AsyncEngine("test_token_123456789")
         service = GoogleSERPService(engine)
 
-        url_desktop = service.url_builder.build("test", None, "en", "desktop", 10)
+        service.url_builder.build("test", None, "en", "desktop", 10)
         url_mobile = service.url_builder.build("test", None, "en", "mobile", 10)
 
         # Mobile should have mobile-specific parameter

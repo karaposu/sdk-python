@@ -1,7 +1,7 @@
 """URL builder for SERP search engines."""
 
 from abc import ABC, abstractmethod
-from typing import Optional, Dict, Any
+from typing import Optional
 from urllib.parse import quote_plus
 from ...utils.location import LocationService, LocationFormat
 

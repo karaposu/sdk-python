@@ -6,9 +6,7 @@ particularly common on macOS systems.
 """
 
 import sys
-import platform
 import ssl
-from typing import Optional
 
 try:
     import aiohttp

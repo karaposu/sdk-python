@@ -1,6 +1,5 @@
 """Unit tests for constants module."""
 
-import pytest
 from brightdata import constants
 
 
