@@ -1,4 +1,4 @@
-# Bright Data Python SDK
+# Bright Data Python SDK 🐍
 
 [![Tests](https://img.shields.io/badge/tests-502%2B%20passing-brightgreen)](https://github.com/vzucher/brightdata-sdk-python)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
