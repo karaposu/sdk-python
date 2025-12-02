@@ -4,9 +4,7 @@ Tests for batch scraping operations.
 Verifies that scraping multiple URLs returns List[ScrapeResult] correctly.
 """
 
-import pytest
 from brightdata import BrightDataClient
-from brightdata.models import ScrapeResult
 
 
 class TestBatchOperations:
@@ -23,7 +21,6 @@ class TestBatchOperations:
         import inspect
 
         sig = inspect.signature(scraper.products)
-        return_annotation = sig.return_annotation
 
         # Should accept Union[str, List[str]]
         params = sig.parameters
