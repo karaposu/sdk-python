@@ -442,5 +442,26 @@ class InstagramScraper(BaseWebScraper):
         if is_single and isinstance(result.data, list) and len(result.data) == 1:
             result.url = url if isinstance(url, str) else url[0]
             result.data = result.data[0]
+            return result
+        elif not is_single and isinstance(result.data, list):
+            from ...models import ScrapeResult
 
+            results = []
+            for url_item, data_item in zip(url_list, result.data):
+                results.append(
+                    ScrapeResult(
+                        success=True,
+                        data=data_item,
+                        url=url_item,
+                        platform=result.platform,
+                        method=result.method,
+                        trigger_sent_at=result.trigger_sent_at,
+                        snapshot_id_received_at=result.snapshot_id_received_at,
+                        snapshot_polled_at=result.snapshot_polled_at,
+                        data_fetched_at=result.data_fetched_at,
+                        snapshot_id=result.snapshot_id,
+                        cost=result.cost / len(result.data) if result.cost else None,
+                    )
+                )
+            return results
         return result

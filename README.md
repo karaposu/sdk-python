@@ -1,12 +1,51 @@
 # Bright Data Python SDK 🐍
 
-[![Tests](https://img.shields.io/badge/tests-502%2B%20passing-brightgreen)](https://github.com/vzucher/brightdata-sdk-python)
+[![Tests](https://img.shields.io/badge/tests-502%2B%20passing-brightgreen)](https://github.com/brightdata/sdk-python)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Code Quality](https://img.shields.io/badge/quality-enterprise--grade-gold)](https://github.com/vzucher/brightdata-sdk-python)
+[![Code Quality](https://img.shields.io/badge/quality-enterprise--grade-gold)](https://github.com/brightdata/sdk-python)
 [![Notebooks](https://img.shields.io/badge/jupyter-5%20notebooks-orange)](notebooks/)
 
 Modern async-first Python SDK for [Bright Data](https://brightdata.com) APIs with **dataclass payloads**, **Jupyter notebooks**, comprehensive platform support, and **CLI tool** - built for data scientists and developers.
+
+---
+
+## 📑 Table of Contents
+
+- [✨ Features](#-features)
+- [📓 Jupyter Notebooks](#-jupyter-notebooks-new)
+- [📦 Installation](#-installation)
+- [🚀 Quick Start](#-quick-start)
+  - [Authentication](#authentication)
+  - [Simple Web Scraping](#simple-web-scraping)
+  - [Using Dataclass Payloads](#using-dataclass-payloads-type-safe-)
+  - [Pandas Integration](#pandas-integration-for-data-scientists-)
+  - [Platform-Specific Scraping](#platform-specific-scraping)
+  - [Search Engine Results (SERP)](#search-engine-results-serp)
+  - [Async Usage](#async-usage)
+- [🆕 What's New in v2.0.0](#-whats-new-in-v2-200)
+- [🏗️ Architecture](#️-architecture)
+- [📚 API Reference](#-api-reference)
+  - [Client Initialization](#client-initialization)
+  - [Connection Testing](#connection-testing)
+  - [Zone Management](#zone-management)
+  - [Result Objects](#result-objects)
+- [🖥️ CLI Usage](#️-cli-usage)
+- [🐼 Pandas Integration](#-pandas-integration)
+- [🎨 Dataclass Payloads](#-dataclass-payloads)
+- [🔧 Advanced Usage](#-advanced-usage)
+- [🧪 Testing](#-testing)
+- [🏛️ Design Philosophy](#️-design-philosophy)
+- [📖 Documentation](#-documentation)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [🤝 Contributing](#-contributing)
+- [📊 Project Stats](#-project-stats)
+- [📝 License](#-license)
+- [🔗 Links](#-links)
+- [💡 Examples](#-examples)
+- [🎯 Roadmap](#-roadmap)
+- [🙏 Acknowledgments](#-acknowledgments)
+- [🌟 Why Choose This SDK?](#-why-choose-this-sdk)
 
 ---
 
@@ -44,11 +83,11 @@ Modern async-first Python SDK for [Bright Data](https://brightdata.com) APIs wit
 
 Perfect for data scientists! Interactive tutorials with examples:
 
-1. **[01_quickstart.ipynb](notebooks/01_quickstart.ipynb)** - Get started in 5 minutes [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/01_quickstart.ipynb)
-2. **[02_pandas_integration.ipynb](notebooks/02_pandas_integration.ipynb)** - Work with DataFrames [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/02_pandas_integration.ipynb)
-3. **[03_amazon_scraping.ipynb](notebooks/03_amazon_scraping.ipynb)** - Amazon deep dive [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/03_amazon_scraping.ipynb)
-4. **[04_linkedin_jobs.ipynb](notebooks/04_linkedin_jobs.ipynb)** - Job market analysis [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/04_linkedin_jobs.ipynb)
-5. **[05_batch_processing.ipynb](notebooks/05_batch_processing.ipynb)** - Scale to 1000s of URLs [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/05_batch_processing.ipynb)
+1. **[01_quickstart.ipynb](notebooks/01_quickstart.ipynb)** - Get started in 5 minutes [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/01_quickstart.ipynb)
+2. **[02_pandas_integration.ipynb](notebooks/02_pandas_integration.ipynb)** - Work with DataFrames [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/02_pandas_integration.ipynb)
+3. **[03_amazon_scraping.ipynb](notebooks/03_amazon_scraping.ipynb)** - Amazon deep dive [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/03_amazon_scraping.ipynb)
+4. **[04_linkedin_jobs.ipynb](notebooks/04_linkedin_jobs.ipynb)** - Job market analysis [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/04_linkedin_jobs.ipynb)
+5. **[05_batch_processing.ipynb](notebooks/05_batch_processing.ipynb)** - Scale to 1000s of URLs [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/05_batch_processing.ipynb)
 
 ---
 
@@ -61,8 +100,8 @@ pip install brightdata-sdk
 Or install from source:
 
 ```bash
-git clone https://github.com/vzucher/brightdata-sdk-python.git
-cd brightdata-sdk-python
+git clone https://github.com/brightdata/sdk-python.git
+cd sdk-python
 pip install -e .
 ```
 
@@ -418,7 +457,7 @@ asyncio.run(scrape_multiple())
 
 ---
 
-## 🆕 What's New in v01.12.24
+## 🆕 What's New in v2 2.0.0
 
 ### 🆕 **Latest Updates (December 2025)**
 - ✅ **Amazon Search API** - NEW parameter-based product discovery
@@ -1106,8 +1145,8 @@ Contributions are welcome! Please see [CONTRIBUTING.md](docs/contributing.md) fo
 ### Development Setup
 
 ```bash
-git clone https://github.com/vzucher/brightdata-sdk-python.git
-cd brightdata-sdk-python
+git clone https://github.com/brightdata/sdk-python.git
+cd sdk-python
 
 # Install with dev dependencies
 pip install -e ".[dev]"
@@ -1147,8 +1186,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 - [Bright Data](https://brightdata.com) - Get your API token
 - [API Documentation](https://docs.brightdata.com)
-- [GitHub Repository](https://github.com/vzucher/brightdata-sdk-python)
-- [Issue Tracker](https://github.com/vzucher/brightdata-sdk-python/issues)
+- [GitHub Repository](https://github.com/brightdata/sdk-python)
+- [Issue Tracker](https://github.com/brightdata/sdk-python/issues)
 
 ---
 
