@@ -154,9 +154,32 @@ class BaseWebScraper(ABC):
         )
 
         if is_single and isinstance(result.data, list) and len(result.data) == 1:
+            # Single URL case - unwrap single item from list
             result.url = urls
             result.data = result.data[0]
             return result
+        elif not is_single and isinstance(result.data, list):
+            # Multiple URLs case - transform to List[ScrapeResult]
+            results = []
+            for i, (url, data_item) in enumerate(zip(url_list, result.data)):
+                individual_result = ScrapeResult(
+                    success=True,
+                    data=data_item,
+                    url=url,
+                    error=None,
+                    platform=result.platform,
+                    method=result.method,
+                    # Copy timing information from parent
+                    trigger_sent_at=result.trigger_sent_at,
+                    snapshot_id_received_at=result.snapshot_id_received_at,
+                    snapshot_polled_at=result.snapshot_polled_at,
+                    data_fetched_at=result.data_fetched_at,
+                    snapshot_id=result.snapshot_id,
+                    # Divide cost equally across results
+                    cost=result.cost / len(result.data) if result.cost else None,
+                )
+                results.append(individual_result)
+            return results
 
         return result
 

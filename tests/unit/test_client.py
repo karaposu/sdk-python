@@ -16,9 +16,9 @@ class TestClientInitialization:
 
         assert client.token == "test_token_123456789"
         assert client.timeout == 30  # Default timeout
-        assert client.web_unlocker_zone == "web_unlocker1"
-        assert client.serp_zone == "serp_api1"
-        assert client.browser_zone == "browser_api1"
+        assert client.web_unlocker_zone == "sdk_unlocker"
+        assert client.serp_zone == "sdk_serp"
+        assert client.browser_zone == "sdk_browser"
 
     def test_client_with_custom_config(self):
         """Test client with custom configuration."""
@@ -192,10 +192,10 @@ class TestClientRepr:
 class TestClientConfiguration:
     """Test client configuration options."""
 
-    def test_auto_create_zones_default_false(self):
-        """Test auto_create_zones defaults to False."""
+    def test_auto_create_zones_default_true(self):
+        """Test auto_create_zones defaults to True."""
         client = BrightDataClient(token="test_token_123456789")
-        assert client.auto_create_zones is False
+        assert client.auto_create_zones is True
 
     def test_auto_create_zones_can_be_enabled(self):
         """Test auto_create_zones can be enabled."""

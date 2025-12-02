@@ -94,8 +94,8 @@ class InstagramSearchScraper:
             >>> result = await scraper.posts_async(
             ...     url="https://instagram.com/username",
             ...     num_of_posts=10,
-            ...     start_date="01-01-2024",
-            ...     end_date="12-31-2024",
+            ...     start_date="01-01-2025",
+            ...     end_date="12-31-2025",
             ...     post_type="reel"
             ... )
         """
@@ -175,8 +175,8 @@ class InstagramSearchScraper:
             >>> result = await scraper.reels_async(
             ...     url="https://instagram.com/username",
             ...     num_of_posts=50,
-            ...     start_date="01-01-2024",
-            ...     end_date="12-31-2024",
+            ...     start_date="01-01-2025",
+            ...     end_date="12-31-2025",
             ...     timeout=240
             ... )
         """
@@ -283,5 +283,26 @@ class InstagramSearchScraper:
         if is_single and isinstance(result.data, list) and len(result.data) == 1:
             result.url = url if isinstance(url, str) else url[0]
             result.data = result.data[0]
+            return result
+        elif not is_single and isinstance(result.data, list):
+            from ...models import ScrapeResult
 
+            results = []
+            url_list = url if isinstance(url, list) else [url]
+            for url_item, data_item in zip(url_list, result.data):
+                results.append(
+                    ScrapeResult(
+                        success=True,
+                        data=data_item,
+                        url=url_item,
+                        platform="instagram",
+                        trigger_sent_at=result.trigger_sent_at,
+                        snapshot_id_received_at=result.snapshot_id_received_at,
+                        snapshot_polled_at=result.snapshot_polled_at,
+                        data_fetched_at=result.data_fetched_at,
+                        snapshot_id=result.snapshot_id,
+                        cost=result.cost / len(result.data) if result.cost else None,
+                    )
+                )
+            return results
         return result

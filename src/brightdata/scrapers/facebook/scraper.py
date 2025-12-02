@@ -97,8 +97,8 @@ class FacebookScraper(BaseWebScraper):
             >>> result = await scraper.posts_by_profile_async(
             ...     url="https://facebook.com/profile",
             ...     num_of_posts=10,
-            ...     start_date="01-01-2024",
-            ...     end_date="12-31-2024",
+            ...     start_date="01-01-2025",
+            ...     end_date="12-31-2025",
             ...     timeout=240
             ... )
         """
@@ -431,8 +431,8 @@ class FacebookScraper(BaseWebScraper):
             >>> result = await scraper.comments_async(
             ...     url="https://facebook.com/post/123456",
             ...     num_of_comments=100,
-            ...     start_date="01-01-2024",
-            ...     end_date="12-31-2024",
+            ...     start_date="01-01-2025",
+            ...     end_date="12-31-2025",
             ...     timeout=240
             ... )
         """
@@ -669,7 +669,28 @@ class FacebookScraper(BaseWebScraper):
         if is_single and isinstance(result.data, list) and len(result.data) == 1:
             result.url = url if isinstance(url, str) else url[0]
             result.data = result.data[0]
+            return result
+        elif not is_single and isinstance(result.data, list):
+            from ...models import ScrapeResult
 
+            results = []
+            for url_item, data_item in zip(url_list, result.data):
+                results.append(
+                    ScrapeResult(
+                        success=True,
+                        data=data_item,
+                        url=url_item,
+                        platform=result.platform,
+                        method=result.method,
+                        trigger_sent_at=result.trigger_sent_at,
+                        snapshot_id_received_at=result.snapshot_id_received_at,
+                        snapshot_polled_at=result.snapshot_polled_at,
+                        data_fetched_at=result.data_fetched_at,
+                        snapshot_id=result.snapshot_id,
+                        cost=result.cost / len(result.data) if result.cost else None,
+                    )
+                )
+            return results
         return result
 
     async def _scrape_with_params(
@@ -737,5 +758,27 @@ class FacebookScraper(BaseWebScraper):
         if is_single and isinstance(result.data, list) and len(result.data) == 1:
             result.url = url if isinstance(url, str) else url[0]
             result.data = result.data[0]
+            return result
+        elif not is_single and isinstance(result.data, list):
+            from ...models import ScrapeResult
 
+            results = []
+            url_list = url if isinstance(url, list) else [url]
+            for url_item, data_item in zip(url_list, result.data):
+                results.append(
+                    ScrapeResult(
+                        success=True,
+                        data=data_item,
+                        url=url_item,
+                        platform=result.platform,
+                        method=result.method,
+                        trigger_sent_at=result.trigger_sent_at,
+                        snapshot_id_received_at=result.snapshot_id_received_at,
+                        snapshot_polled_at=result.snapshot_polled_at,
+                        data_fetched_at=result.data_fetched_at,
+                        snapshot_id=result.snapshot_id,
+                        cost=result.cost / len(result.data) if result.cost else None,
+                    )
+                )
+            return results
         return result

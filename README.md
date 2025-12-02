@@ -1,12 +1,51 @@
 # Bright Data Python SDK 🐍
 
-[![Tests](https://img.shields.io/badge/tests-502%2B%20passing-brightgreen)](https://github.com/vzucher/brightdata-sdk-python)
+[![Tests](https://img.shields.io/badge/tests-502%2B%20passing-brightgreen)](https://github.com/brightdata/sdk-python)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Code Quality](https://img.shields.io/badge/quality-enterprise--grade-gold)](https://github.com/vzucher/brightdata-sdk-python)
+[![Code Quality](https://img.shields.io/badge/quality-enterprise--grade-gold)](https://github.com/brightdata/sdk-python)
 [![Notebooks](https://img.shields.io/badge/jupyter-5%20notebooks-orange)](notebooks/)
 
 Modern async-first Python SDK for [Bright Data](https://brightdata.com) APIs with **dataclass payloads**, **Jupyter notebooks**, comprehensive platform support, and **CLI tool** - built for data scientists and developers.
+
+---
+
+## 📑 Table of Contents
+
+- [✨ Features](#-features)
+- [📓 Jupyter Notebooks](#-jupyter-notebooks-new)
+- [📦 Installation](#-installation)
+- [🚀 Quick Start](#-quick-start)
+  - [Authentication](#authentication)
+  - [Simple Web Scraping](#simple-web-scraping)
+  - [Using Dataclass Payloads](#using-dataclass-payloads-type-safe-)
+  - [Pandas Integration](#pandas-integration-for-data-scientists-)
+  - [Platform-Specific Scraping](#platform-specific-scraping)
+  - [Search Engine Results (SERP)](#search-engine-results-serp)
+  - [Async Usage](#async-usage)
+- [🆕 What's New in v2.0.0](#-whats-new-in-v2-200)
+- [🏗️ Architecture](#️-architecture)
+- [📚 API Reference](#-api-reference)
+  - [Client Initialization](#client-initialization)
+  - [Connection Testing](#connection-testing)
+  - [Zone Management](#zone-management)
+  - [Result Objects](#result-objects)
+- [🖥️ CLI Usage](#️-cli-usage)
+- [🐼 Pandas Integration](#-pandas-integration)
+- [🎨 Dataclass Payloads](#-dataclass-payloads)
+- [🔧 Advanced Usage](#-advanced-usage)
+- [🧪 Testing](#-testing)
+- [🏛️ Design Philosophy](#️-design-philosophy)
+- [📖 Documentation](#-documentation)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [🤝 Contributing](#-contributing)
+- [📊 Project Stats](#-project-stats)
+- [📝 License](#-license)
+- [🔗 Links](#-links)
+- [💡 Examples](#-examples)
+- [🎯 Roadmap](#-roadmap)
+- [🙏 Acknowledgments](#-acknowledgments)
+- [🌟 Why Choose This SDK?](#-why-choose-this-sdk)
 
 ---
 
@@ -44,11 +83,11 @@ Modern async-first Python SDK for [Bright Data](https://brightdata.com) APIs wit
 
 Perfect for data scientists! Interactive tutorials with examples:
 
-1. **[01_quickstart.ipynb](notebooks/01_quickstart.ipynb)** - Get started in 5 minutes [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/01_quickstart.ipynb)
-2. **[02_pandas_integration.ipynb](notebooks/02_pandas_integration.ipynb)** - Work with DataFrames [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/02_pandas_integration.ipynb)
-3. **[03_amazon_scraping.ipynb](notebooks/03_amazon_scraping.ipynb)** - Amazon deep dive [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/03_amazon_scraping.ipynb)
-4. **[04_linkedin_jobs.ipynb](notebooks/04_linkedin_jobs.ipynb)** - Job market analysis [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/04_linkedin_jobs.ipynb)
-5. **[05_batch_processing.ipynb](notebooks/05_batch_processing.ipynb)** - Scale to 1000s of URLs [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vzucher/brightdata-sdk-python/blob/master/notebooks/05_batch_processing.ipynb)
+1. **[01_quickstart.ipynb](notebooks/01_quickstart.ipynb)** - Get started in 5 minutes [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/01_quickstart.ipynb)
+2. **[02_pandas_integration.ipynb](notebooks/02_pandas_integration.ipynb)** - Work with DataFrames [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/02_pandas_integration.ipynb)
+3. **[03_amazon_scraping.ipynb](notebooks/03_amazon_scraping.ipynb)** - Amazon deep dive [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/03_amazon_scraping.ipynb)
+4. **[04_linkedin_jobs.ipynb](notebooks/04_linkedin_jobs.ipynb)** - Job market analysis [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/04_linkedin_jobs.ipynb)
+5. **[05_batch_processing.ipynb](notebooks/05_batch_processing.ipynb)** - Scale to 1000s of URLs [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/05_batch_processing.ipynb)
 
 ---
 
@@ -61,8 +100,8 @@ pip install brightdata-sdk
 Or install from source:
 
 ```bash
-git clone https://github.com/vzucher/brightdata-sdk-python.git
-cd brightdata-sdk-python
+git clone https://github.com/brightdata/sdk-python.git
+cd sdk-python
 pip install -e .
 ```
 
@@ -198,6 +237,21 @@ result = client.scrape.amazon.reviews(
 result = client.scrape.amazon.sellers(
     url="https://amazon.com/sp?seller=AXXXXXXXXX"
 )
+
+# NEW: Search Amazon by keyword and filters
+result = client.search.amazon.products(
+    keyword="laptop",
+    min_price=50000,    # $500 in cents
+    max_price=200000,   # $2000 in cents
+    prime_eligible=True,
+    condition="new"
+)
+
+# Search by category
+result = client.search.amazon.products(
+    keyword="wireless headphones",
+    category="electronics"
+)
 ```
 
 #### LinkedIn Data
@@ -235,8 +289,8 @@ result = client.search.linkedin.profiles(
 
 result = client.search.linkedin.posts(
     profile_url="https://linkedin.com/in/johndoe",
-    start_date="2024-01-01",
-    end_date="2024-12-31"
+    start_date="2025-01-01",
+    end_date="2025-12-31"
 )
 ```
 
@@ -264,8 +318,8 @@ result = client.scrape.chatgpt.prompts(
 result = client.scrape.facebook.posts_by_profile(
     url="https://facebook.com/profile",
     num_of_posts=10,
-    start_date="01-01-2024",
-    end_date="12-31-2024",
+    start_date="01-01-2025",
+    end_date="12-31-2025",
     timeout=240
 )
 
@@ -286,8 +340,8 @@ result = client.scrape.facebook.posts_by_url(
 result = client.scrape.facebook.comments(
     url="https://facebook.com/post/123456",
     num_of_comments=100,
-    start_date="01-01-2024",
-    end_date="12-31-2024",
+    start_date="01-01-2025",
+    end_date="12-31-2025",
     timeout=240
 )
 
@@ -330,8 +384,8 @@ result = client.scrape.instagram.reels(
 result = client.search.instagram.posts(
     url="https://instagram.com/username",
     num_of_posts=10,
-    start_date="01-01-2024",
-    end_date="12-31-2024",
+    start_date="01-01-2025",
+    end_date="12-31-2025",
     post_type="reel",
     timeout=240
 )
@@ -340,8 +394,8 @@ result = client.search.instagram.posts(
 result = client.search.instagram.reels(
     url="https://instagram.com/username",
     num_of_posts=50,
-    start_date="01-01-2024",
-    end_date="12-31-2024",
+    start_date="01-01-2025",
+    end_date="12-31-2025",
     timeout=240
 )
 ```
@@ -403,7 +457,16 @@ asyncio.run(scrape_multiple())
 
 ---
 
-## 🆕 What's New in v26.11.24
+## 🆕 What's New in v2 2.0.0
+
+### 🆕 **Latest Updates (December 2025)**
+- ✅ **Amazon Search API** - NEW parameter-based product discovery
+- ✅ **LinkedIn Job Search Fixed** - Now builds URLs from keywords internally
+- ✅ **Trigger Interface** - Manual trigger/poll/fetch control for all platforms
+- ✅ **Auto-Create Zones** - Now enabled by default (was opt-in)
+- ✅ **Improved Zone Names** - `sdk_unlocker`, `sdk_serp`, `sdk_browser`
+- ✅ **26 Sync Wrapper Fixes** - All platform scrapers now work without context managers
+- ✅ **Zone Manager Tests Fixed** - All 22 tests passing
 
 ### 🎓 **For Data Scientists**
 - ✅ **5 Jupyter Notebooks** - Complete interactive tutorials
@@ -422,17 +485,18 @@ asyncio.run(scrape_multiple())
 
 ### 🖥️ **CLI Tool**
 - ✅ **`brightdata` command** - Use SDK from terminal
-- ✅ **Scrape operations** - `brightdata scrape amazon products --url ...`
-- ✅ **Search operations** - `brightdata search linkedin jobs --keyword ...`
+- ✅ **Scrape operations** - `brightdata scrape amazon products ...`
+- ✅ **Search operations** - `brightdata search amazon products --keyword ...`
 - ✅ **Output formats** - JSON, pretty-print, minimal
 
 ### 🏗️ **Architecture Improvements**
 - ✅ **Single AsyncEngine** - Shared across all scrapers (8x efficiency)
 - ✅ **Resource Optimization** - Reduced memory footprint
 - ✅ **Enhanced Error Messages** - Clear, actionable error messages
-- ✅ **502+ Tests** - Comprehensive test coverage
+- ✅ **500+ Tests Passing** - Comprehensive test coverage (99.4%)
 
-### 🆕 **New Platforms**
+### 🆕 **Platforms & Features**
+- ✅ **Amazon Search** - Keyword-based product discovery
 - ✅ **Facebook Scraper** - Posts (profile/group/URL), Comments, Reels
 - ✅ **Instagram Scraper** - Profiles, Posts, Comments, Reels
 - ✅ **Instagram Search** - Posts and Reels discovery with filters
@@ -456,6 +520,7 @@ client.scrape.instagram.profiles(url="...")
 client.scrape.generic.url(url="...")
 
 # Parameter-based discovery (search namespace)
+client.search.amazon.products(keyword="...", min_price=..., max_price=...)
 client.search.linkedin.jobs(keyword="...", location="...")
 client.search.instagram.posts(url="...", num_of_posts=10)
 client.search.google(query="...")
@@ -490,11 +555,11 @@ client = BrightDataClient(
     token="your_token",               # Auto-loads from BRIGHTDATA_API_TOKEN if not provided
     customer_id="your_customer_id",   # Auto-loads from BRIGHTDATA_CUSTOMER_ID (optional)
     timeout=30,                        # Default timeout in seconds
-    web_unlocker_zone="sdk_unlocker",  # Web Unlocker zone name
-    serp_zone="sdk_serp",              # SERP API zone name
-    browser_zone="sdk_browser",        # Browser API zone name
-    auto_create_zones=False,           # Auto-create missing zones
-    validate_token=False               # Validate token on init
+    web_unlocker_zone="sdk_unlocker",  # Web Unlocker zone name (default)
+    serp_zone="sdk_serp",              # SERP API zone name (default)
+    browser_zone="sdk_browser",        # Browser API zone name (default)
+    auto_create_zones=True,            # Auto-create missing zones (default: True)
+    validate_token=False               # Validate token on init (default: False)
 )
 ```
 
@@ -639,6 +704,7 @@ brightdata scrape generic \
 - `brightdata scrape generic url`
 
 **Search Operations:**
+- `brightdata search amazon products`
 - `brightdata search linkedin jobs/profiles/posts`
 - `brightdata search instagram posts/reels`
 - `brightdata search google/bing/yandex`
@@ -1079,8 +1145,8 @@ Contributions are welcome! Please see [CONTRIBUTING.md](docs/contributing.md) fo
 ### Development Setup
 
 ```bash
-git clone https://github.com/vzucher/brightdata-sdk-python.git
-cd brightdata-sdk-python
+git clone https://github.com/brightdata/sdk-python.git
+cd sdk-python
 
 # Install with dev dependencies
 pip install -e ".[dev]"
@@ -1120,8 +1186,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 - [Bright Data](https://brightdata.com) - Get your API token
 - [API Documentation](https://docs.brightdata.com)
-- [GitHub Repository](https://github.com/vzucher/brightdata-sdk-python)
-- [Issue Tracker](https://github.com/vzucher/brightdata-sdk-python/issues)
+- [GitHub Repository](https://github.com/brightdata/sdk-python)
+- [Issue Tracker](https://github.com/brightdata/sdk-python/issues)
 
 ---
 
