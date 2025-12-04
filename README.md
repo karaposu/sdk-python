@@ -83,11 +83,11 @@ Modern async-first Python SDK for [Bright Data](https://brightdata.com) APIs wit
 
 Perfect for data scientists! Interactive tutorials with examples:
 
-1. **[01_quickstart.ipynb](notebooks/01_quickstart.ipynb)** - Get started in 5 minutes [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/01_quickstart.ipynb)
-2. **[02_pandas_integration.ipynb](notebooks/02_pandas_integration.ipynb)** - Work with DataFrames [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/02_pandas_integration.ipynb)
-3. **[03_amazon_scraping.ipynb](notebooks/03_amazon_scraping.ipynb)** - Amazon deep dive [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/03_amazon_scraping.ipynb)
-4. **[04_linkedin_jobs.ipynb](notebooks/04_linkedin_jobs.ipynb)** - Job market analysis [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/04_linkedin_jobs.ipynb)
-5. **[05_batch_processing.ipynb](notebooks/05_batch_processing.ipynb)** - Scale to 1000s of URLs [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/master/notebooks/05_batch_processing.ipynb)
+1. **[01_quickstart.ipynb](notebooks/01_quickstart.ipynb)** - Get started in 5 minutes [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/main/notebooks/01_quickstart.ipynb)
+2. **[02_pandas_integration.ipynb](notebooks/02_pandas_integration.ipynb)** - Work with DataFrames [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/main/notebooks/02_pandas_integration.ipynb)
+3. **[03_amazon_scraping.ipynb](notebooks/03_amazon_scraping.ipynb)** - Amazon deep dive [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/main/notebooks/03_amazon_scraping.ipynb)
+4. **[04_linkedin_jobs.ipynb](notebooks/04_linkedin_jobs.ipynb)** - Job market analysis [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/main/notebooks/04_linkedin_jobs.ipynb)
+5. **[05_batch_processing.ipynb](notebooks/05_batch_processing.ipynb)** - Scale to 1000s of URLs [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/brightdata/sdk-python/blob/main/notebooks/05_batch_processing.ipynb)
 
 ---
 
@@ -149,9 +149,9 @@ client = BrightDataClient()
 result = client.scrape.generic.url("https://example.com")
 
 if result.success:
-    print(f"Success: {result.success}")
-    print(f"Data: {result.data[:200]}...")
-    print(f"Time: {result.elapsed_ms():.2f}ms")
+print(f"Success: {result.success}")
+print(f"Data: {result.data[:200]}...")
+print(f"Time: {result.elapsed_ms():.2f}ms")
 else:
     print(f"Error: {result.error}")
 ```
@@ -460,13 +460,14 @@ asyncio.run(scrape_multiple())
 ## 🆕 What's New in v2 2.0.0
 
 ### 🆕 **Latest Updates (December 2025)**
-- ✅ **Amazon Search API** - NEW parameter-based product discovery
+- ✅ **Amazon Search API** - NEW parameter-based product discovery with correct dataset
 - ✅ **LinkedIn Job Search Fixed** - Now builds URLs from keywords internally
 - ✅ **Trigger Interface** - Manual trigger/poll/fetch control for all platforms
+- ✅ **29 Sync Wrapper Fixes** - All sync methods work (scrapers + SERP API)
+- ✅ **Batch Operations Fixed** - Returns List[ScrapeResult] correctly
 - ✅ **Auto-Create Zones** - Now enabled by default (was opt-in)
 - ✅ **Improved Zone Names** - `sdk_unlocker`, `sdk_serp`, `sdk_browser`
-- ✅ **26 Sync Wrapper Fixes** - All platform scrapers now work without context managers
-- ✅ **Zone Manager Tests Fixed** - All 22 tests passing
+- ✅ **Full Sync/Async Examples** - README now shows both patterns for all features
 
 ### 🎓 **For Data Scientists**
 - ✅ **5 Jupyter Notebooks** - Complete interactive tutorials
@@ -924,28 +925,198 @@ result = client.search.linkedin.jobs(
 )
 ```
 
-### Sync vs Async Methods
+### Sync vs Async Examples - Full Coverage
+
+All SDK methods support **both sync and async** patterns. Choose based on your needs:
+
+#### **Amazon Products**
 
 ```python
-# Sync wrapper - for simple scripts (blocks until complete)
-result = client.scrape.linkedin.profiles(
-    url="https://linkedin.com/in/johndoe",
-    timeout=300      # Max wait time in seconds
-)
+# SYNC - Simple scripts
+result = client.scrape.amazon.products(url="https://amazon.com/dp/B123")
 
-# Async method - for concurrent operations (requires async context)
+# ASYNC - Concurrent operations
 import asyncio
 
-async def scrape_profiles():
+async def scrape_amazon():
     async with BrightDataClient() as client:
-        result = await client.scrape.linkedin.profiles_async(
-            url="https://linkedin.com/in/johndoe",
-            timeout=300
+        result = await client.scrape.amazon.products_async(url="https://amazon.com/dp/B123")
+        return result
+
+result = asyncio.run(scrape_amazon())
+```
+
+#### **Amazon Search**
+
+```python
+# SYNC - Simple keyword search
+result = client.search.amazon.products(keyword="laptop", prime_eligible=True)
+
+# ASYNC - Batch keyword searches
+async def search_amazon():
+    async with BrightDataClient() as client:
+        result = await client.search.amazon.products_async(
+            keyword="laptop",
+            min_price=50000,
+            max_price=200000,
+            prime_eligible=True
         )
         return result
 
-result = asyncio.run(scrape_profiles())
+result = asyncio.run(search_amazon())
 ```
+
+#### **LinkedIn Scraping**
+
+```python
+# SYNC - Single profile
+result = client.scrape.linkedin.profiles(url="https://linkedin.com/in/johndoe")
+
+# ASYNC - Multiple profiles concurrently
+async def scrape_linkedin():
+    async with BrightDataClient() as client:
+        urls = ["https://linkedin.com/in/person1", "https://linkedin.com/in/person2"]
+        results = await client.scrape.linkedin.profiles_async(url=urls)
+        return results
+
+results = asyncio.run(scrape_linkedin())
+```
+
+#### **LinkedIn Job Search**
+
+```python
+# SYNC - Simple job search
+result = client.search.linkedin.jobs(keyword="python", location="NYC", remote=True)
+
+# ASYNC - Advanced search with filters
+async def search_jobs():
+    async with BrightDataClient() as client:
+        result = await client.search.linkedin.jobs_async(
+            keyword="python developer",
+            location="New York",
+            experienceLevel="mid",
+            jobType="full-time",
+            remote=True
+        )
+        return result
+
+result = asyncio.run(search_jobs())
+```
+
+#### **SERP API (Google, Bing, Yandex)**
+
+```python
+# SYNC - Quick Google search
+result = client.search.google(query="python tutorial", location="United States")
+
+# ASYNC - Multiple search engines concurrently
+async def search_all_engines():
+    async with BrightDataClient() as client:
+        google = await client.search.google_async(query="python", num_results=10)
+        bing = await client.search.bing_async(query="python", num_results=10)
+        yandex = await client.search.yandex_async(query="python", num_results=10)
+        return google, bing, yandex
+
+results = asyncio.run(search_all_engines())
+```
+
+#### **Facebook Scraping**
+
+```python
+# SYNC - Single profile posts
+result = client.scrape.facebook.posts_by_profile(
+    url="https://facebook.com/profile",
+    num_of_posts=10
+)
+
+# ASYNC - Multiple sources
+async def scrape_facebook():
+    async with BrightDataClient() as client:
+        profile_posts = await client.scrape.facebook.posts_by_profile_async(
+            url="https://facebook.com/zuck",
+            num_of_posts=10
+        )
+        group_posts = await client.scrape.facebook.posts_by_group_async(
+            url="https://facebook.com/groups/programming",
+            num_of_posts=10
+        )
+        return profile_posts, group_posts
+
+results = asyncio.run(scrape_facebook())
+```
+
+#### **Instagram Scraping**
+
+```python
+# SYNC - Single profile
+result = client.scrape.instagram.profiles(url="https://instagram.com/instagram")
+
+# ASYNC - Profile + posts
+async def scrape_instagram():
+    async with BrightDataClient() as client:
+        profile = await client.scrape.instagram.profiles_async(
+            url="https://instagram.com/instagram"
+        )
+        posts = await client.scrape.instagram.posts_async(
+            url="https://instagram.com/p/ABC123"
+        )
+        return profile, posts
+
+results = asyncio.run(scrape_instagram())
+```
+
+#### **ChatGPT**
+
+```python
+# SYNC - Single prompt
+result = client.scrape.chatgpt.prompt(prompt="Explain Python", web_search=True)
+
+# ASYNC - Batch prompts
+async def ask_chatgpt():
+    async with BrightDataClient() as client:
+        result = await client.scrape.chatgpt.prompts_async(
+            prompts=["What is Python?", "What is JavaScript?"],
+            web_searches=[False, True]
+        )
+        return result
+
+result = asyncio.run(ask_chatgpt())
+```
+
+#### **Generic Web Scraping**
+
+```python
+# SYNC - Single URL
+result = client.scrape.generic.url(url="https://example.com")
+
+# ASYNC - Concurrent scraping
+async def scrape_multiple():
+    async with BrightDataClient() as client:
+        results = await client.scrape.generic.url_async([
+            "https://example1.com",
+            "https://example2.com",
+            "https://example3.com"
+        ])
+        return results
+
+results = asyncio.run(scrape_multiple())
+```
+
+---
+
+### **When to Use Sync vs Async**
+
+**Use Sync When:**
+- ✅ Simple scripts or notebooks
+- ✅ Single operations at a time
+- ✅ Learning or prototyping
+- ✅ Sequential workflows
+
+**Use Async When:**
+- ✅ Scraping multiple URLs concurrently
+- ✅ Combining multiple API calls
+- ✅ Production applications
+- ✅ Performance-critical operations
 
 **Note:** Sync wrappers (e.g., `profiles()`) internally use `asyncio.run()` and cannot be called from within an existing async context. Use `*_async` methods when you're already in an async function.
 
@@ -1078,10 +1249,8 @@ pytest tests/ --cov=brightdata --cov-report=html
 - [All examples →](examples/)
 
 ### Documentation
-- [Quick Start Guide](docs/quickstart.md)
-- [Architecture Overview](docs/architecture.md)
 - [API Reference](docs/api-reference/)
-- [Contributing Guide](docs/contributing.md)
+- [Contributing Guidelines](https://github.com/brightdata/sdk-python/blob/main/CONTRIBUTING.md) (See upstream repo)
 
 ---
 
@@ -1140,7 +1309,7 @@ pip install -e .
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](docs/contributing.md) for guidelines.
+Contributions are welcome! Check the [GitHub repository](https://github.com/brightdata/sdk-python) for contribution guidelines.
 
 ### Development Setup
 
@@ -1238,7 +1407,7 @@ if client.test_connection_sync():
     )
     
     if fb_posts.success:
-        print(f"Scraped {len(fb_posts.data)} Facebook posts")
+    print(f"Scraped {len(fb_posts.data)} Facebook posts")
     
     # Scrape Instagram profile
     ig_profile = client.scrape.instagram.profiles(
@@ -1269,37 +1438,6 @@ Run the included demo to explore the SDK interactively:
 ```bash
 python demo_sdk.py
 ```
-
----
-
-## 🎯 Roadmap
-
-### ✅ Completed
-- [x] Core client with authentication
-- [x] Web Unlocker service
-- [x] Platform scrapers (Amazon, LinkedIn, ChatGPT, Facebook, Instagram)
-- [x] SERP API (Google, Bing, Yandex)
-- [x] Comprehensive test suite (502+ tests)
-- [x] .env file support via python-dotenv
-- [x] SSL error handling with helpful guidance
-- [x] Centralized constants module
-- [x] Function-level monitoring
-- [x] **Dataclass payloads with validation**
-- [x] **Jupyter notebooks for data scientists**
-- [x] **CLI tool (brightdata command)**
-- [x] **Pandas integration examples**
-- [x] **Single shared AsyncEngine (8x efficiency)**
-
-### 🚧 In Progress
-- [ ] Browser automation API
-- [ ] Web crawler API
-
-### 🔮 Future
-- [ ] Additional platforms (Reddit, Twitter/X, TikTok, YouTube)
-- [ ] Real-time data streaming
-- [ ] Advanced caching strategies
-- [ ] Prometheus metrics export
-
 ---
 
 ## 🙏 Acknowledgments
