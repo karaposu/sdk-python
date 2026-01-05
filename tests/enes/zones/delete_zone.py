@@ -61,9 +61,7 @@ async def demo_delete_zone():
                 async with test_client:
                     # Trigger zone creation
                     try:
-                        await test_client.scrape_url(
-                            url="https://example.com", zone=test_zone_name
-                        )
+                        await test_client.scrape_url(url="https://example.com", zone=test_zone_name)
                     except Exception as e:
                         # Zone might be created even if scrape fails
                         print(f"   ℹ️  Scrape error (expected): {e}")

@@ -308,7 +308,7 @@ class WebUnlockerService(BaseAPI):
                 url=url,
                 format=response_format,
                 method=method,
-                country=country.upper() if country else None
+                country=country.upper() if country else None,
             )
         except Exception as e:
             return ScrapeResult(
@@ -370,9 +370,7 @@ class WebUnlockerService(BaseAPI):
 
                 try:
                     data = await self.async_unblocker.fetch_result(
-                        zone,
-                        response_id,
-                        response_format=response_format
+                        zone, response_id, response_format=response_format
                     )
 
                     root_domain = extract_root_domain(url)

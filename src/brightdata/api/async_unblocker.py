@@ -70,7 +70,7 @@ class AsyncUnblockerClient:
         zone: str,
         url: str,
         customer: Optional[str] = None,
-        **kwargs  # Additional params like country, format, etc.
+        **kwargs,  # Additional params like country, format, etc.
     ) -> Optional[str]:
         """
         Trigger async unblocker request.
@@ -105,21 +105,14 @@ class AsyncUnblockerClient:
         payload.update(kwargs)
 
         async with self.engine.post_to_url(
-            f"{self.engine.BASE_URL}{self.TRIGGER_ENDPOINT}",
-            params=params,
-            json_data=payload
+            f"{self.engine.BASE_URL}{self.TRIGGER_ENDPOINT}", params=params, json_data=payload
         ) as response:
             # Extract response_id from x-response-id header
             # Note: This is different from datasets API which returns snapshot_id in body
             response_id = response.headers.get("x-response-id")
             return response_id
 
-    async def get_status(
-        self,
-        zone: str,
-        response_id: str,
-        customer: Optional[str] = None
-    ) -> str:
+    async def get_status(self, zone: str, response_id: str, customer: Optional[str] = None) -> str:
         """
         Check if response is ready.
 
@@ -142,18 +135,14 @@ class AsyncUnblockerClient:
             >>> if status == "ready":
             ...     # Fetch results
         """
-        params = {
-            "zone": zone,
-            "response_id": response_id
-        }
+        params = {"zone": zone, "response_id": response_id}
 
         # Add customer to query params if provided
         if customer:
             params["customer"] = customer
 
         async with self.engine.get_from_url(
-            f"{self.engine.BASE_URL}{self.FETCH_ENDPOINT}",
-            params=params
+            f"{self.engine.BASE_URL}{self.FETCH_ENDPOINT}", params=params
         ) as response:
             if response.status == 200:
                 return "ready"
@@ -168,7 +157,7 @@ class AsyncUnblockerClient:
         zone: str,
         response_id: str,
         response_format: str = "json",
-        customer: Optional[str] = None
+        customer: Optional[str] = None,
     ) -> Any:
         """
         Fetch results when ready.
@@ -203,18 +192,14 @@ class AsyncUnblockerClient:
             ...     customer="hl_67e5ed38"
             ... )
         """
-        params = {
-            "zone": zone,
-            "response_id": response_id
-        }
+        params = {"zone": zone, "response_id": response_id}
 
         # Add customer to query params if provided
         if customer:
             params["customer"] = customer
 
         async with self.engine.get_from_url(
-            f"{self.engine.BASE_URL}{self.FETCH_ENDPOINT}",
-            params=params
+            f"{self.engine.BASE_URL}{self.FETCH_ENDPOINT}", params=params
         ) as response:
             if response.status == 200:
                 # Success - parse based on format

@@ -214,9 +214,7 @@ class TestClientErrorHandling:
 
     def test_sync_connection_test_returns_false_on_error(self):
         """Test sync connection test returns False on errors using SyncBrightDataClient."""
-        with SyncBrightDataClient(
-            token="test_token_123456789", auto_create_zones=False
-        ) as client:
+        with SyncBrightDataClient(token="test_token_123456789", auto_create_zones=False) as client:
             # Should return False, not raise exception
             is_valid = client.test_connection()
             assert is_valid is False

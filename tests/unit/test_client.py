@@ -71,7 +71,6 @@ class TestClientInitialization:
         assert "Invalid token format" in str(exc_info.value)
 
 
-
 class TestClientTokenManagement:
     """Test token management and validation."""
 

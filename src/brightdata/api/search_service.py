@@ -103,7 +103,6 @@ class SearchService:
             **kwargs,
         )
 
-
     async def bing(
         self,
         query: Union[str, List[str]],
@@ -132,7 +131,6 @@ class SearchService:
             **kwargs,
         )
 
-
     async def yandex(
         self,
         query: Union[str, List[str]],
@@ -160,7 +158,6 @@ class SearchService:
             num_results=num_results,
             **kwargs,
         )
-
 
     @property
     def amazon(self):
