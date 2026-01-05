@@ -45,6 +45,37 @@ async with BrightDataClient() as client:
     print(result.data)
 ```
 
+#### Web Scraping Async Mode
+
+For non-blocking web scraping, use `mode="async"`. This triggers a request and returns a `response_id`, which the SDK automatically polls until results are ready:
+
+```python
+async with BrightDataClient() as client:
+    # Triggers request → gets response_id → polls until ready
+    result = await client.scrape_url(
+        url="https://example.com",
+        mode="async",
+        poll_interval=5,    # Check every 5 seconds
+        poll_timeout=180    # Web Unlocker async can take ~2 minutes
+    )
+    print(result.data)
+
+    # Batch scraping multiple URLs concurrently
+    urls = ["https://example.com", "https://example.org", "https://example.net"]
+    results = await client.scrape_url(url=urls, mode="async", poll_timeout=180)
+```
+
+**How it works:**
+1. Sends request to `/unblocker/req` → returns `response_id` immediately
+2. Polls `/unblocker/get_result?response_id=...` until ready or timeout
+3. Returns the scraped data
+
+**When to use async mode:**
+- Batch scraping with many URLs
+- Background processing while continuing other work
+
+**Performance note:** Web Unlocker async mode typically takes ~2 minutes to complete. For faster results on single URLs, use the default sync mode (no `mode` parameter).
+
 ### Search Engines (SERP)
 
 ```python
@@ -53,6 +84,31 @@ async with BrightDataClient() as client:
     for item in result.data:
         print(item)
 ```
+
+#### SERP Async Mode
+
+For non-blocking SERP requests, use `mode="async"`:
+
+```python
+async with BrightDataClient() as client:
+    # Non-blocking - polls for results
+    result = await client.search.google(
+        query="python programming",
+        mode="async",
+        poll_interval=2,   # Check every 2 seconds
+        poll_timeout=30    # Give up after 30 seconds
+    )
+
+    for item in result.data:
+        print(item['title'], item['link'])
+```
+
+**When to use async mode:**
+- Batch operations with many queries
+- Background processing while continuing other work
+- When scraping may take longer than usual
+
+**Note:** Async mode uses the same zones and returns the same data structure as sync mode - no extra configuration needed!
 
 ### Web Scraper API
 
