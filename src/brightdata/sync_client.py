@@ -5,7 +5,7 @@ Provides sync interface using persistent event loop for optimal performance.
 """
 
 import asyncio
-from typing import Optional, List, Dict, Any, Union
+from typing import Optional, List, Dict, Any
 
 from .client import BrightDataClient
 from .models import ScrapeResult, SearchResult

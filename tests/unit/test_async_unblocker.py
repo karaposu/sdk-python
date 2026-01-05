@@ -1,7 +1,7 @@
 """Unit tests for AsyncUnblockerClient."""
 
 import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 from brightdata.api.async_unblocker import AsyncUnblockerClient
 from brightdata.exceptions import APIError
 
