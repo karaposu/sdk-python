@@ -258,6 +258,7 @@ class TestChatGPTScraper:
     def test_chatgpt_scraper_scrape_raises_not_implemented(self):
         """Test ChatGPTScraper raises NotImplementedError for scrape()."""
         import asyncio
+
         scraper = ChatGPTScraper(bearer_token="test_token_123456789")
 
         async def test_scrape():
@@ -413,6 +414,7 @@ class TestInterfaceConsistency:
     def test_chatgpt_interface_matches_spec(self):
         """Test ChatGPT scraper matches interface specification."""
         import asyncio
+
         scraper = ChatGPTScraper(bearer_token="test_token_123456789")
 
         # Prompt-based (ChatGPT specific)

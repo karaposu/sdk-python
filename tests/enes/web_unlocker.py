@@ -33,9 +33,7 @@ async def test_web_unlocker_single_url():
         print("📍 URL: https://httpbin.org/html")
 
         try:
-            result = await client.scrape_url(
-                url="https://httpbin.org/html", response_format="raw"
-            )
+            result = await client.scrape_url(url="https://httpbin.org/html", response_format="raw")
 
             print("\n✅ API call succeeded")
             print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")
@@ -86,9 +84,7 @@ async def test_web_unlocker_json_format():
         print("📍 URL: https://httpbin.org/json")
 
         try:
-            result = await client.scrape_url(
-                url="https://httpbin.org/json", response_format="json"
-            )
+            result = await client.scrape_url(url="https://httpbin.org/json", response_format="json")
 
             print("\n✅ API call succeeded")
             print(f"⏱️  Elapsed: {result.elapsed_ms():.2f}ms" if result.elapsed_ms() else "")

@@ -36,15 +36,10 @@ class TestAsyncUnblockerClient:
         response.headers.get.return_value = "test_response_id_123"
 
         # Mock post_to_url to return async context manager
-        self.engine.post_to_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.post_to_url = MagicMock(return_value=MockAsyncContextManager(response))
 
         # Trigger request
-        response_id = await self.client.trigger(
-            zone="test_zone",
-            url="https://example.com"
-        )
+        response_id = await self.client.trigger(zone="test_zone", url="https://example.com")
 
         # Verify response_id returned
         assert response_id == "test_response_id_123"
@@ -62,16 +57,11 @@ class TestAsyncUnblockerClient:
         response = MagicMock()
         response.headers.get.return_value = "response_id_456"
 
-        self.engine.post_to_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.post_to_url = MagicMock(return_value=MockAsyncContextManager(response))
 
         # Trigger with additional params
         response_id = await self.client.trigger(
-            zone="my_zone",
-            url="https://google.com/search?q=test",
-            format="raw",
-            country="US"
+            zone="my_zone", url="https://google.com/search?q=test", format="raw", country="US"
         )
 
         assert response_id == "response_id_456"
@@ -89,14 +79,9 @@ class TestAsyncUnblockerClient:
         response = MagicMock()
         response.headers.get.return_value = None  # No x-response-id
 
-        self.engine.post_to_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.post_to_url = MagicMock(return_value=MockAsyncContextManager(response))
 
-        response_id = await self.client.trigger(
-            zone="test_zone",
-            url="https://example.com"
-        )
+        response_id = await self.client.trigger(zone="test_zone", url="https://example.com")
 
         assert response_id is None
 
@@ -106,14 +91,9 @@ class TestAsyncUnblockerClient:
         response = MagicMock()
         response.status = 200
 
-        self.engine.get_from_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.get_from_url = MagicMock(return_value=MockAsyncContextManager(response))
 
-        status = await self.client.get_status(
-            zone="test_zone",
-            response_id="abc123"
-        )
+        status = await self.client.get_status(zone="test_zone", response_id="abc123")
 
         assert status == "ready"
 
@@ -129,14 +109,9 @@ class TestAsyncUnblockerClient:
         response = MagicMock()
         response.status = 202
 
-        self.engine.get_from_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.get_from_url = MagicMock(return_value=MockAsyncContextManager(response))
 
-        status = await self.client.get_status(
-            zone="test_zone",
-            response_id="xyz789"
-        )
+        status = await self.client.get_status(zone="test_zone", response_id="xyz789")
 
         assert status == "pending"
 
@@ -148,37 +123,24 @@ class TestAsyncUnblockerClient:
             response = MagicMock()
             response.status = error_code
 
-            self.engine.get_from_url = MagicMock(
-                return_value=MockAsyncContextManager(response)
-            )
+            self.engine.get_from_url = MagicMock(return_value=MockAsyncContextManager(response))
 
-            status = await self.client.get_status(
-                zone="test_zone",
-                response_id="err123"
-            )
+            status = await self.client.get_status(zone="test_zone", response_id="err123")
 
             assert status == "error", f"Expected 'error' for HTTP {error_code}"
 
     @pytest.mark.asyncio
     async def test_fetch_result_success(self):
         """Test fetch_result returns parsed JSON for HTTP 200."""
-        expected_data = {
-            "general": {"search_engine": "google"},
-            "organic": [{"title": "Result 1"}]
-        }
+        expected_data = {"general": {"search_engine": "google"}, "organic": [{"title": "Result 1"}]}
 
         response = MagicMock()
         response.status = 200
         response.json = AsyncMock(return_value=expected_data)
 
-        self.engine.get_from_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.get_from_url = MagicMock(return_value=MockAsyncContextManager(response))
 
-        data = await self.client.fetch_result(
-            zone="test_zone",
-            response_id="fetch123"
-        )
+        data = await self.client.fetch_result(zone="test_zone", response_id="fetch123")
 
         assert data == expected_data
         response.json.assert_called_once()
@@ -189,15 +151,10 @@ class TestAsyncUnblockerClient:
         response = MagicMock()
         response.status = 202
 
-        self.engine.get_from_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.get_from_url = MagicMock(return_value=MockAsyncContextManager(response))
 
         with pytest.raises(APIError) as exc_info:
-            await self.client.fetch_result(
-                zone="test_zone",
-                response_id="pending123"
-            )
+            await self.client.fetch_result(zone="test_zone", response_id="pending123")
 
         assert "not ready yet" in str(exc_info.value).lower()
         assert "202" in str(exc_info.value)
@@ -209,15 +166,10 @@ class TestAsyncUnblockerClient:
         response.status = 500
         response.text = AsyncMock(return_value="Internal Server Error")
 
-        self.engine.get_from_url = MagicMock(
-            return_value=MockAsyncContextManager(response)
-        )
+        self.engine.get_from_url = MagicMock(return_value=MockAsyncContextManager(response))
 
         with pytest.raises(APIError) as exc_info:
-            await self.client.fetch_result(
-                zone="test_zone",
-                response_id="error123"
-            )
+            await self.client.fetch_result(zone="test_zone", response_id="error123")
 
         error_msg = str(exc_info.value)
         assert "500" in error_msg

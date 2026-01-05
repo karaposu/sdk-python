@@ -507,7 +507,6 @@ class BrightDataClient:
             poll_timeout=poll_timeout,
         )
 
-
     async def __aenter__(self):
         """Async context manager entry."""
         await self.engine.__aenter__()
@@ -517,9 +516,7 @@ class BrightDataClient:
             is_valid = await self.test_connection()
             if not is_valid:
                 await self.engine.__aexit__(None, None, None)
-                raise AuthenticationError(
-                    "Token validation failed. Please check your API token."
-                )
+                raise AuthenticationError("Token validation failed. Please check your API token.")
 
         await self._ensure_zones()
         return self
@@ -533,5 +530,3 @@ class BrightDataClient:
         token_preview = f"{self.token[:10]}...{self.token[-5:]}" if self.token else "None"
         status = "Connected" if self._is_connected else "Not tested"
         return f"<BrightDataClient token={token_preview} status='{status}'>"
-
-

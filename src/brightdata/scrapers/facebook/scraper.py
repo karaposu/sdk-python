@@ -278,9 +278,7 @@ class FacebookScraper(BaseWebScraper):
 
     # --- Trigger Interface (Manual Control) ---
 
-    async def posts_by_group_trigger(
-        self, url: Union[str, List[str]], **kwargs
-    ) -> "ScrapeJob":
+    async def posts_by_group_trigger(self, url: Union[str, List[str]], **kwargs) -> "ScrapeJob":
         """Trigger Facebook posts by group scrape (async - manual control)."""
         from ..job import ScrapeJob
 

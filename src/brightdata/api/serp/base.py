@@ -153,7 +153,6 @@ class BaseSERPService:
                     **kwargs,
                 )
 
-
     async def _search_single_async(
         self,
         query: str,

@@ -48,9 +48,7 @@ class TestSERPAsyncMode:
     async def test_google_search_sync_mode_explicit(self, async_client):
         """Test sync mode still works when explicitly specified."""
         result = await async_client.search.google(
-            query="python programming",
-            zone=async_client.serp_zone,
-            mode="sync"  # Explicit sync
+            query="python programming", zone=async_client.serp_zone, mode="sync"  # Explicit sync
         )
 
         assert result.success is True, f"Search failed: {result.error}"
@@ -65,7 +63,7 @@ class TestSERPAsyncMode:
         """Test default mode is sync (backwards compatibility)."""
         result = await async_client.search.google(
             query="test query",
-            zone=async_client.serp_zone
+            zone=async_client.serp_zone,
             # No mode parameter - should default to sync
         )
 
@@ -82,8 +80,8 @@ class TestSERPAsyncMode:
             query="python programming",
             zone=async_client.serp_zone,
             mode="async",
-            poll_interval=2,   # Check every 2 seconds
-            poll_timeout=30    # Give up after 30 seconds
+            poll_interval=2,  # Check every 2 seconds
+            poll_timeout=30,  # Give up after 30 seconds
         )
 
         assert result.success is True, f"Async search failed: {result.error}"
@@ -101,18 +99,12 @@ class TestSERPAsyncMode:
 
         # Run sync mode
         sync_result = await async_client.search.google(
-            query=query,
-            zone=async_client.serp_zone,
-            mode="sync"
+            query=query, zone=async_client.serp_zone, mode="sync"
         )
 
         # Run async mode
         async_result = await async_client.search.google(
-            query=query,
-            zone=async_client.serp_zone,
-            mode="async",
-            poll_interval=2,
-            poll_timeout=30
+            query=query, zone=async_client.serp_zone, mode="async", poll_interval=2, poll_timeout=30
         )
 
         # Both should succeed
@@ -152,7 +144,7 @@ class TestSERPAsyncMode:
             zone=async_client.serp_zone,
             mode="async",
             poll_interval=1,
-            poll_timeout=1  # Very short timeout
+            poll_timeout=1,  # Very short timeout
         )
 
         # Should fail with timeout error
@@ -172,7 +164,7 @@ class TestSERPAsyncMode:
             zone=async_client.serp_zone,
             mode="async",
             poll_interval=2,
-            poll_timeout=60  # Longer timeout for multiple queries
+            poll_timeout=60,  # Longer timeout for multiple queries
         )
 
         # Should get results for all queries
@@ -189,10 +181,7 @@ class TestSERPAsyncMode:
     async def test_sync_mode_with_location(self, async_client):
         """Test sync mode with location parameter."""
         result = await async_client.search.google(
-            query="restaurants",
-            zone=async_client.serp_zone,
-            location="US",
-            mode="sync"
+            query="restaurants", zone=async_client.serp_zone, location="US", mode="sync"
         )
 
         assert result.success is True
@@ -209,7 +198,7 @@ class TestSERPAsyncMode:
             location="US",
             mode="async",
             poll_interval=2,
-            poll_timeout=30
+            poll_timeout=30,
         )
 
         assert result.success is True
@@ -229,7 +218,7 @@ class TestSERPAsyncModeTiming:
             zone=async_client.serp_zone,
             mode="async",
             poll_interval=2,
-            poll_timeout=30
+            poll_timeout=30,
         )
 
         assert result.success is True

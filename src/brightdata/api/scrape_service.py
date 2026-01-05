@@ -182,5 +182,3 @@ class ScrapeService:
                 bearer_token=self._client.token, engine=self._client.engine
             )
         return self._instagram
-
-

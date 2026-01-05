@@ -150,7 +150,6 @@ class ChatGPTSearchService:
 
         return result
 
-
     def chatGPT_sync(
         self,
         prompt: Union[str, List[str]],
@@ -170,6 +169,7 @@ class ChatGPTSearchService:
             ...     webSearch=True
             ... )
         """
+
         async def _run():
             async with self.engine:
                 return await self.chatGPT(
@@ -179,6 +179,7 @@ class ChatGPTSearchService:
                     webSearch=webSearch,
                     timeout=timeout,
                 )
+
         return asyncio.run(_run())
 
     # ============================================================================
