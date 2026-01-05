@@ -68,9 +68,7 @@ class ZoneCRUDTester:
                     # Trigger zone creation
                     try:
                         if zone_type == "unblocker":
-                            await temp_client.scrape_url(
-                                url="https://example.com", zone=zone_name
-                            )
+                            await temp_client.scrape_url(url="https://example.com", zone=zone_name)
                         else:  # serp
                             await temp_client.search.google(query="test", zone=zone_name)
                     except Exception:

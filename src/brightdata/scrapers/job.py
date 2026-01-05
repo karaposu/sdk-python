@@ -97,7 +97,6 @@ class ScrapeJob:
         self._cached_status = await self._api_client.get_status(self.snapshot_id)
         return self._cached_status
 
-
     async def wait(
         self,
         timeout: int = 300,
@@ -144,7 +143,6 @@ class ScrapeJob:
             # Still in progress (can be "running", "in_progress", "pending", etc.)
             await asyncio.sleep(poll_interval)
 
-
     async def fetch(self, format: str = "json") -> Any:
         """
         Fetch job results.
@@ -164,7 +162,6 @@ class ScrapeJob:
         """
         self._cached_data = await self._api_client.fetch_result(self.snapshot_id, format=format)
         return self._cached_data
-
 
     async def to_result(
         self,
@@ -223,4 +220,3 @@ class ScrapeJob:
                 timing_end=datetime.now(timezone.utc),
                 metadata={"snapshot_id": self.snapshot_id},
             )
-

@@ -258,6 +258,7 @@ class TestChatGPTScraper:
     def test_chatgpt_scraper_scrape_raises_not_implemented(self):
         """Test ChatGPTScraper raises NotImplementedError for scrape()."""
         import asyncio
+
         scraper = ChatGPTScraper(bearer_token="test_token_123456789")
 
         async def test_scrape():
@@ -266,7 +267,7 @@ class TestChatGPTScraper:
             assert "doesn't support URL-based scraping" in str(exc_info.value)
             assert "Use prompt()" in str(exc_info.value)
 
-        asyncio.get_event_loop().run_until_complete(test_scrape())
+        asyncio.run(test_scrape())
 
     def test_chatgpt_scraper_registered_in_registry(self):
         """Test ChatGPTScraper is registered for 'chatgpt' domain."""
@@ -413,6 +414,7 @@ class TestInterfaceConsistency:
     def test_chatgpt_interface_matches_spec(self):
         """Test ChatGPT scraper matches interface specification."""
         import asyncio
+
         scraper = ChatGPTScraper(bearer_token="test_token_123456789")
 
         # Prompt-based (ChatGPT specific)
@@ -424,7 +426,7 @@ class TestInterfaceConsistency:
             with pytest.raises(NotImplementedError):
                 await scraper.scrape("https://chatgpt.com/")
 
-        asyncio.get_event_loop().run_until_complete(test_scrape())
+        asyncio.run(test_scrape())
 
 
 class TestPhilosophicalPrinciples:

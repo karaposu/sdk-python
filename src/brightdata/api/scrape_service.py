@@ -5,9 +5,8 @@ Provides hierarchical access to specialized scrapers and generic scraping.
 All methods are async-only. For sync usage, use SyncBrightDataClient.
 """
 
-from typing import Union, List, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
-from ..models import ScrapeResult
 
 if TYPE_CHECKING:
     from ..client import BrightDataClient
@@ -182,5 +181,3 @@ class ScrapeService:
                 bearer_token=self._client.token, engine=self._client.engine
             )
         return self._instagram
-
-

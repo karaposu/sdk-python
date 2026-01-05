@@ -24,7 +24,9 @@ warnings.filterwarnings("ignore", category=ResourceWarning, message="unclosed.*<
 warnings.filterwarnings("ignore", category=ResourceWarning, message="unclosed.*<ssl.SSLSocket")
 # Suppress RuntimeWarning for coroutines not awaited in __del__ cleanup
 # This happens because aiohttp's connector.close() is async in 3.x
-warnings.filterwarnings("ignore", category=RuntimeWarning, message="coroutine.*TCPConnector.close.*never awaited")
+warnings.filterwarnings(
+    "ignore", category=RuntimeWarning, message="coroutine.*TCPConnector.close.*never awaited"
+)
 
 
 class AsyncEngine:

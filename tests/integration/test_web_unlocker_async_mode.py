@@ -50,7 +50,7 @@ class TestWebUnlockerAsyncMode:
         result = await async_client.scrape_url(
             url="https://example.com",
             zone=async_client.web_unlocker_zone,
-            mode="sync"  # Explicit sync
+            mode="sync",  # Explicit sync
         )
 
         assert result.success is True, f"Scrape failed: {result.error}"
@@ -65,7 +65,7 @@ class TestWebUnlockerAsyncMode:
         """Test default mode is sync (backwards compatibility)."""
         result = await async_client.scrape_url(
             url="https://example.com",
-            zone=async_client.web_unlocker_zone
+            zone=async_client.web_unlocker_zone,
             # No mode parameter - should default to sync
         )
 
@@ -82,8 +82,8 @@ class TestWebUnlockerAsyncMode:
             url="https://example.com",
             zone=async_client.web_unlocker_zone,
             mode="async",
-            poll_interval=2,   # Check every 2 seconds
-            poll_timeout=30    # Give up after 30 seconds
+            poll_interval=2,  # Check every 2 seconds
+            poll_timeout=30,  # Give up after 30 seconds
         )
 
         assert result.success is True, f"Async scrape failed: {result.error}"
@@ -101,9 +101,7 @@ class TestWebUnlockerAsyncMode:
 
         # Run sync mode
         sync_result = await async_client.scrape_url(
-            url=url,
-            zone=async_client.web_unlocker_zone,
-            mode="sync"
+            url=url, zone=async_client.web_unlocker_zone, mode="sync"
         )
 
         # Run async mode
@@ -112,7 +110,7 @@ class TestWebUnlockerAsyncMode:
             zone=async_client.web_unlocker_zone,
             mode="async",
             poll_interval=2,
-            poll_timeout=30
+            poll_timeout=30,
         )
 
         # Both should succeed
@@ -145,7 +143,7 @@ class TestWebUnlockerAsyncMode:
             zone=async_client.web_unlocker_zone,
             mode="async",
             poll_interval=1,
-            poll_timeout=1  # Very short timeout
+            poll_timeout=1,  # Very short timeout
         )
 
         # Should fail with timeout error
@@ -158,18 +156,14 @@ class TestWebUnlockerAsyncMode:
     @pytest.mark.slow
     async def test_async_mode_multiple_urls(self, async_client):
         """Test async mode with multiple URLs (batch processing)."""
-        urls = [
-            "https://example.com",
-            "https://www.example.org",
-            "https://www.example.net"
-        ]
+        urls = ["https://example.com", "https://www.example.org", "https://www.example.net"]
 
         results = await async_client.scrape_url(
             url=urls,
             zone=async_client.web_unlocker_zone,
             mode="async",
             poll_interval=2,
-            poll_timeout=60  # Longer timeout for multiple URLs
+            poll_timeout=60,  # Longer timeout for multiple URLs
         )
 
         # Should get results for all URLs
@@ -190,7 +184,7 @@ class TestWebUnlockerAsyncMode:
             url="https://example.com",
             zone=async_client.web_unlocker_zone,
             country="US",
-            mode="sync"
+            mode="sync",
         )
 
         assert result.success is True
@@ -207,7 +201,7 @@ class TestWebUnlockerAsyncMode:
             country="US",
             mode="async",
             poll_interval=2,
-            poll_timeout=30
+            poll_timeout=30,
         )
 
         assert result.success is True
@@ -224,7 +218,7 @@ class TestWebUnlockerAsyncMode:
             response_format="json",
             mode="async",
             poll_interval=2,
-            poll_timeout=30
+            poll_timeout=30,
         )
 
         assert result.success is True
@@ -247,7 +241,7 @@ class TestWebUnlockerAsyncModeTiming:
             zone=async_client.web_unlocker_zone,
             mode="async",
             poll_interval=2,
-            poll_timeout=30
+            poll_timeout=30,
         )
 
         assert result.success is True

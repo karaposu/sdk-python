@@ -230,7 +230,9 @@ class TestChatGPTCountryValidation:
 
         # Check docstring mentions 2-letter format (async-first API)
         doc = search.chatGPT.__doc__
-        assert doc is not None and ("2-letter" in doc or "2 letter" in doc.replace("-", " ") or "country" in doc.lower())
+        assert doc is not None and (
+            "2-letter" in doc or "2 letter" in doc.replace("-", " ") or "country" in doc.lower()
+        )
 
 
 class TestChatGPTPhilosophicalPrinciples:

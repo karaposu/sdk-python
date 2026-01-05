@@ -92,9 +92,7 @@ def test_auto_zone_creation():
         print(f"\n1️⃣ Attempting to create Web Unlocker zone: {client.web_unlocker_zone}")
         try:
             async with client:
-                await client.scrape_url(
-                    url="https://example.com", zone=client.web_unlocker_zone
-                )
+                await client.scrape_url(url="https://example.com", zone=client.web_unlocker_zone)
                 print("   ✅ Zone operation completed")
                 results.append(("Web Unlocker", client.web_unlocker_zone, True))
         except Exception as e:

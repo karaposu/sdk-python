@@ -5,7 +5,7 @@ Provides sync interface using persistent event loop for optimal performance.
 """
 
 import asyncio
-from typing import Optional, List, Dict, Any, Union
+from typing import Optional, List, Dict, Any
 
 from .client import BrightDataClient
 from .models import ScrapeResult, SearchResult
@@ -96,16 +96,12 @@ class SyncBrightDataClient:
 
         # Validate token if requested
         if self._validate_token:
-            is_valid = self._loop.run_until_complete(
-                self._async_client.test_connection()
-            )
+            is_valid = self._loop.run_until_complete(self._async_client.test_connection())
             if not is_valid:
                 self.__exit__(None, None, None)
                 from .exceptions import AuthenticationError
 
-                raise AuthenticationError(
-                    "Token validation failed. Token appears to be invalid."
-                )
+                raise AuthenticationError("Token validation failed. Token appears to be invalid.")
 
         return self
 
@@ -116,9 +112,7 @@ class SyncBrightDataClient:
 
         try:
             # Cleanup async client
-            self._loop.run_until_complete(
-                self._async_client.__aexit__(exc_type, exc_val, exc_tb)
-            )
+            self._loop.run_until_complete(self._async_client.__aexit__(exc_type, exc_val, exc_tb))
 
             # Give the event loop a moment to process any remaining callbacks
             # This helps prevent "Unclosed client session" warnings
@@ -131,9 +125,7 @@ class SyncBrightDataClient:
 
             # Let cancellations propagate
             if pending:
-                self._loop.run_until_complete(
-                    asyncio.gather(*pending, return_exceptions=True)
-                )
+                self._loop.run_until_complete(asyncio.gather(*pending, return_exceptions=True))
         except Exception:
             # Ignore errors during cleanup
             pass
@@ -210,9 +202,7 @@ class SyncBrightDataClient:
 
     def __repr__(self) -> str:
         """String representation."""
-        token_preview = (
-            f"{self.token[:10]}...{self.token[-5:]}" if self.token else "None"
-        )
+        token_preview = f"{self.token[:10]}...{self.token[-5:]}" if self.token else "None"
         status = "Initialized" if self._loop else "Not initialized"
         return f"<SyncBrightDataClient token={token_preview} status='{status}'>"
 
@@ -265,7 +255,6 @@ class SyncScrapeService:
         return self._chatgpt
 
 
-
 class SyncAmazonScraper:
     """Sync wrapper for AmazonScraper - COMPLETE with all methods."""
 
@@ -280,15 +269,11 @@ class SyncAmazonScraper:
 
     def products_trigger(self, url, **kwargs):
         """Trigger Amazon products scrape."""
-        return self._loop.run_until_complete(
-            self._async.products_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.products_trigger(url, **kwargs))
 
     def products_status(self, snapshot_id):
         """Check Amazon products scrape status."""
-        return self._loop.run_until_complete(
-            self._async.products_status(snapshot_id)
-        )
+        return self._loop.run_until_complete(self._async.products_status(snapshot_id))
 
     def products_fetch(self, snapshot_id):
         """Fetch Amazon products scrape results."""
@@ -301,9 +286,7 @@ class SyncAmazonScraper:
 
     def reviews_trigger(self, url, **kwargs):
         """Trigger Amazon reviews scrape."""
-        return self._loop.run_until_complete(
-            self._async.reviews_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.reviews_trigger(url, **kwargs))
 
     def reviews_status(self, snapshot_id):
         """Check Amazon reviews scrape status."""
@@ -320,9 +303,7 @@ class SyncAmazonScraper:
 
     def sellers_trigger(self, url, **kwargs):
         """Trigger Amazon sellers scrape."""
-        return self._loop.run_until_complete(
-            self._async.sellers_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.sellers_trigger(url, **kwargs))
 
     def sellers_status(self, snapshot_id):
         """Check Amazon sellers scrape status."""
@@ -406,9 +387,7 @@ class SyncInstagramScraper:
         return self._loop.run_until_complete(self._async.profiles(url, **kwargs))
 
     def profiles_trigger(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.profiles_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.profiles_trigger(url, **kwargs))
 
     def profiles_status(self, snapshot_id):
         return self._loop.run_until_complete(self._async.profiles_status(snapshot_id))
@@ -434,9 +413,7 @@ class SyncInstagramScraper:
         return self._loop.run_until_complete(self._async.comments(url, **kwargs))
 
     def comments_trigger(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.comments_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.comments_trigger(url, **kwargs))
 
     def comments_status(self, snapshot_id):
         return self._loop.run_until_complete(self._async.comments_status(snapshot_id))
@@ -467,73 +444,49 @@ class SyncFacebookScraper:
 
     # Posts by profile - NOTE: Must call async methods (not _sync wrappers) because they use asyncio.run()
     def posts_by_profile(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.posts_by_profile(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_profile(url, **kwargs))
 
     def posts_by_profile_trigger(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.posts_by_profile_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_profile_trigger(url, **kwargs))
 
     def posts_by_profile_status(self, snapshot_id):
-        return self._loop.run_until_complete(
-            self._async.posts_by_profile_status(snapshot_id)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_profile_status(snapshot_id))
 
     def posts_by_profile_fetch(self, snapshot_id):
-        return self._loop.run_until_complete(
-            self._async.posts_by_profile_fetch(snapshot_id)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_profile_fetch(snapshot_id))
 
     # Posts by group
     def posts_by_group(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.posts_by_group(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_group(url, **kwargs))
 
     def posts_by_group_trigger(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.posts_by_group_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_group_trigger(url, **kwargs))
 
     def posts_by_group_status(self, snapshot_id):
-        return self._loop.run_until_complete(
-            self._async.posts_by_group_status(snapshot_id)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_group_status(snapshot_id))
 
     def posts_by_group_fetch(self, snapshot_id):
-        return self._loop.run_until_complete(
-            self._async.posts_by_group_fetch(snapshot_id)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_group_fetch(snapshot_id))
 
     # Posts by URL
     def posts_by_url(self, url, **kwargs):
         return self._loop.run_until_complete(self._async.posts_by_url(url, **kwargs))
 
     def posts_by_url_trigger(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.posts_by_url_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_url_trigger(url, **kwargs))
 
     def posts_by_url_status(self, snapshot_id):
-        return self._loop.run_until_complete(
-            self._async.posts_by_url_status(snapshot_id)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_url_status(snapshot_id))
 
     def posts_by_url_fetch(self, snapshot_id):
-        return self._loop.run_until_complete(
-            self._async.posts_by_url_fetch(snapshot_id)
-        )
+        return self._loop.run_until_complete(self._async.posts_by_url_fetch(snapshot_id))
 
     # Comments
     def comments(self, url, **kwargs):
         return self._loop.run_until_complete(self._async.comments(url, **kwargs))
 
     def comments_trigger(self, url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.comments_trigger(url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.comments_trigger(url, **kwargs))
 
     def comments_status(self, snapshot_id):
         return self._loop.run_until_complete(self._async.comments_status(snapshot_id))
@@ -565,14 +518,10 @@ class SyncChatGPTScraper:
     # Prompt - Call async methods (prompt) not sync wrappers (prompt_sync)
     # because sync wrappers use asyncio.run() which conflicts with our persistent loop
     def prompt(self, prompt_text, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.prompt(prompt_text, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.prompt(prompt_text, **kwargs))
 
     def prompt_trigger(self, prompt_text, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.prompt_trigger(prompt_text, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.prompt_trigger(prompt_text, **kwargs))
 
     def prompt_status(self, snapshot_id):
         return self._loop.run_until_complete(self._async.prompt_status(snapshot_id))
@@ -585,9 +534,7 @@ class SyncChatGPTScraper:
         return self._loop.run_until_complete(self._async.prompts(prompts, **kwargs))
 
     def prompts_trigger(self, prompts, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.prompts_trigger(prompts, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.prompts_trigger(prompts, **kwargs))
 
     def prompts_status(self, snapshot_id):
         return self._loop.run_until_complete(self._async.prompts_status(snapshot_id))
@@ -641,9 +588,7 @@ class SyncSearchService:
     def instagram(self) -> "SyncInstagramSearchScraper":
         """Instagram search service."""
         if self._instagram is None:
-            self._instagram = SyncInstagramSearchScraper(
-                self._async.instagram, self._loop
-            )
+            self._instagram = SyncInstagramSearchScraper(self._async.instagram, self._loop)
         return self._instagram
 
     @property
@@ -671,9 +616,7 @@ class SyncLinkedInSearchScraper:
         self._loop = loop
 
     def posts(self, profile_url, **kwargs):
-        return self._loop.run_until_complete(
-            self._async.posts(profile_url, **kwargs)
-        )
+        return self._loop.run_until_complete(self._async.posts(profile_url, **kwargs))
 
     def profiles(self, **kwargs):
         return self._loop.run_until_complete(self._async.profiles(**kwargs))

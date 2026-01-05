@@ -124,7 +124,6 @@ class LinkedInSearchScraper:
             payload=payload, dataset_id=self.DATASET_ID_POSTS, timeout=timeout
         )
 
-
     def posts_sync(
         self,
         profile_url: Union[str, List[str]],
@@ -137,9 +136,11 @@ class LinkedInSearchScraper:
 
         See posts() for documentation.
         """
+
         async def _run():
             async with self.engine:
                 return await self.posts(profile_url, start_date, end_date, timeout)
+
         return asyncio.run(_run())
 
     # ============================================================================
@@ -187,7 +188,6 @@ class LinkedInSearchScraper:
             payload=payload, dataset_id=self.DATASET_ID_PROFILES, timeout=timeout
         )
 
-
     def profiles_sync(
         self,
         firstName: Union[str, List[str]],
@@ -199,9 +199,11 @@ class LinkedInSearchScraper:
 
         See profiles() for documentation.
         """
+
         async def _run():
             async with self.engine:
                 return await self.profiles(firstName, lastName, timeout)
+
         return asyncio.run(_run())
 
     # ============================================================================
@@ -311,7 +313,6 @@ class LinkedInSearchScraper:
 
         return await self._execute_search(payload=payload, dataset_id=dataset_id, timeout=timeout)
 
-
     def jobs_sync(
         self,
         url: Optional[Union[str, List[str]]] = None,
@@ -331,6 +332,7 @@ class LinkedInSearchScraper:
 
         See jobs() for full documentation.
         """
+
         async def _run():
             async with self.engine:
                 return await self.jobs(
@@ -346,6 +348,7 @@ class LinkedInSearchScraper:
                     locationRadius=locationRadius,
                     timeout=timeout,
                 )
+
         return asyncio.run(_run())
 
     # ============================================================================

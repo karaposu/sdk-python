@@ -164,7 +164,6 @@ class AmazonSearchScraper:
             timeout=timeout,
         )
 
-
     def products_sync(
         self,
         keyword: Optional[Union[str, List[str]]] = None,
@@ -182,6 +181,7 @@ class AmazonSearchScraper:
 
         See products() for full documentation.
         """
+
         async def _run():
             async with self.engine:
                 return await self.products(
@@ -195,6 +195,7 @@ class AmazonSearchScraper:
                     country=country,
                     timeout=timeout,
                 )
+
         return asyncio.run(_run())
 
     # ============================================================================

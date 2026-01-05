@@ -50,9 +50,7 @@ def scrape_url(ctx: click.Context, url: str, country: str, response_format: str)
     """Scrape any URL using Web Unlocker."""
     try:
         client = create_client(ctx.obj["api_key"])
-        result = client.scrape_url(
-            url=url, country=country, response_format=response_format
-        )
+        result = client.scrape_url(url=url, country=country, response_format=response_format)
         output_result(result, ctx.obj["output_format"], ctx.obj["output_file"])
     except Exception as e:
         handle_error(e)
