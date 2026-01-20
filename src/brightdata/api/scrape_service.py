@@ -7,7 +7,6 @@ All methods are async-only. For sync usage, use SyncBrightDataClient.
 
 from typing import TYPE_CHECKING
 
-
 if TYPE_CHECKING:
     from ..client import BrightDataClient
 
