@@ -1,0 +1,802 @@
+[
+  {
+    "name": "Crunchbase companies information",
+    "id": "gd_l1vijqt9jfj7olije",
+    "implemented": true
+  },
+  {
+    "name": "Instagram - Profiles",
+    "id": "gd_l1vikfch901nx3by4",
+    "implemented": true
+  },
+  {
+    "name": "Manta businesses ",
+    "id": "gd_l1vil1d81g0u8763b2",
+    "implemented": true
+  },
+  {
+    "name": "US lawyers directory",
+    "id": "gd_l1vil5n11okchcbvax",
+    "implemented": true
+  },
+  {
+    "name": "LinkedIn company information",
+    "id": "gd_l1vikfnt1wgvvqz95w",
+    "implemented": true
+  },
+  {
+    "name": "LinkedIn people profiles",
+    "id": "gd_l1viktl72bvl7bjuj0",
+    "implemented": true
+  },
+  {
+    "name": "TikTok - Profiles",
+    "id": "gd_l1villgoiiidt09ci",
+    "implemented": true
+  },
+  {
+    "name": "Slintel 6sense company information",
+    "id": "gd_l1vilg5a1decoahvgq",
+    "implemented": true
+  },
+  {
+    "name": "Owler companies information",
+    "id": "gd_l1vilaxi10wutoage7",
+    "implemented": true
+  },
+  {
+    "name": "VentureRadar company information",
+    "id": "gd_l1vilsfd1xpsndbtpr",
+    "implemented": true
+  },
+  {
+    "name": "Australia real estate properties",
+    "id": "gd_l3cvjh111l943r4awk",
+    "implemented": true
+  },
+  {
+    "name": "Indeed job listings information",
+    "id": "gd_l4dx9j9sscpvs7no2",
+    "implemented": true
+  },
+  {
+    "name": "Glassdoor companies reviews",
+    "id": "gd_l7j1po0921hbu0ri1z",
+    "implemented": true
+  },
+  {
+    "name": "Xing social network",
+    "id": "gd_l3lh4ev31oqrvvblv6",
+    "implemented": true
+  },
+  {
+    "name": "Indeed companies info",
+    "id": "gd_l7qekxkv2i7ve6hx1s",
+    "implemented": true
+  },
+  {
+    "name": "Glassdoor companies overview information",
+    "id": "gd_l7j0bx501ockwldaqf",
+    "implemented": true
+  },
+  {
+    "name": "Amazon products",
+    "id": "gd_l7q7dkf244hwjntr0",
+    "implemented": true
+  },
+  {
+    "name": "G2 software - product reviews",
+    "id": "gd_l88xvdka1uao86xvlb",
+    "implemented": true
+  },
+  {
+    "name": "G2 software product overview",
+    "id": "gd_l88xp4k01qnhvyqlvw",
+    "implemented": true
+  },
+  {
+    "name": "Walmart - products ",
+    "id": "gd_l95fol7l1ru6rlo116",
+    "implemented": true
+  },
+  {
+    "name": "Mediamarkt.de products",
+    "id": "gd_lbl2lo6y11m37z3gwq",
+    "implemented": true
+  },
+  {
+    "name": "Fendi Products",
+    "id": "gd_lbqsfpfk71ubir3pi",
+    "implemented": true
+  },
+  {
+    "name": "Zalando products",
+    "id": "gd_lbqj6l5s28ofha6mlk",
+    "implemented": true
+  },
+  {
+    "name": "Sephora products",
+    "id": "gd_lbz49igcthopwaygd",
+    "implemented": true
+  },
+  {
+    "name": "Zara - Products ",
+    "id": "gd_lct4vafw1tgx27d4o0",
+    "implemented": true
+  },
+  {
+    "name": "Zara Home Products",
+    "id": "gd_lcx5utgek9mxrsiie",
+    "implemented": true
+  },
+  {
+    "name": "Mango Products",
+    "id": "gd_lcyua5iy1go06own9d",
+    "implemented": true
+  },
+  {
+    "name": "Massimo Dutti - Products ",
+    "id": "gd_lcxf9r252p7e46ul5b",
+    "implemented": true
+  },
+  {
+    "name": "Otodom Poland",
+    "id": "gd_ld739mwou49s5y9ko",
+    "implemented": true
+  },
+  {
+    "name": "Webmotors Brasil - Cars Listings",
+    "id": "gd_ld73zt91j10sphddj",
+    "implemented": true
+  },
+  {
+    "name": "Airbnb Properties Information",
+    "id": "gd_ld7ll037kqy322v05",
+    "implemented": true
+  },
+  {
+    "name": "Asos - Products",
+    "id": "gd_ldbg7we91cp53nr2z4",
+    "implemented": true
+  },
+  {
+    "name": "Chanel Products",
+    "id": "gd_ldwwuwqe1oh3zav3js",
+    "implemented": true
+  },
+  {
+    "name": "Ashleyfurniture - Products",
+    "id": "gd_le1ddqrs16uevi5vc4",
+    "implemented": true
+  },
+  {
+    "name": "Fanatics.com - Products",
+    "id": "gd_le124kuq1uoj7zj8hb",
+    "implemented": true
+  },
+  {
+    "name": "Carters.com - Products",
+    "id": "gd_le60f5v0dj17xgv6u",
+    "implemented": true
+  },
+  {
+    "name": "AE.com - Complete Products",
+    "id": "gd_le6plu065keypwyir",
+    "implemented": true
+  },
+  {
+    "name": "Ikea - Products",
+    "id": "gd_le2lfu10qrjmrqo60",
+    "implemented": true
+  },
+  {
+    "name": "Amazon Reviews",
+    "id": "gd_le8e811kzy4ggddlq",
+    "implemented": true
+  },
+  {
+    "name": "H&M - Products",
+    "id": "gd_lebec5ir293umvxh5g",
+    "implemented": true
+  },
+  {
+    "name": "Lego - Products",
+    "id": "gd_leenwt162rg85apy87",
+    "implemented": true
+  },
+  {
+    "name": "Mattressfirm - Products",
+    "id": "gd_legw5t6c2bvw9d7e4k",
+    "implemented": true
+  },
+  {
+    "name": "Crateandbarrel - Products",
+    "id": "gd_lemtcp2p2qdyd24vq5",
+    "implemented": true
+  },
+  {
+    "name": "llbean.com - Products",
+    "id": "gd_lemtwv4s1mglzlzh57",
+    "implemented": true
+  },
+  {
+    "name": "Shein- Products",
+    "id": "gd_lemu5ceq1jxjo7vzit",
+    "implemented": true
+  },
+  {
+    "name": "Toysrus  - Products",
+    "id": "gd_lemuapao1lkjggvn05",
+    "implemented": true
+  },
+  {
+    "name": "Mybobs.com - Products ",
+    "id": "gd_lf14k1zw1l3zcxs9m4",
+    "implemented": true
+  },
+  {
+    "name": "Sleepnumber.com - Products",
+    "id": "gd_lf8ctgxj1dpkzvl862",
+    "implemented": true
+  },
+  {
+    "name": "Raymourflanigan.com - Products",
+    "id": "gd_lf8cwb8wxoiqarizb",
+    "implemented": true
+  },
+  {
+    "name": "Inmuebles24 Mexico - Properties Listings",
+    "id": "gd_lfsa1vgv183347v45m",
+    "implemented": true
+  },
+  {
+    "name": "Mouser - Products ",
+    "id": "gd_lfjty8942ogxzhmp8t",
+    "implemented": true
+  },
+  {
+    "name": "Zillow properties listing information",
+    "id": "gd_lfqkr8wm13ixtbd8f5",
+    "implemented": true
+  },
+  {
+    "name": "Zonaprop Argentina - Properties Listing",
+    "id": "gd_lfsbhfgo2bglgrecm6",
+    "implemented": true
+  },
+  {
+    "name": "Metrocuadrado - Properties Listings",
+    "id": "gd_lfsblgpf2oq16yrbny",
+    "implemented": true
+  },
+  {
+    "name": "Chileautos Chile - Cars Listings",
+    "id": "gd_lfsbqgb01iiit5ppju",
+    "implemented": true
+  },
+  {
+    "name": "Infocasas Uruguay - Properties Listings",
+    "id": "gd_lftpmbga1jwon80ddh",
+    "implemented": true
+  },
+  {
+    "name": "La-z-boy.com - Products",
+    "id": "gd_lg0nhuxkvxagfannn",
+    "implemented": true
+  },
+  {
+    "name": "Properati Argentina and Colombia - Properties Listings",
+    "id": "gd_lg3nvn6ibrhbotstw",
+    "implemented": true
+  },
+  {
+    "name": "Yapo Chile - marketplace ads",
+    "id": "gd_lgfcz12mk6og7lvhs",
+    "implemented": true
+  },
+  {
+    "name": "Toctoc - Properties Listings",
+    "id": "gd_lgfdx3l01behlrboh7",
+    "implemented": true
+  },
+  {
+    "name": "Yelp businesses overview",
+    "id": "gd_lgugwl0519h1p14rwk",
+    "implemented": true
+  },
+  {
+    "name": "Yelp businesses reviews",
+    "id": "gd_lgzhlu9323u3k24jkv",
+    "implemented": true
+  },
+  {
+    "name": "Dior - Products",
+    "id": "gd_lh7o3kqu6wp7qmqkl",
+    "implemented": true
+  },
+  {
+    "name": "Balenciaga.com - Products",
+    "id": "gd_lh7oemkb2f9h596dfn",
+    "implemented": true
+  },
+  {
+    "name": "Bottegaveneta.com - Products",
+    "id": "gd_lh7os5q91y20h69xj",
+    "implemented": true
+  },
+  {
+    "name": "OLX Brazil - marketplace ads",
+    "id": "gd_lguvsr0wp4rx7fjfo",
+    "implemented": true
+  },
+  {
+    "name": "Celine.com - Products",
+    "id": "gd_lh7qnf8rwtn2c2uuc",
+    "implemented": true
+  },
+  {
+    "name": "Loewe.com - Products",
+    "id": "gd_lh7rkj4wwka9q19t",
+    "implemented": true
+  },
+  {
+    "name": "Berluti.com - Products",
+    "id": "gd_lh7sef5p16tcupyuy3",
+    "implemented": true
+  },
+  {
+    "name": "Moynat.com - Products",
+    "id": "gd_lh7rh0d12qkaid87e1",
+    "implemented": true
+  },
+  {
+    "name": "Hermes- Products",
+    "id": "gd_lh7sn8rz1g95zt4lwk",
+    "implemented": true
+  },
+  {
+    "name": "Delvaux - Products",
+    "id": "gd_lhahvbli142qv9r0v1",
+    "implemented": true
+  },
+  {
+    "name": "Prada.com - Products",
+    "id": "gd_lhahqiq52egng5v35i",
+    "implemented": true
+  },
+  {
+    "name": "Montblanc - Products",
+    "id": "gd_lhahz3n9dr6srx4cm",
+    "implemented": true
+  },
+  {
+    "name": "Ysl.com - Products",
+    "id": "gd_lhai2io04wilkad5z",
+    "implemented": true
+  },
+  {
+    "name": "Amazon sellers info",
+    "id": "gd_lhotzucw1etoe5iw1k",
+    "implemented": true
+  },
+  {
+    "name": "World zipcodes ",
+    "id": "gd_licvqc95ta2552qxu",
+    "implemented": true
+  },
+  {
+    "name": "Pinterest - Posts ",
+    "id": "gd_lk0sjs4d21kdr7cnlv",
+    "implemented": true
+  },
+  {
+    "name": "Pinterest - Profiles",
+    "id": "gd_lk0zv93c2m9qdph46z",
+    "implemented": true
+  },
+  {
+    "name": "Shopee - products",
+    "id": "gd_lk122xxgf86xf97py",
+    "implemented": true
+  },
+  {
+    "name": "Lazada - Products",
+    "id": "gd_lk14r4zxuiw2uxpk6",
+    "implemented": true
+  },
+  {
+    "name": "Instagram - Posts",
+    "id": "gd_lk5ns7kz21pck8jpis",
+    "implemented": true
+  },
+  {
+    "name": "YouTube - Profiles",
+    "id": "gd_lk538t2k2p1k3oos71",
+    "implemented": true
+  },
+  {
+    "name": "Youtube - Videos posts",
+    "id": "gd_lk56epmy2i5g7lzu0k",
+    "implemented": true
+  },
+  {
+    "name": "Digikey - Products",
+    "id": "gd_lj74waf72416ro0k65",
+    "implemented": true
+  },
+  {
+    "name": "Facebook - Pages Posts by Profile URL",
+    "id": "gd_lkaxegm826bjpoo9m5",
+    "implemented": true
+  },
+  {
+    "name": "Youtube - Comments",
+    "id": "gd_lk9q0ew71spt1mxywf",
+    "implemented": true
+  },
+  {
+    "name": "Facebook -  Comments",
+    "id": "gd_lkay758p1eanlolqw8"
+  },
+  {
+    "name": "TikTok - Comments",
+    "id": "gd_lkf2st302ap89utw5k"
+  },
+  {
+    "name": "Amazon best seller products",
+    "id": "gd_l1vijixj9g2vp7563"
+  },
+  {
+    "name": "IMDB media",
+    "id": "gd_l1vikf2h1a4t6x8qzu",
+    "implemented": true
+  },
+  {
+    "name": "Trustpilot business reviews",
+    "id": "gd_lm5zmhwd2sni130p",
+    "implemented": true
+  },
+  {
+    "name": "Yahoo Finance business information",
+    "id": "gd_lmrpz3vxmz972ghd7"
+  },
+  {
+    "name": "Home Depot US ",
+    "id": "gd_lmusivh019i7g97q2n"
+  },
+  {
+    "name": "Home Depot CA",
+    "id": "gd_lmyvvktscoojdor83"
+  },
+  {
+    "name": "Zoopla properties listing information",
+    "id": "gd_lnabksndfp1pegwzh"
+  },
+  {
+    "name": "Google News",
+    "id": "gd_lnsxoxzi1omrwnka5r"
+  },
+  {
+    "name": "Lowes.com",
+    "id": "gd_lnvl79pfftqh18u2o"
+  },
+  {
+    "name": "Glassdoor job listings information",
+    "id": "gd_lpfbbndm1xnopbrcr0",
+    "implemented": true
+  },
+  {
+    "name": "Linkedin job listings information",
+    "id": "gd_lpfll7v5hcqtkxl6l",
+    "implemented": true
+  },
+  {
+    "name": "Myntra products ",
+    "id": "gd_lptvxr8b1qx1d9thgp"
+  },
+  {
+    "name": "Wikipedia articles",
+    "id": "gd_lr9978962kkjr3nx49"
+  },
+  {
+    "name": "Goodreads books ",
+    "id": "gd_lreq6ho72fhvovjj7a",
+    "implemented": true
+  },
+  {
+    "name": "World population",
+    "id": "gd_lrqeq7u3bil0pmelk",
+    "implemented": true
+  },
+  {
+    "name": "NBA players' stats",
+    "id": "gd_lrqirmftwxxatiorf",
+    "implemented": true
+  },
+  {
+    "name": "Google Play Store",
+    "id": "gd_lsk382l8xei8vzm4u"
+  },
+  {
+    "name": "Apple App Store",
+    "id": "gd_lsk9ki3u2iishmwrui"
+  },
+  {
+    "name": "Etsy",
+    "id": "gd_ltppk0jdv1jqz25mz"
+  },
+  {
+    "name": "Google Shopping",
+    "id": "gd_ltppk50q18kdw67omz"
+  },
+  {
+    "name": "Target",
+    "id": "gd_ltppk5mx2lp0v1k0vo"
+  },
+  {
+    "name": "Instagram - Comments",
+    "id": "gd_ltppn085pokosxh13"
+  },
+  {
+    "name": "eBay",
+    "id": "gd_ltr9mjt81n0zzdk1fb"
+  },
+  {
+    "name": "Wayfair products",
+    "id": "gd_ltr9ne3p24zrhrbu28"
+  },
+  {
+    "name": "Best Buy products",
+    "id": "gd_ltre1jqe1jfr7cccf"
+  },
+  {
+    "name": "TikTok - Posts",
+    "id": "gd_lu702nij2f790tmv9h"
+  },
+  {
+    "name": "Lazada -  Reviews ",
+    "id": "gd_lub6mys21lzcklkq1z"
+  },
+  {
+    "name": "Ozon.ru products",
+    "id": "gd_lutq85sl13rlndbzai"
+  },
+  {
+    "name": "Wildberries.ru products ",
+    "id": "gd_luz4fboh2dicd27hhm"
+  },
+  {
+    "name": "Google maps reviews",
+    "id": "gd_luzfs1dn2oa0teb81",
+    "implemented": true
+  },
+  {
+    "name": "Facebook Marketplace",
+    "id": "gd_lvt9iwuh6fbcwmx1a"
+  },
+  {
+    "name": "Quora posts ",
+    "id": "gd_lvz1rbj81afv3m6n5y"
+  },
+  {
+    "name": "Reddit- Posts",
+    "id": "gd_lvz8ah06191smkebj4"
+  },
+  {
+    "name": "Reddit - Comments",
+    "id": "gd_lvzdpsdlw09j6t702"
+  },
+  {
+    "name": "Lazada products search (GMV)",
+    "id": "gd_lwd9icor28eg4srnxi"
+  },
+  {
+    "name": "Amazon products search",
+    "id": "gd_lwdb4vjm1ehb499uxs"
+  },
+  {
+    "name": "Amazon products global dataset",
+    "id": "gd_lwhideng15g8jg63s7"
+  },
+  {
+    "name": "X (formerly Twitter) - Posts",
+    "id": "gd_lwxkxvnf1cynvib9co"
+  },
+  {
+    "name": "X (formerly Twitter) - Profiles",
+    "id": "gd_lwxmeb2u1cniijd7t4"
+  },
+  {
+    "name": "Tokopedia Products",
+    "id": "gd_lxk24yba297r8qd3tp"
+  },
+  {
+    "name": "Vimeo - Videos posts",
+    "id": "gd_lxk88z3v1ketji4pn"
+  },
+  {
+    "name": "Zillow price history",
+    "id": "gd_lxu1cz9r88uiqsosl"
+  },
+  {
+    "name": "BBC news",
+    "id": "gd_ly5lkfzd1h8c85feyh"
+  },
+  {
+    "name": "Facebook - Posts by post URL",
+    "id": "gd_lyclm1571iy3mv57zw"
+  },
+  {
+    "name": "Instagram - Reels",
+    "id": "gd_lyclm20il4r5helnj"
+  },
+  {
+    "name": "Facebook - Reels by profile URL",
+    "id": "gd_lyclm3ey2q6rww027t"
+  },
+  {
+    "name": "CNN news",
+    "id": "gd_lycz8783197ch4wvwg"
+  },
+  {
+    "name": "Github repository",
+    "id": "gd_lyrexgxc24b3d4imjt"
+  },
+  {
+    "name": "LinkedIn posts",
+    "id": "gd_lyy3tktm25m4avu764"
+  },
+  {
+    "name": "Facebook - Posts by group URL",
+    "id": "gd_lz11l67o2cb3r0lkj3"
+  },
+  {
+    "name": "Trustradius product reviews",
+    "id": "gd_lztojazw1389985ops",
+    "implemented": true
+  },
+  {
+    "name": "Zoominfo companies information",
+    "id": "gd_m0ci4a4ivx3j5l6nx",
+    "implemented": true
+  },
+  {
+    "name": "Facebook Company Reviews",
+    "id": "gd_m0dtqpiu1mbcyc2g86"
+  },
+  {
+    "name": "Facebook Events",
+    "id": "gd_m14sd0to1jz48ppm51"
+  },
+  {
+    "name": "Employees business enriched dataset",
+    "id": "gd_m18zt6ec11wfqohyrs",
+    "implemented": true
+  },
+  {
+    "name": "Creative Commons Images",
+    "id": "gd_m23cxdw82ct6k022y3"
+  },
+  {
+    "name": "Google Shopping products search US",
+    "id": "gd_m31f2k0d2m1bah4f3b"
+  },
+  {
+    "name": "Companies information enriched dataset",
+    "id": "gd_m3fl0mwzmfpfn4cw4",
+    "implemented": true
+  },
+  {
+    "name": "TikTok Shop",
+    "id": "gd_m45m1u911dsa4274pi"
+  },
+  {
+    "name": "Top 500 Bluesky Profiles",
+    "id": "gd_m45p78dl1m017wi5lj"
+  },
+  {
+    "name": "LinkedIn profiles Jobs Listings",
+    "id": "gd_m487ihp32jtc4ujg45"
+  },
+  {
+    "name": " Booking Listings Search",
+    "id": "gd_m4bf7a917zfezv9d5"
+  },
+  {
+    "name": "pitchbook companies information",
+    "id": "gd_m4ijiqfp2n9oe3oluj",
+    "implemented": true
+  },
+  {
+    "name": "Creative Commons 3D Models",
+    "id": "gd_m4jr2hyr2kfhtvba6e"
+  },
+  {
+    "name": "Amazon Walmart",
+    "id": "gd_m4l6s4mn2g2rkx9lia"
+  },
+  {
+    "name": "Realtor international properties listings",
+    "id": "gd_m517agnc1jppzwgtmw"
+  },
+  {
+    "name": "Booking Hotel Listings ",
+    "id": "gd_m5mbdl081229ln6t4a"
+  },
+  {
+    "name": "Bluesky - Posts",
+    "id": "gd_m6hn4r5s27zfhc7w4"
+  },
+  {
+    "name": "Google Play Store reviews",
+    "id": "gd_m6zagkt024uwvvwuyu"
+  },
+  {
+    "name": "Apple App Store reviews ",
+    "id": "gd_m734msue16e0adkbit"
+  },
+  {
+    "name": "Walmart sellers info",
+    "id": "gd_m7ke48w81ocyu4hhz0"
+  },
+  {
+    "name": "mercadolivre.com.br products",
+    "id": "gd_m7re62tb1w88ymy86r"
+  },
+  {
+    "name": "Agoda Properties Listings",
+    "id": "gd_m837ssst155rq3a1xo"
+  },
+  {
+    "name": "Google Maps full information",
+    "id": "gd_m8ebnr0q2qlklc02fz"
+  },
+  {
+    "name": "Carsales Cars Listings search page information",
+    "id": "gd_m8h7qkn317z9rvlngb"
+  },
+  {
+    "name": "Naver products ",
+    "id": "gd_m9qqjxxr1hab7okefj"
+  },
+  {
+    "name": "Snapchat posts",
+    "id": "gd_ma0ydx431w6stl16ge"
+  },
+  {
+    "name": "Facebook - Profiles",
+    "id": "gd_mf0urb782734ik94dz"
+  },
+  {
+    "name": "Facebook - Pages and Profiles ",
+    "id": "gd_mf124a0511bauquyow"
+  },
+  {
+    "name": "Rona.ca products",
+    "id": "gd_mf53alwg1a35fv69pw"
+  },
+  {
+    "name": "Kroger.com",
+    "id": "gd_mhlod8vh2kwgoi9yw3"
+  },
+  {
+    "name": "Macys.com",
+    "id": "gd_miebqh4a18ivg65bpa"
+  },
+  {
+    "name": "Costco products",
+    "id": "gd_mkcbmac44j178pook"
+  },
+  {
+    "name": "B&H Products",
+    "id": "gd_mkce0sox1mchrlpp8g"
+  },
+  {
+    "name": "Micro Center Products",
+    "id": "gd_mkckexq2uquhupguv"
+  },
+  {
+    "name": "Autozone - products",
+    "id": "gd_mkcnp8yy1kf8oxpvij"
+  }
+]
