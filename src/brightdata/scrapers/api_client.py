@@ -112,8 +112,16 @@ class DatasetAPIClient:
             if response.status == HTTPStatus.OK:
                 data = await response.json()
                 return data.get("status", "unknown")
-            else:
-                return "error"
+
+            # Do NOT collapse transport failures into a job status. Returning
+            # "error" here made an expired token look like a failed scrape;
+            # raising lets poll_until_ready report the real cause.
+            error_text = await response.text()
+            raise APIError(
+                f"Status check failed (HTTP {response.status})",
+                status_code=response.status,
+                raw=error_text,
+            )
 
     async def fetch_result(self, snapshot_id: str, format: str = "json") -> Any:
         """

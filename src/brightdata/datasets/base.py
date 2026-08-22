@@ -3,11 +3,13 @@ Base dataset class - provides common functionality for all datasets.
 """
 
 import asyncio
+import json
 import time
 from typing import Dict, List, Any, Optional, Literal, TYPE_CHECKING
 
 from .models import DatasetMetadata, SnapshotStatus
-from ..exceptions import BrightDataError
+from ..exceptions import BrightDataError, RateLimitError
+from ..utils.http import parse_retry_after
 
 if TYPE_CHECKING:
     from ..core.engine import AsyncEngine
@@ -17,6 +19,26 @@ class DatasetError(BrightDataError):
     """Error related to dataset operations."""
 
     pass
+
+
+def _raise_for_status(response, body: str, what: str) -> None:
+    """
+    Convert a non-2xx dataset response into a structured exception.
+
+    Reads the body as text BEFORE attempting JSON: the API answers some
+    errors (notably 429) with a bare string under a non-JSON content type,
+    which would otherwise surface as an aiohttp content-type error rather
+    than as the actual problem.
+    """
+    if response.status < 400:
+        return
+    exc_cls = RateLimitError if response.status == 429 else DatasetError
+    raise exc_cls(
+        f"{what} failed (HTTP {response.status})",
+        status_code=response.status,
+        retry_after=parse_retry_after(response.headers),
+        raw=body,
+    )
 
 
 class BaseDataset:
@@ -100,7 +122,9 @@ class BaseDataset:
             f"{self.BASE_URL}/datasets/filter",
             json_data=payload,
         ) as response:
-            data = await response.json()
+            body = await response.text()
+            _raise_for_status(response, body, "Filter request")
+            data = json.loads(body) if body.strip() else {}
 
         if "snapshot_id" not in data:
             error_msg = (
@@ -146,7 +170,9 @@ class BaseDataset:
         async with self._engine.get_from_url(
             f"{self.BASE_URL}/datasets/snapshots/{snapshot_id}"
         ) as response:
-            data = await response.json()
+            body = await response.text()
+            _raise_for_status(response, body, "Snapshot status check")
+            data = json.loads(body) if body.strip() else {}
         return SnapshotStatus.from_dict(data)
 
     async def download(
@@ -198,8 +224,6 @@ class BaseDataset:
             f"{self.BASE_URL}/datasets/snapshots/{snapshot_id}/download",
             params={"format": format},
         ) as response:
-            import json
-
             # Check for HTTP errors
             if response.status >= 400:
                 error_text = await response.text()
