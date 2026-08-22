@@ -7,12 +7,13 @@ import time
 from typing import Dict, List, Any, Optional, Literal, TYPE_CHECKING
 
 from .models import DatasetMetadata, SnapshotStatus
+from ..exceptions import BrightDataError
 
 if TYPE_CHECKING:
     from ..core.engine import AsyncEngine
 
 
-class DatasetError(Exception):
+class DatasetError(BrightDataError):
     """Error related to dataset operations."""
 
     pass
