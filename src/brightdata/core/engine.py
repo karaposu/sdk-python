@@ -434,6 +434,10 @@ class AsyncEngine:
                         "method": self._method,
                         "raw": text,
                     }
+                    # A short body excerpt keeps a bare print(exc) useful; the
+                    # full (bounded) body stays on .raw.
+                    detail = " ".join(text.split())[:200]
+                    suffix = f": {detail}" if detail else ""
 
                     if status in (HTTPStatus.UNAUTHORIZED, HTTPStatus.FORBIDDEN):
                         raise AuthenticationError(f"{status_phrase(status)} ({status})", **context)
@@ -442,13 +446,13 @@ class AsyncEngine:
                         # Never retryable: a 429 response itself consumes quota,
                         # so retrying extends the lockout instead of waiting it out.
                         raise RateLimitError(
-                            f"Rate limited ({status})",
+                            f"Rate limited ({status}){suffix}",
                             retry_after=parse_retry_after(self._response.headers),
                             **context,
                         )
 
                     # retryable resolves from status_code: 5xx yes, 4xx no.
-                    raise APIError(f"Request failed (HTTP {status})", **context)
+                    raise APIError(f"Request failed (HTTP {status}){suffix}", **context)
                 except asyncio.TimeoutError as e:
                     # Must be caught before OSError — on Python 3.11+,
                     # TimeoutError is a subclass of OSError

@@ -8,8 +8,7 @@ import time
 from typing import Dict, List, Any, Optional, Literal, TYPE_CHECKING
 
 from .models import DatasetMetadata, SnapshotStatus
-from ..exceptions import BrightDataError, RateLimitError
-from ..utils.http import parse_retry_after
+from ..exceptions import APIError, BrightDataError, RateLimitError
 
 if TYPE_CHECKING:
     from ..core.engine import AsyncEngine
@@ -21,23 +20,24 @@ class DatasetError(BrightDataError):
     pass
 
 
-def _raise_for_status(response, body: str, what: str) -> None:
+def _as_dataset_error(exc: APIError, what: str) -> DatasetError:
     """
-    Convert a non-2xx dataset response into a structured exception.
+    Re-type an engine-raised APIError as a DatasetError, preserving context.
 
-    Reads the body as text BEFORE attempting JSON: the API answers some
-    errors (notably 429) with a bare string under a non-JSON content type,
-    which would otherwise surface as an aiohttp content-type error rather
-    than as the actual problem.
+    The engine classifies every non-2xx centrally, so by the time a failure
+    reaches this layer it is already structured. Callers of the datasets API
+    catch DatasetError, though, so convert rather than let a sibling type
+    escape. RateLimitError is deliberately NOT converted: it is the more
+    specific, actionable type and users are told to catch it directly.
     """
-    if response.status < 400:
-        return
-    exc_cls = RateLimitError if response.status == 429 else DatasetError
-    raise exc_cls(
-        f"{what} failed (HTTP {response.status})",
-        status_code=response.status,
-        retry_after=parse_retry_after(response.headers),
-        raw=body,
+    return DatasetError(
+        f"{what} failed (HTTP {exc.status_code})",
+        status_code=exc.status_code,
+        url=exc.url,
+        method=exc.method,
+        retry_after=exc.retry_after,
+        retryable=exc.retryable,
+        raw=exc.raw,
     )
 
 
@@ -118,13 +118,17 @@ class BaseDataset:
         if records_limit is not None:
             payload["records_limit"] = records_limit
 
-        async with self._engine.post_to_url(
-            f"{self.BASE_URL}/datasets/filter",
-            json_data=payload,
-        ) as response:
-            body = await response.text()
-            _raise_for_status(response, body, "Filter request")
-            data = json.loads(body) if body.strip() else {}
+        try:
+            async with self._engine.post_to_url(
+                f"{self.BASE_URL}/datasets/filter",
+                json_data=payload,
+            ) as response:
+                body = await response.text()
+                data = json.loads(body) if body.strip() else {}
+        except RateLimitError:
+            raise
+        except APIError as exc:
+            raise _as_dataset_error(exc, "Filter request") from exc
 
         if "snapshot_id" not in data:
             error_msg = (
@@ -167,12 +171,16 @@ class BaseDataset:
         Returns:
             SnapshotStatus with status field: "scheduled", "building", "ready", or "failed"
         """
-        async with self._engine.get_from_url(
-            f"{self.BASE_URL}/datasets/snapshots/{snapshot_id}"
-        ) as response:
-            body = await response.text()
-            _raise_for_status(response, body, "Snapshot status check")
-            data = json.loads(body) if body.strip() else {}
+        try:
+            async with self._engine.get_from_url(
+                f"{self.BASE_URL}/datasets/snapshots/{snapshot_id}"
+            ) as response:
+                body = await response.text()
+                data = json.loads(body) if body.strip() else {}
+        except RateLimitError:
+            raise
+        except APIError as exc:
+            raise _as_dataset_error(exc, "Snapshot status check") from exc
         return SnapshotStatus.from_dict(data)
 
     async def download(

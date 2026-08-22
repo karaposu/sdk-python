@@ -331,3 +331,40 @@ class TestCausePropagation:
         assert payload["cause"]["type"] == "RateLimitError"
         assert payload["cause"]["status_code"] == 429
         r.to_json()  # must not raise
+
+
+class TestDatasetErrorContract:
+    """The datasets layer must keep raising DatasetError after central translation."""
+
+    async def _call(self, status, body, headers=None):
+        from brightdata.datasets.base import BaseDataset
+
+        class DS(BaseDataset):
+            DATASET_ID = "gd_x"
+            NAME = "x"
+
+        engine = AsyncEngine(bearer_token="tok")
+        async with engine:
+            engine._session.request = AsyncMock(return_value=_resp(status, body, headers))
+            return await DS(engine)(filter={"name": "f", "operator": "is_not_null"})
+
+    async def test_client_error_is_still_a_dataset_error(self):
+        from brightdata.datasets import DatasetError
+
+        with pytest.raises(DatasetError) as ei:
+            await self._call(400, '{"error":"bad filter"}')
+        assert ei.value.status_code == 400
+        assert "bad filter" in ei.value.raw
+
+    async def test_rate_limit_stays_rate_limit_error(self):
+        with pytest.raises(RateLimitError) as ei:
+            await self._call(429, "too_many_parallel_jobs", {"Retry-After": "60"})
+        assert ei.value.retry_after == 60.0
+
+    async def test_message_keeps_a_body_excerpt(self):
+        with pytest.raises(APIError) as ei:
+            engine = AsyncEngine(bearer_token="tok")
+            async with engine:
+                await _enter(engine, _resp(400, "helpful detail"))
+        assert "helpful detail" in str(ei.value)
+        assert len(str(ei.value)) < 300  # bounded
