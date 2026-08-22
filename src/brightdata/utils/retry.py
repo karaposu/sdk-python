@@ -2,7 +2,7 @@
 
 import asyncio
 from typing import Callable, Awaitable, TypeVar, Optional, List, Type
-from ..exceptions import BrightDataError, NetworkError, RateLimitError
+from ..exceptions import BrightDataError, NetworkError
 
 T = TypeVar("T")
 
@@ -23,15 +23,8 @@ def is_retryable(exc: Exception) -> bool:
     """
     if isinstance(exc, (NetworkError, TimeoutError)):
         return True
-    if isinstance(exc, RateLimitError):
-        return False
     if isinstance(exc, BrightDataError):
-        if exc.retryable:
-            return True
-        # An explicit 5xx means the server itself errored, so repeating is
-        # standard practice. A MISSING status code is the dangerous case: it
-        # means we raised locally, possibly after the server accepted the work.
-        return exc.status_code is not None and exc.status_code >= 500
+        return exc.retryable
     return False
 
 

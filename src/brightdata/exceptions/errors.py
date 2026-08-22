@@ -44,7 +44,7 @@ class BrightDataError(Exception):
         url: str | None = None,
         method: str | None = None,
         retry_after: float | None = None,
-        retryable: bool = False,
+        retryable: bool | None = None,
         raw: Any = None,
         **kwargs,
     ):
@@ -54,6 +54,8 @@ class BrightDataError(Exception):
         self.url = url
         self.method = method
         self.retry_after = retry_after
+        if retryable is None:
+            retryable = status_code is not None and status_code >= 500
         self.retryable = retryable
         self.raw = _truncate(raw)
 
@@ -93,12 +95,14 @@ class RateLimitError(APIError):
     """
     HTTP 429 — request rate or quota exceeded.
 
-    Never marked retryable: on the Bright Data API a 429 response itself
-    consumes quota, so retrying extends the lockout rather than waiting it out.
-    Use `retry_after` to decide how long to pause.
+    Never retryable: on the Bright Data API a 429 response itself consumes
+    quota, so retrying extends the lockout rather than waiting it out. Use
+    `retry_after` to decide how long to pause instead.
     """
 
-    pass
+    def __init__(self, message: str, *args, **kwargs):
+        kwargs["retryable"] = False  # not overridable — see the class docstring
+        super().__init__(message, *args, **kwargs)
 
 
 class DataNotReadyError(BrightDataError):

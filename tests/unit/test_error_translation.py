@@ -269,3 +269,65 @@ class TestHttpHelpers:
     def test_status_phrase_handles_non_standard(self):
         assert status_phrase(429) == "Too Many Requests"
         assert status_phrase(520)  # must not raise
+
+
+# ---------------------------------------------------------------------------
+# Structure must survive to the caller (the point of the whole change)
+# ---------------------------------------------------------------------------
+
+
+class TestCausePropagation:
+    async def test_rate_limit_during_polling_reaches_the_caller(self):
+        from brightdata.utils.polling import poll_until_ready
+
+        async def rate_limited(_):
+            raise RateLimitError("Rate limited (429)", status_code=429, retry_after=45.0)
+
+        async def never(_):
+            raise AssertionError("should not fetch")
+
+        r = await poll_until_ready(rate_limited, never, "snap_1", poll_interval=0, poll_timeout=5)
+
+        assert r.success is False
+        assert isinstance(r.cause, RateLimitError)
+        assert r.cause.status_code == 429
+        assert r.cause.retry_after == 45.0
+        assert r.cause.retryable is False
+
+    async def test_trigger_failure_carries_cause(self):
+        from brightdata.scrapers.workflow import WorkflowExecutor
+
+        api = MagicMock()
+        api.trigger = AsyncMock(side_effect=APIError("boom", status_code=503))
+        r = await WorkflowExecutor(api).execute(payload=[{"url": "u"}], dataset_id="gd_x")
+
+        assert r.success is False
+        assert isinstance(r.cause, APIError)
+        assert r.cause.status_code == 503
+        assert r.cause.retryable is True
+
+    async def test_crawler_result_carries_cause(self):
+        from brightdata.crawler.service import CrawlerService
+
+        client = MagicMock()
+        cm = MagicMock()
+        cm.__aenter__ = AsyncMock(side_effect=RateLimitError("rl", status_code=429, retry_after=10))
+        cm.__aexit__ = AsyncMock(return_value=False)
+        client.engine.post_to_url = MagicMock(return_value=cm)
+
+        r = await CrawlerService(client).crawl(urls="https://example.com")
+        assert isinstance(r.cause, RateLimitError)
+        assert r.cause.retry_after == 10
+
+    def test_result_with_cause_is_still_serializable(self):
+        from brightdata.models import ScrapeResult
+
+        r = ScrapeResult(
+            success=False,
+            error="rate limited",
+            cause=RateLimitError("rl", status_code=429, retry_after=30.0),
+        )
+        payload = r.to_dict()
+        assert payload["cause"]["type"] == "RateLimitError"
+        assert payload["cause"]["status_code"] == 429
+        r.to_json()  # must not raise

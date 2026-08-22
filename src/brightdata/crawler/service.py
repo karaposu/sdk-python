@@ -22,7 +22,7 @@ from http import HTTPStatus
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
 from .models import CrawlJob, CrawlResult
-from ..exceptions import APIError, ValidationError
+from ..exceptions import APIError, BrightDataError, ValidationError
 from ..utils.function_detection import get_caller_function_name
 from ..utils.validation import validate_url, validate_url_list
 
@@ -222,6 +222,7 @@ class CrawlerService:
                     trigger_sent_at=trigger_sent_at,
                     data_fetched_at=datetime.now(timezone.utc),
                     error=f"Status check failed: {exc}",
+                    cause=exc,
                 )
 
             if current == "ready":
@@ -309,6 +310,7 @@ class CrawlerService:
                 trigger_sent_at=trigger_sent_at,
                 data_fetched_at=datetime.now(timezone.utc),
                 error=f"HTTP {exc.status_code}: {exc.raw or exc.message}",
+                cause=exc,
             )
         except Exception as exc:
             return CrawlResult(
@@ -357,6 +359,7 @@ class CrawlerService:
                 trigger_sent_at=trigger_sent_at,
                 data_fetched_at=datetime.now(timezone.utc),
                 error=f"Snapshot fetch error: {exc}",
+                cause=exc if isinstance(exc, BrightDataError) else None,
             )
 
     @staticmethod

@@ -444,15 +444,11 @@ class AsyncEngine:
                         raise RateLimitError(
                             f"Rate limited ({status})",
                             retry_after=parse_retry_after(self._response.headers),
-                            retryable=False,
                             **context,
                         )
 
-                    raise APIError(
-                        f"Request failed (HTTP {status})",
-                        retryable=(status >= 500),
-                        **context,
-                    )
+                    # retryable resolves from status_code: 5xx yes, 4xx no.
+                    raise APIError(f"Request failed (HTTP {status})", **context)
                 except asyncio.TimeoutError as e:
                     # Must be caught before OSError — on Python 3.11+,
                     # TimeoutError is a subclass of OSError
