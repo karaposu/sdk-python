@@ -298,8 +298,18 @@ class CrawlerService:
                     trigger_sent_at=trigger_sent_at,
                     data_fetched_at=data_fetched_at,
                 )
-        except (ValidationError, APIError):
+        except ValidationError:
             raise
+        except APIError as exc:
+            # The engine now raises for non-2xx, so this is the same condition
+            # the status check above used to handle inline. Keep returning a
+            # CrawlResult rather than raising, which is crawl()'s contract.
+            return CrawlResult(
+                success=False,
+                trigger_sent_at=trigger_sent_at,
+                data_fetched_at=datetime.now(timezone.utc),
+                error=f"HTTP {exc.status_code}: {exc.raw or exc.message}",
+            )
         except Exception as exc:
             return CrawlResult(
                 success=False,
